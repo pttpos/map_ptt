@@ -101,33 +101,41 @@
                 console.error('Geolocation is not supported by this browser.');
             }
         }
-
-function pushpinClicked(e) {
-    if (e.target.metadata) {
-        var title = e.target.metadata.title;
-        var description = e.target.metadata.description;
-        var latitude = e.target.getLocation().latitude;
-        var longitude = e.target.getLocation().longitude;
-
-        // Set popup content
-        popup.innerHTML = '<h3>' + title + '</h3><p>' + description + '</p>' +
-                          '<span class="close-button">X</span>' + 
-                          '<a href="#" onclick="openGoogleMaps(' + latitude + ', ' + longitude + ')">View Directions on Google Maps</a>';
-
-        // Set popup position
-        var loc = map.tryLocationToPixel(e.target.getLocation(), Microsoft.Maps.PixelReference.control);
-        popup.style.left = loc.x + 'px';
-        popup.style.top = loc.y + 'px';
-
-        // Display popup
-        popup.style.display = 'block';
-
-        // Add click event listener to close the popup
-        popup.querySelector('.close-button').addEventListener('click', function() {
-            popup.style.display = 'none';
-        });
-    }
-}
+        function pushpinClicked(e) {
+            if (e.target.metadata) {
+                console.log('Metadata:', e.target.metadata); // Log the metadata object
+        
+                var title = e.target.metadata.title;
+                var description = e.target.metadata.description;
+                var latitude = e.target.getLocation().latitude;
+                var longitude = e.target.getLocation().longitude;
+                var picture = e.target.metadata.picture; // Get the picture file name from metadata
+        
+                // Set popup content
+                var imagePath = 'pictures/' + picture;
+                console.log('Image Path:', imagePath); // Log the image path
+                popup.innerHTML = '<h3>' + title + '</h3><p>' + description + '</p>' +
+                                  '<img src="' + imagePath + '" alt="Marker Image" style="max-width: 100px;">' +
+                                  '<span class="close-button">X</span>' + 
+                                  '<a href="#" onclick="openGoogleMaps(' + latitude + ', ' + longitude + ')">View Directions on Google Maps</a>';
+        
+                // Set popup position
+                var loc = map.tryLocationToPixel(e.target.getLocation(), Microsoft.Maps.PixelReference.control);
+                popup.style.left = loc.x + 'px';
+                popup.style.top = loc.y + 'px';
+        
+                // Display popup
+                popup.style.display = 'block';
+        
+                // Add click event listener to close the popup
+                popup.querySelector('.close-button').addEventListener('click', function() {
+                    popup.style.display = 'none';
+                });
+            }
+        }
+        
+        
+        
 
 
         window.onload = loadMapScenario;

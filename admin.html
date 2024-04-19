@@ -22,7 +22,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="marker-form" method="POST" action="marker-interface.php">
+                    <form id="marker-form" method="POST" action="marker-interface.php" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="id" class="form-label">ID:</label>
                             <input type="text" class="form-control" id="id" name="id" required>
@@ -105,6 +105,7 @@
                             <th>Longitude</th>
                             <th>Title</th>
                             <th>Description</th>
+                            <th>Image</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -154,6 +155,7 @@
                                 <td>${marker.longitude}</td>
                                 <td>${marker.title}</td>
                                 <td>${marker.description}</td>
+                                <td>${marker.picture ? `<img src="pictures/${marker.picture}" alt="Marker Image" style="max-width: 100px; border-radius: 50%;">` : 'No Image'}</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm" onclick="deleteMarker(${marker.id})">Delete</button>
                                     <button class="btn btn-primary btn-sm" onclick="editMarker(${marker.id})" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
@@ -166,30 +168,30 @@
             })
             .catch(error => console.error('Error:', error));
 
-        /// Function to populate edit form and show edit modal
-function editMarker(id) {
-    // Fetch marker data corresponding to the ID
-    fetch(`marker-interface.php?id=${id}`)
-        .then(response => response.json())
-        .then(data => {
-            // Check if data is not empty and has the expected structure
-            if (data && data.STATION.length > 0) {
-                // Populate the modal form fields with the marker data
-                const marker = data.STATION[0];
-                document.getElementById('edit-id').value = marker.id;
-                document.getElementById('edit-latitude').value = marker.latitude;
-                document.getElementById('edit-longitude').value = marker.longitude;
-                document.getElementById('edit-title').value = marker.title;
-                document.getElementById('edit-description').value = marker.description;
-            } else {
-                console.error('No data found for the specified ID.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
+        // Function to populate edit form and show edit modal
+        function editMarker(id) {
+            // Fetch marker data corresponding to the ID
+            fetch(`marker-interface.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if data is not empty and has the expected structure
+                    if (data && data.STATION.length > 0) {
+                        // Populate the modal form fields with the marker data
+                        const marker = data.STATION[0];
+                        document.getElementById('edit-id').value = marker.id;
+                        document.getElementById('edit-latitude').value = marker.latitude;
+                        document.getElementById('edit-longitude').value = marker.longitude;
+                        document.getElementById('edit-title').value = marker.title;
+                        document.getElementById('edit-description').value = marker.description;
+                    } else {
+                        console.error('No data found for the specified ID.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
     </script>
 
 </body>
 
-</html>
+</html> 

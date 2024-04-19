@@ -1,4 +1,3 @@
-User
 <?php
 // Function to load marker data from JSON file
 function loadMarkerData() {
@@ -17,11 +16,12 @@ function addOrUpdateMarker($markerData) {
     // Check if a file was uploaded
     if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = 'pictures/'; // Directory to upload pictures
-        $uploadFile = $uploadDir . basename($_FILES['picture']['name']);
+        $uploadFileName = uniqid() . '_' . basename($_FILES['picture']['name']);
+        $uploadFile = $uploadDir . $uploadFileName;
         // Move the uploaded file to the specified directory
         if (move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile)) {
             // Add the picture path to the marker data
-            $markerData['picture'] = $uploadFile;
+            $markerData['picture'] = $uploadFileName;
         } else {
             echo "Failed to upload picture.";
             return;
