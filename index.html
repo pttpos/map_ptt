@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bing Maps with OpenStreetMap</title>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AhQxc3Nm4Sfv53x7JRXUoj76QZnlm7VWkT5qAigmHQo8gjeYFthvGgEqVcjO5c7C' async defer></script>
+    
+    <style>
+        #map {
+            height: 80vh;
+            width: 100%;
+        }
+        #button-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+        #find-location-button {
+            padding: 10px 20px;
+            background-color: #0078D4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1000;
+            display: none;
+        }
+        .popup h3 {
+            margin-top: 0;
+        }
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="button-container">
+        <button id="find-location-button">Find My Location</button>
+    </div>
+
+    <!-- Popup for marker information -->
+    <div id="popup" class="popup"></div>
+
+    <script>
+        var map;
+        var popup = document.getElementById('popup');
+
+        function loadMapScenario() {
+            map = new Microsoft.Maps.Map(document.getElementById('map'), {
+                credentials: 'AhQxc3Nm4Sfv53x7JRXUoj76QZnlm7VWkT5qAigmHQo8gjeYFthvGgEqVcjO5c7C'
+            });
+
+            // Fetch marker data from JSON file
+            fetch('data/markers.json')
+                .then(response => response.json())
+                .then(markerData => {
+                    markerData.STATION.forEach(marker => {
+                        var loc = new Microsoft.Maps.Location(marker.latitude, marker.longitude);
+                        var pin = new Microsoft.Maps.Pushpin(loc);
+                        pin.metadata = {
+                            title: marker.title,
+                            description: marker.description
+                        };
+                        Microsoft.Maps.Events.addHandler(pin, 'click', pushpinClicked);
+                        map.entities.push(pin);
+                    });
+                })
+                .catch(error => console.error('Error loading marker data:', error));
+
+            // Add click event listener to the "Find My Location" button
+            document.getElementById('find-location-button').addEventListener('click', findMyLocation);
+        }
+
+        function findMyLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var loc = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+
+                    // Add a new pushpin at the user's location
+                    var pushpin = new Microsoft.Maps.Pushpin(loc, { color: 'red' });
+                    map.entities.push(pushpin);
+
+                    // Set map view to user's location with zoom level
+                    map.setView({ center: loc, zoom: 15 }); // Adjust the zoom level as needed
+                }, function(error) {
+                    console.error('Error getting the user location:', error);
+                });
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+            }
+        }
+
+function pushpinClicked(e) {
+    if (e.target.metadata) {
+        var title = e.target.metadata.title;
+        var description = e.target.metadata.description;
+        var latitude = e.target.getLocation().latitude;
+        var longitude = e.target.getLocation().longitude;
+
+        // Set popup content
+        popup.innerHTML = '<h3>' + title + '</h3><p>' + description + '</p>' +
+                          '<span class="close-button">X</span>' + 
+                          '<a href="#" onclick="openGoogleMaps(' + latitude + ', ' + longitude + ')">View Directions on Google Maps</a>';
+
+        // Set popup position
+        var loc = map.tryLocationToPixel(e.target.getLocation(), Microsoft.Maps.PixelReference.control);
+        popup.style.left = loc.x + 'px';
+        popup.style.top = loc.y + 'px';
+
+        // Display popup
+        popup.style.display = 'block';
+
+        // Add click event listener to close the popup
+        popup.querySelector('.close-button').addEventListener('click', function() {
+            popup.style.display = 'none';
+        });
+    }
+}
+
+
+        window.onload = loadMapScenario;
+        function openGoogleMaps(lat, lon) {
+            var url = 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lon;
+            window.open(url, '_self');
+        }
+    </script>
+</body>
+</html>

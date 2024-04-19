@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "latitude": 11.5564,
+        "longitude": 104.9282,
+        "title": "Phnom Penh",
+        "description": "The Pearl of Asia"
+    },
+    {
+        "latitude": "11.585459292678992",
+        "longitude": "104.95404679375464",
+        "title": "efrg",
+        "description": "wefwef",
+        "id": 2
+    },
+    {
+        "latitude": "11.585459292678992",
+        "longitude": "104.95404679375464",
+        "title": "efrg",
+        "description": "wefwef",
+        "id": 3
+    },
+    {
+        "latitude": "11.585459292678992",
+        "longitude": "104.95404679375464",
+        "title": "jydjhtrhstrh",
+        "description": "hethteh",
+        "id": 4
+    }
+]

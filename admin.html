@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Interface</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Marker</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="marker-form" method="POST" action="marker-interface.php">
+                        <div class="mb-3">
+                            <label for="id" class="form-label">ID:</label>
+                            <input type="text" class="form-control" id="id" name="id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="latitude" class="form-label">Latitude:</label>
+                            <input type="text" class="form-control" id="latitude" name="latitude" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="longitude" class="form-label">Longitude:</label>
+                            <input type="text" class="form-control" id="longitude" name="longitude" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description:</label>
+                            <input type="text" class="form-control" id="description" name="description" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Marker</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add a new modal form for editing markers -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Marker</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-marker-form" method="POST" action="marker-interface.php">
+                        <div class="mb-3">
+                            <label for="edit-id" class="form-label">ID:</label>
+                            <input type="text" class="form-control" id="edit-id" name="id" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-latitude" class="form-label">Latitude:</label>
+                            <input type="text" class="form-control" id="edit-latitude" name="latitude" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-longitude" class="form-label">Longitude:</label>
+                            <input type="text" class="form-control" id="edit-longitude" name="longitude" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-title" class="form-label">Title:</label>
+                            <input type="text" class="form-control" id="edit-title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-description" class="form-label">Description:</label>
+                            <input type="text" class="form-control" id="edit-description" name="description" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Marker</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <!-- Marker Data Table -->
+                <h2 class="card-title mt-5">Marker Data</h2>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Add Marker
+                </button>
+                <table class="table mt-3 table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marker-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to delete marker
+        function deleteMarker(id) {
+            if (confirm('Are you sure you want to delete this marker?')) {
+                // Perform delete operation
+                fetch(`marker-interface.php?id=${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        // Refresh page to update marker list
+                        window.location.reload();
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+
+        // Fetch marker data and display in table
+        fetch('marker-interface.php')
+            .then(response => response.json())
+            .then(data => {
+                var tableBody = document.getElementById('marker-table-body');
+                var markers = data.STATION;
+
+                function displayMarkers(markers) {
+                    tableBody.innerHTML = '';
+                    markers.forEach(marker => {
+                        var row = document.createElement('tr');
+                        row.innerHTML = `<td>${marker.id}</td>
+                                <td>${marker.latitude}</td>
+                                <td>${marker.longitude}</td>
+                                <td>${marker.title}</td>
+                                <td>${marker.description}</td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteMarker(${marker.id})">Delete</button>
+                                    <button class="btn btn-primary btn-sm" onclick="editMarker(${marker.id})" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                                </td>`;
+                        tableBody.appendChild(row);
+                    });
+                }
+
+                displayMarkers(markers);
+            })
+            .catch(error => console.error('Error:', error));
+
+        /// Function to populate edit form and show edit modal
+function editMarker(id) {
+    // Fetch marker data corresponding to the ID
+    fetch(`marker-interface.php?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            // Check if data is not empty and has the expected structure
+            if (data && data.STATION.length > 0) {
+                // Populate the modal form fields with the marker data
+                const marker = data.STATION[0];
+                document.getElementById('edit-id').value = marker.id;
+                document.getElementById('edit-latitude').value = marker.latitude;
+                document.getElementById('edit-longitude').value = marker.longitude;
+                document.getElementById('edit-title').value = marker.title;
+                document.getElementById('edit-description').value = marker.description;
+            } else {
+                console.error('No data found for the specified ID.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+    </script>
+
+</body>
+
+</html>
