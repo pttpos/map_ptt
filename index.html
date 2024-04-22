@@ -71,13 +71,16 @@
 
         function loadMapScenario() {
             // Initialize Leaflet map
-             map = L.map('map').setView([12.5657, 104.991], 7);
+            map = L.map('map').setView([12.5657, 104.991], 7);
 
             // Add OpenStreetMap tile layer to the map
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
+
+            // Automatically find user's location
+            findMyLocation();
 
             // Fetch marker data from JSON file
             fetch('data/markers.json')
@@ -116,9 +119,6 @@
                     });
                 })
                 .catch(error => console.error('Error loading marker data:', error));
-
-            // Add click event listener to the "Find My Location" button
-            document.getElementById('find-location-button').addEventListener('click', findMyLocation);
 
             // Add click event listener to close button
             document.getElementById('close-button').addEventListener('click', function(event) {
