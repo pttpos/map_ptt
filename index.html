@@ -10,6 +10,8 @@
         #map {
             height: 80vh;
             width: 100%;
+            position: relative; /* Ensure the map container is positioned relative */
+            z-index: 0; /* Set a z-index to ensure the map is behind the popup */
         }
         #button-container {
             text-align: center;
@@ -23,23 +25,19 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .popup {
-            position: absolute;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            z-index: 1000;
-            display: none;
+        .footer-popup {
+            position: fixed;
+            bottom: -100%; /* Initially hide the popup below the screen */
+            left: 0;
+            width: 100%;
+            background-color: rgb(129, 210, 248); /* Set background color to blue */
+            padding: 20px;
+            border-top: 1px solid #ccc;
+            transition: bottom 0.5s ease; /* Add smooth transition animation */
+            z-index: 1000; /* Ensure the popup appears above the map */
         }
-        .popup h3 {
-            margin-top: 0;
-        }
-        .close-button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            cursor: pointer;
+        .show-popup {
+            bottom: 0; /* Display the popup at the bottom of the screen */
         }
     </style>
 </head>
@@ -49,24 +47,8 @@
         <button id="find-location-button">Find My Location</button>
     </div>
 
-
-  <!-- Popup for marker information -->
-<style> 
-    #popup {
-        position: fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: white;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        z-index: 1000; /* Ensure it appears above other content */
-        display: none; /* Initially hide the popup */
-    }
-</style>
-<div id="popup" class="popup"></div>
-
+    <!-- Popup for marker information -->
+    <div id="popup" class="footer-popup"></div>
 
     <script>
         var map;
@@ -117,6 +99,7 @@
                 console.error('Geolocation is not supported by this browser.');
             }
         }
+
         function pushpinClicked(e) {
             if (e.target.metadata) {
                 var title = e.target.metadata.title;
@@ -127,28 +110,31 @@
         
                 // Set popup content
                 var imagePath = 'pictures/' + picture;
-                popup.innerHTML = '<h3>' + title + '</h3><p>' + description + '</p>' +
-                                  '<img src="' + imagePath + '" alt="Marker Image" style="max-width: 100px;">' + '</p>'+
-                                  '<a href="#" onclick="openGoogleMaps(' + latitude + ', ' + longitude + ')">View Directions on Google Maps</a>';
+                popup.innerHTML = '<div class="popup-header">' +'<button id="close-button" style="margin-left:50%;">Close</button>'  +
+                                  '<h3>' + title + '</h3>' +
+                                  '</div>' +
+                                  '<div class="popup-content">' +
+                                  '<p>' + description + '</p>' +
+                                  '<img src="' + imagePath + '" alt="Marker Image" style="max-width: 100px;">' +
+                                  '<a href="#" onclick="openGoogleMaps(' + latitude + ', ' + longitude + ')">View Directions on Google Maps</a>' +
+                                  '</div>';
         
-                // Set popup position
-                var loc = map.tryLocationToPixel(e.target.getLocation(), Microsoft.Maps.PixelReference.control);
-                popup.style.left = loc.x + 'px';
-                popup.style.top = loc.y + 'px';
+                // Display the popup with animation
+                popup.classList.add('show-popup');
         
-                // Display popup
-                popup.style.display = 'block';
-        
-                // Add click event listener to close the popup
-                popup.querySelector('.close-button').addEventListener('click', function() {
-                    popup.style.display = 'none';
+                // Add click event listener to close button
+                var closeButton = document.getElementById('close-button');
+                closeButton.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Prevent click event from propagating to popup
+                    popup.classList.remove('show-popup');
                 });
             }
         }
         
-
+        
 
         window.onload = loadMapScenario;
+
         function openGoogleMaps(lat, lon) {
             var url = 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lon;
             window.open(url, '_self');
