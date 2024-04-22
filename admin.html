@@ -88,12 +88,23 @@
                         <input type="file" class="form-control" id="edit-picture" name="picture">
                     </div>
                     <input type="hidden" id="old-picture" name="old_picture">
+                    <!-- Display selected file name -->
+                    <div id="file-name"></div>
                     <button type="submit" class="btn btn-primary">Update Marker</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Function to update the selected file name in the form
+    document.getElementById('edit-picture').addEventListener('change', function() {
+        var fileName = this.value.split('\\').pop(); // Get the file name without path
+        document.getElementById('file-name').textContent = 'Selected File: ' + fileName;
+    });
+</script>
+
 
     <div class="container mt-5">
         <div class="card">
@@ -189,12 +200,21 @@
                         document.getElementById('edit-longitude').value = marker.longitude;
                         document.getElementById('edit-title').value = marker.title;
                         document.getElementById('edit-description').value = marker.description;
+                        document.getElementById('old-picture').value = marker.picture; // Store old picture filename
+                        // Display the filename of the existing picture, if available
+                        if (marker.picture) {
+                            const fileName = marker.picture.split('/').pop(); // Extract filename from the path
+                            document.getElementById('file-name').textContent = 'Selected File: ' + fileName;
+                        } else {
+                            document.getElementById('file-name').textContent = 'No Picture Selected';
+                        }
                     } else {
                         console.error('No data found for the specified ID.');
                     }
                 })
                 .catch(error => console.error('Error:', error));
         }
+        
 
     </script>
 

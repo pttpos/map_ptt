@@ -10,28 +10,28 @@ function saveMarkerData($markers) {
     $markersJson = json_encode(['STATION' => $markers], JSON_PRETTY_PRINT);
     file_put_contents('data/markers.json', $markersJson); // Corrected path
 }
-
 // Function to add or update a marker
 function addOrUpdateMarker($markerData) {
-    // Check if a file was uploaded
+    // Check if a new file was uploaded
     if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = 'pictures/'; // Directory to upload pictures
-        
-        // Delete old picture if updating an existing marker
-        if (!empty($markerData['old_picture'])) {
-            unlink($uploadDir . $markerData['old_picture']);
-        }
-
         $uploadFileName = uniqid() . '_' . basename($_FILES['picture']['name']);
         $uploadFile = $uploadDir . $uploadFileName;
         // Move the uploaded file to the specified directory
         if (move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile)) {
-            // Add the picture path to the marker data
+            // Delete the old picture if it exists
+            if (!empty($markerData['old_picture'])) {
+                unlink('pictures/' . $markerData['old_picture']);
+            }
+            // Add the new picture path to the marker data
             $markerData['picture'] = $uploadFileName;
         } else {
             echo "Failed to upload picture.";
             return;
         }
+    } elseif (isset($markerData['old_picture'])) {
+        // Keep the old picture if no new picture is selected
+        $markerData['picture'] = $markerData['old_picture'];
     }
 
     $markers = loadMarkerData();
@@ -50,6 +50,7 @@ function addOrUpdateMarker($markerData) {
     }
     saveMarkerData($markers['STATION']);
 }
+
 
 // Function to delete a marker
 function deleteMarker($id) {
