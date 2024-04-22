@@ -16,6 +16,12 @@ function addOrUpdateMarker($markerData) {
     // Check if a file was uploaded
     if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = 'pictures/'; // Directory to upload pictures
+        
+        // Delete old picture if updating an existing marker
+        if (!empty($markerData['old_picture'])) {
+            unlink($uploadDir . $markerData['old_picture']);
+        }
+
         $uploadFileName = uniqid() . '_' . basename($_FILES['picture']['name']);
         $uploadFile = $uploadDir . $uploadFileName;
         // Move the uploaded file to the specified directory
@@ -49,7 +55,14 @@ function addOrUpdateMarker($markerData) {
 function deleteMarker($id) {
     $markers = loadMarkerData();
     $markers['STATION'] = array_values(array_filter($markers['STATION'], function($marker) use ($id) {
-        return $marker['id'] != $id;
+        if ($marker['id'] == $id) {
+            // Delete picture if it exists
+            if (!empty($marker['picture'])) {
+                unlink('pictures/' . $marker['picture']);
+            }
+            return false;
+        }
+        return true;
     }));
     saveMarkerData($markers['STATION']);
 }
@@ -73,7 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'latitude' => $_POST['latitude'],
         'longitude' => $_POST['longitude'],
         'title' => $_POST['title'],
-        'description' => $_POST['description']
+        'description' => $_POST['description'],
+        'old_picture' => $_POST['old_picture'] ?? '' // Store old picture filename if exists
     ];
     
     // Add or update the marker

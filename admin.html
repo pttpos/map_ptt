@@ -53,42 +53,48 @@
             </div>
         </div>
     </div>
-    <!-- Add a new modal form for editing markers -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Marker</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="edit-marker-form" method="POST" action="marker-interface.php">
-                        <div class="mb-3">
-                            <label for="edit-id" class="form-label">ID:</label>
-                            <input type="text" class="form-control" id="edit-id" name="id" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-latitude" class="form-label">Latitude:</label>
-                            <input type="text" class="form-control" id="edit-latitude" name="latitude" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-longitude" class="form-label">Longitude:</label>
-                            <input type="text" class="form-control" id="edit-longitude" name="longitude" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-title" class="form-label">Title:</label>
-                            <input type="text" class="form-control" id="edit-title" name="title" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-description" class="form-label">Description:</label>
-                            <input type="text" class="form-control" id="edit-description" name="description" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update Marker</button>
-                    </form>
-                </div>
+<!-- Add a new modal form for editing markers -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Marker</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-marker-form" method="POST" action="marker-interface.php" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="edit-id" class="form-label">ID:</label>
+                        <input type="text" class="form-control" id="edit-id" name="id" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-latitude" class="form-label">Latitude:</label>
+                        <input type="text" class="form-control" id="edit-latitude" name="latitude" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-longitude" class="form-label">Longitude:</label>
+                        <input type="text" class="form-control" id="edit-longitude" name="longitude" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-title" class="form-label">Title:</label>
+                        <input type="text" class="form-control" id="edit-title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-description" class="form-label">Description:</label>
+                        <input type="text" class="form-control" id="edit-description" name="description" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-picture" class="form-label">New Picture:</label>
+                        <input type="file" class="form-control" id="edit-picture" name="picture">
+                    </div>
+                    <input type="hidden" id="old-picture" name="old_picture">
+                    <button type="submit" class="btn btn-primary">Update Marker</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
     <div class="container mt-5">
         <div class="card">
             <div class="card-body">

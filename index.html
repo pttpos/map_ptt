@@ -62,7 +62,7 @@
             <h3>Title</h3>
             <p>Description</p>
             <img src="pictures/default.jpg" alt="Marker Image" style="max-width: 100px;">
-            <button><a href="#" class="btn btn-primary">View Directions on Google Maps</a></button>
+            <a href="#" class="btn btn-primary">View Directions on Google Maps</a>
         </div>
     </div>
     <script>
@@ -107,6 +107,8 @@
                             popup.querySelector('.popup-content h3').textContent = marker.title;
                             popup.querySelector('.popup-content p').textContent = marker.description;
                             popup.querySelector('.popup-content img').src = "pictures/" + marker.picture;
+                            var directionsButton = popup.querySelector('.popup-content a');
+                            directionsButton.setAttribute('onclick', `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
 
                             // Display the popup with animation
                             popup.classList.add('show-popup');
@@ -145,6 +147,11 @@
 
         // Load Leaflet map when the window is loaded
         window.onload = loadMapScenario;
+
+        function openGoogleMaps(lat, lon) {
+            var url = 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lon;
+            window.open(url, '_self');
+        }
     </script>
 </body>
 </html>
