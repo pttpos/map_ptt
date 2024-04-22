@@ -125,6 +125,11 @@
                 event.stopPropagation(); // Prevent click event from propagating to popup
                 popup.classList.remove('show-popup');
             });
+
+            // Add click event listener to find location button
+            document.getElementById('find-location-button').addEventListener('click', function() {
+                findMyLocation();
+            });
         }
 
         function findMyLocation() {

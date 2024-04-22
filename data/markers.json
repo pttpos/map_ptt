@@ -8,6 +8,15 @@
             "description": "fleetcard ,ABA",
             "old_picture": "662630a945408_photo_2024-03-28_13-47-26-removebg-preview.png",
             "picture": "6626312e6182e_transparent-technical-support-icon-help-support-icon-support-5fce5531842a90.5513994516073577455414.png"
+        },
+        {
+            "id": "45",
+            "latitude": "13.818402149990884",
+            "longitude": "102.96425823587",
+            "title": "test",
+            "description": "test",
+            "old_picture": "",
+            "picture": "66263942aa153_770139_man_512x512.png"
         }
     ]
 }
