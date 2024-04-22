@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bing Maps with OpenStreetMap</title>
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=AhQxc3Nm4Sfv53x7JRXUoj76QZnlm7VWkT5qAigmHQo8gjeYFthvGgEqVcjO5c7C' async defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-S3h2BUvga4FfFD/8e/1XW1vJFf01wk+2O9qYdhrWh5S" crossorigin="anonymous">
+
     
     <style>
         #map {
@@ -19,23 +21,27 @@
         }
         #find-location-button {
             padding: 10px 20px;
-            background-color: #0078D4;
+            background-color: #bebebe;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         .footer-popup {
+            border-radius: 10px 10px 0 0; /* Top-left and top-right corners are rounded */
             position: fixed;
             bottom: -100%; /* Initially hide the popup below the screen */
             left: 0;
-            width: 100%;
-            background-color: rgb(129, 210, 248); /* Set background color to blue */
+            right: 0; /* Set right to 0 to ensure the popup stretches to the right edge */
+            width: auto; /* Remove the width setting to allow the popup to stretch horizontally */
+            background-color: rgb(201, 201, 201); /* Set background color to blue */
             padding: 20px;
             border-top: 1px solid #ccc;
             transition: bottom 0.5s ease; /* Add smooth transition animation */
             z-index: 1000; /* Ensure the popup appears above the map */
         }
+        
+        
         .show-popup {
             bottom: 0; /* Display the popup at the bottom of the screen */
         }
@@ -108,27 +114,59 @@
                 var longitude = e.target.getLocation().longitude;
                 var picture = e.target.metadata.picture; // Get the picture file name from metadata
         
-                // Set popup content
-                var imagePath = 'pictures/' + picture;
-                popup.innerHTML = '<div class="popup-header">' +'<button id="close-button" style="margin-left:50%;">Close</button>'  +
-                                  '<h3>' + title + '</h3>' +
-                                  '</div>' +
-                                  '<div class="popup-content">' +
-                                  '<p>' + description + '</p>' +
-                                  '<img src="' + imagePath + '" alt="Marker Image" style="max-width: 100px;">' +
-                                  '<a href="#" onclick="openGoogleMaps(' + latitude + ', ' + longitude + ')">View Directions on Google Maps</a>' +
-                                  '</div>';
+                // Calculate the distance between current location and marker location
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var currentLatitude = position.coords.latitude;
+                    var currentLongitude = position.coords.longitude;
+                    var distance = calculateDistance(currentLatitude, currentLongitude, latitude, longitude);
         
-                // Display the popup with animation
-                popup.classList.add('show-popup');
+                    // Set popup content
+                    var imagePath = 'pictures/' + picture;
+                    popup.innerHTML = '<div class="popup-header">' +
+                        '<img src="./pictures/logo_Station.png" style="max-width: 100px;">' +
+                        '<button id="close-button" style="margin-left: 55%;">Close</button>' +
+                        '</div>' +
+                        '<hr>' +
+                        '<div class="popup-content">' +
+                        '<h3>' + title + '</h3>' +
+                        '<p>' + description + '</p>' +
+                        '<p>Distance: ' + distance.toFixed(2) + ' km</p>' +
+                        '<img src="' + imagePath + '" alt="Marker Image" style="max-width: 100px;">' +
+                        '<button><a href="#" onclick="openGoogleMaps(' + latitude + ', ' + longitude + ')" class="btn btn-primary">View Directions on Google Maps</a></button>' +
+                        '</div>';
         
-                // Add click event listener to close button
-                var closeButton = document.getElementById('close-button');
-                closeButton.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Prevent click event from propagating to popup
-                    popup.classList.remove('show-popup');
+                    // Display the popup with animation
+                    popup.classList.add('show-popup');
+        
+                    // Add click event listener to close button
+                    var closeButton = document.getElementById('close-button');
+                    closeButton.addEventListener('click', function(event) {
+                        event.stopPropagation(); // Prevent click event from propagating to popup
+                        popup.classList.remove('show-popup');
+                    });
+                }, function(error) {
+                    console.error('Error getting the user location:', error);
                 });
             }
+        }
+        
+        // Function to calculate distance between two points using Haversine formula
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2 - lat1);  // deg2rad below
+            var dLon = deg2rad(lon2 - lon1);
+            var a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2)
+                ;
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c; // Distance in km
+            return d;
+        }
+        
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180)
         }
         
         
