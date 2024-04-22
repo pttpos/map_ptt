@@ -19,13 +19,14 @@
             text-align: center;
             margin-top: 10px;
         }
-        #find-location-button {
+        .button {
             padding: 10px 20px;
             background-color: #bebebe;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-right: 10px;
         }
         /* Keep the old style for the footer popup */
         .footer-popup {
@@ -49,7 +50,10 @@
 <body>
     <div id="map"></div>
     <div id="button-container">
-        <button id="find-location-button">Find My Location</button>
+        <button id="find-location-button" class="button">Find My Location</button>
+        <input type="text" id="search-input" placeholder="Search by title..." style="margin-right: 10px;">
+        <button id="filter-button" class="button">Filter</button>
+        <button id="zoom-button" class="button">Zoom</button>
     </div>
     <!-- Popup for marker information -->
     <div id="popup" class="footer-popup">
@@ -68,6 +72,7 @@
     <script>
         var map;
         var popup = document.getElementById('popup');
+        var markers = []; // Array to store all markers
 
         function loadMapScenario() {
             // Initialize Leaflet map
@@ -101,7 +106,8 @@
                         });
 
                         // Create a marker with custom icon
-                        var customMarker = L.marker(loc, { icon: customIcon }).addTo(map);
+                        var customMarker = L.marker(loc, { icon: customIcon, title: marker.title }).addTo(map);
+                        markers.push(customMarker); // Add marker to the markers array
 
                         // Add click event listener to marker for popup
                         customMarker.on('click', function (e) {
@@ -124,6 +130,57 @@
             document.getElementById('close-button').addEventListener('click', function(event) {
                 event.stopPropagation(); // Prevent click event from propagating to popup
                 popup.classList.remove('show-popup');
+            });
+
+            // Add input event listener to search input field
+            document.getElementById('search-input').addEventListener('input', function(event) {
+                var searchTerm = event.target.value.trim().toLowerCase(); // Get search term from input field
+
+                // Filter markers based on search term
+                markers.forEach(marker => {
+                    var markerTitle = marker.options.title.toLowerCase();
+                    if (markerTitle.includes(searchTerm)) {
+                        marker.addTo(map); // Show marker if title includes search term
+                    } else {
+                        map.removeLayer(marker); // Hide marker if title does not include search term
+                    }
+                });
+
+                // Zoom to the filtered markers if any
+                var group = new L.featureGroup(markers);
+                map.fitBounds(group.getBounds());
+            });
+
+            // Add click event listener to filter button
+            document.getElementById('filter-button').addEventListener('click', function() {
+                var searchTerm = document.getElementById('search-input').value.trim().toLowerCase(); // Get search term from input field
+
+                // Filter markers based on search term
+                markers.forEach(marker => {
+                    var markerTitle = marker.options.title.toLowerCase();
+                    if (markerTitle.includes(searchTerm)) {
+                        marker.addTo(map); // Show marker if title includes search term
+                    } else {
+                        map.removeLayer(marker); // Hide marker if title does not include search term
+                    }
+                });
+
+                // Zoom to the filtered markers if any
+                var group = new L.featureGroup(markers);
+                map.fitBounds(group.getBounds());
+            });
+
+            // Add click event listener to zoom button
+            document.getElementById('zoom-button').addEventListener('click', function() {
+                var searchTerm = document.getElementById('search-input').value.trim().toLowerCase(); // Get search term from input field
+
+                // Find the marker matching the search term
+                var targetMarker = markers.find(marker => marker.options.title.toLowerCase() === searchTerm);
+                if (targetMarker) {
+                    map.setView(targetMarker.getLatLng(), 15); // Zoom to the marker if found
+                } else {
+                    alert('Marker not found!');
+                }
             });
 
             // Add click event listener to find location button
