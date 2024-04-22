@@ -50,13 +50,13 @@
     </div>
 
 
-    <!-- Popup for marker information -->
-    <style> 
-        #popup {
+  <!-- Popup for marker information -->
+<style> 
+    #popup {
         position: fixed;
-        top: 50%;
-        left:40%;
-        transform: translate(-50%, -50%);
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
         background-color: white;
         padding: 20px;
         border: 1px solid #ccc;
@@ -64,8 +64,9 @@
         z-index: 1000; /* Ensure it appears above other content */
         display: none; /* Initially hide the popup */
     }
-    </style>
-    <div id="popup" class="popup" ></div>
+</style>
+<div id="popup" class="popup"></div>
+
 
     <script>
         var map;
