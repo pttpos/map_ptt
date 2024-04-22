@@ -55,7 +55,7 @@
         #popup {
         position: fixed;
         top: 50%;
-        left: 50%;
+        left:40%;
         transform: translate(-50%, -50%);
         background-color: white;
         padding: 20px;
@@ -127,8 +127,7 @@
                 // Set popup content
                 var imagePath = 'pictures/' + picture;
                 popup.innerHTML = '<h3>' + title + '</h3><p>' + description + '</p>' +
-                                  '<img src="' + imagePath + '" alt="Marker Image" style="max-width: 100px;">' +
-                                  '<span class="close-button">X</span>' + 
+                                  '<img src="' + imagePath + '" alt="Marker Image" style="max-width: 100px;">' + '</p>'+
                                   '<a href="#" onclick="openGoogleMaps(' + latitude + ', ' + longitude + ')">View Directions on Google Maps</a>';
         
                 // Set popup position
