@@ -69,7 +69,7 @@
             <option value="" selected disabled>Select a title</option>
         </select>
         <button id="find-location-button" class="button mb-2">My Location</button>
-        <button id="filter-button" class="button">Filter</button>
+        <!-- <button id="filter-button" class="button">Filter</button> -->
         <button id="zoom-button" class="button mt-2">Zoom</button>
         <div id="suggestions"></div> <!-- Suggestions container -->
     </div>
@@ -176,9 +176,20 @@
             document.getElementById('find-location-button').addEventListener('click', function() {
                 findMyLocation();
             });
-             // Add zoom control to the bottom right corner
-             L.control.zoom({ position: 'bottomright' }).addTo(map)
+            
+            // Add click event listener to zoom button
+            document.getElementById('zoom-button').addEventListener('click', function() {
+                var selectedTitle = selectInput.value;
+                if (selectedTitle) {
+                    var targetMarker = markers.find(marker => marker.options.title === selectedTitle);
+                    if (targetMarker) {
+                        map.setView(targetMarker.getLatLng(), 15); // Zoom to the marker if found
+                    }
+                }
+            });
 
+            // Add zoom control to the bottom right corner
+            L.control.zoom({ position: 'bottomright' }).addTo(map);
         }
 
         function findMyLocation() {
