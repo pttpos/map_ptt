@@ -65,7 +65,9 @@
 <body>
     <div id="map"></div>
     <div id="button-container" class="d-flex flex-column align-items-center">
-        <input type="text" id="search-input" class="mb-2" placeholder="Search by title...">
+        <select id="search-input" class="form-select mb-2" aria-label="Search by title">
+            <option value="" selected disabled>Select a title</option>
+        </select>
         <button id="find-location-button" class="button mb-2">My Location</button>
         <button id="filter-button" class="button">Filter</button>
         <button id="zoom-button" class="button mt-2">Zoom</button>
@@ -91,6 +93,7 @@
         var popup = document.getElementById('popup');
         var markers = []; // Array to store all markers
         var suggestionsContainer = document.getElementById('suggestions');
+        var selectInput = document.getElementById('search-input');
 
         function loadMapScenario() {
             // Initialize Leaflet map
@@ -129,6 +132,12 @@
                         var customMarker = L.marker(loc, { icon: customIcon, title: marker.title }).addTo(map);
                         markers.push(customMarker); // Add marker to the markers array
 
+                        // Add option to select input
+                        var option = document.createElement('option');
+                        option.textContent = marker.title;
+                        option.value = marker.title;
+                        selectInput.appendChild(option);
+
                         // Add click event listener to marker for popup
                         customMarker.on('click', function (e) {
                             // Set popup content dynamically from marker data
@@ -152,62 +161,14 @@
                 popup.classList.remove('show-popup');
             });
 
-            // Add input event listener to search input field
-            document.getElementById('search-input').addEventListener('input', function(event) {
-                var searchTerm = event.target.value.trim().toLowerCase(); // Get search term from input field
-
-                // Clear previous suggestions
-                suggestionsContainer.innerHTML = '';
-
-                // Filter markers based on search term and show suggestions
-                markers.forEach(marker => {
-                    var markerTitle = marker.options.title.toLowerCase();
-                    if (markerTitle.includes(searchTerm)) {
-                        var suggestion = document.createElement('div');
-                        suggestion.classList.add('suggestion');
-                        suggestion.textContent = marker.options.title;
-                        suggestion.addEventListener('click', function() {
-                            // Set the selected suggestion as the search input value
-                            document.getElementById('search-input').value = marker.options.title;
-                            // Hide suggestions
-                            suggestionsContainer.innerHTML = '';
-                            // Zoom to the selected marker
-                            map.setView(marker.getLatLng(), 15);
-                        });
-                        suggestionsContainer.appendChild(suggestion);
+            // Add change event listener to select input
+            selectInput.addEventListener('change', function(event) {
+                var selectedTitle = event.target.value;
+                if (selectedTitle) {
+                    var targetMarker = markers.find(marker => marker.options.title === selectedTitle);
+                    if (targetMarker) {
+                        map.setView(targetMarker.getLatLng(), 15); // Zoom to the marker if found
                     }
-                });
-            });
-
-            // Add click event listener to filter button
-            document.getElementById('filter-button').addEventListener('click', function() {
-                var searchTerm = document.getElementById('search-input').value.trim().toLowerCase(); // Get search term from input field
-
-                // Filter markers based on search term
-                markers.forEach(marker => {
-                    var markerTitle = marker.options.title.toLowerCase();
-                    if (markerTitle.includes(searchTerm)) {
-                        marker.addTo(map); // Show marker if title includes search term
-                    } else {
-                        map.removeLayer(marker); // Hide marker if title does not include search term
-                    }
-                });
-
-                // Zoom to the filtered markers if any
-                var group = new L.featureGroup(markers);
-                map.fitBounds(group.getBounds());
-            });
-
-            // Add click event listener to zoom button
-            document.getElementById('zoom-button').addEventListener('click', function() {
-                var searchTerm = document.getElementById('search-input').value.trim().toLowerCase(); // Get search term from input field
-
-                // Find the marker matching the search term
-                var targetMarker = markers.find(marker => marker.options.title.toLowerCase() === searchTerm);
-                if (targetMarker) {
-                    map.setView(targetMarker.getLatLng(), 15); // Zoom to the marker if found
-                } else {
-                    alert('Marker not found!');
                 }
             });
 
