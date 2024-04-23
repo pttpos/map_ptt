@@ -49,6 +49,16 @@
         .show-popup {
             bottom: 0;
         }
+        .popup-content {
+            position: relative;
+            padding-bottom: 40px; /* Adjust the padding to make space for the button */
+        }
+        .btn-google-maps {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
         .suggestion {
             cursor: pointer;
             padding: 5px;
@@ -69,7 +79,7 @@
             <option value="" selected disabled>Select a title</option>
         </select>
         <button id="find-location-button" class="button mb-2">My Location</button>
-        <!-- <button id="filter-button" class="button">Filter</button> -->
+        <button id="filter-button" class="button">Filter</button>
         <button id="zoom-button" class="button mt-2">Zoom</button>
         <div id="suggestions"></div> <!-- Suggestions container -->
     </div>
@@ -85,7 +95,7 @@
             <h3>Title</h3>
             <p>Description</p>
             <img src="pictures/default.jpg" alt="Marker Image" style="max-width: 100px;">
-            <a href="#" class="btn btn-primary">View Directions on Google Maps</a>
+            <a href="#" class="btn btn-primary btn-google-maps"><button>View Directions on Google Maps</button></a>
         </div>
     </div>
     <script>
