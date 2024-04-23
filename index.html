@@ -13,13 +13,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-S3h2BUvga4FfFD/8e/1XW1vJFf01wk+2O9qYdhrWh5S" crossorigin="anonymous">
     <style>
         #map {
-            height: 80vh;
+            height:88vh;
             width: 100%;
             z-index: 0;
         }
         #button-container {
-            text-align: center;
-            margin-top: 10px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
         }
         .button {
             padding: 10px 20px;
@@ -28,7 +30,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-right: 10px;
+            margin-bottom: 10px;
         }
         /* Keep the old style for the footer popup */
         .footer-popup {
@@ -50,21 +52,23 @@
         .suggestion {
             cursor: pointer;
             padding: 5px;
+            background-color: #f0f0f0; /* Background color for suggestions */
+            border-radius: 5px; /* Rounded corners for suggestions */
+            margin-bottom: 5px; /* Add margin between suggestions */
         }
         .suggestion:hover {
-            background-color: #f0f0f0;
+            background-color: #e0e0e0; /* Background color for suggestions on hover */
         }
     </style>
 </head>
 <body>
     <div id="map"></div>
-    <div id="button-container" class="d-flex flex-column justify-content-center align-items-center">
+    <div id="button-container" class="d-flex flex-column align-items-center">
         <input type="text" id="search-input" class="mb-2" placeholder="Search by title...">
         <button id="find-location-button" class="button mb-2">My Location</button>
         <button id="filter-button" class="button">Filter</button>
         <button id="zoom-button" class="button mt-2">Zoom</button>
         <div id="suggestions"></div> <!-- Suggestions container -->
-       
     </div>
     
     <!-- Popup for marker information -->
@@ -89,7 +93,9 @@
 
         function loadMapScenario() {
             // Initialize Leaflet map
-            map = L.map('map').setView([12.5657, 104.991], 7);
+            map = L.map('map', {
+                zoomControl: false // Disable default zoom control
+            }).setView([12.5657, 104.991], 7);
 
             // Add OpenStreetMap tile layer to the map
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -208,6 +214,9 @@
             document.getElementById('find-location-button').addEventListener('click', function() {
                 findMyLocation();
             });
+             // Add zoom control to the bottom right corner
+             L.control.zoom({ position: 'bottomright' }).addTo(map)
+
         }
 
         function findMyLocation() {
