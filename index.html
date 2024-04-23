@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>Leaflet Maps with OpenStreetMap</title>
     <!-- Include Leaflet CSS and JavaScript -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -45,16 +47,26 @@
         .show-popup {
             bottom: 0;
         }
+        .suggestion {
+            cursor: pointer;
+            padding: 5px;
+        }
+        .suggestion:hover {
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
-    <div id="button-container">
-        <button id="find-location-button" class="button">Find My Location</button>
-        <input type="text" id="search-input" placeholder="Search by title..." style="margin-right: 10px;">
+    <div id="button-container" class="d-flex flex-column justify-content-center align-items-center">
+        <button id="find-location-button" class="button mb-2">Find My Location</button>
+        <input type="text" id="search-input" class="mb-2" placeholder="Search by title...">
         <button id="filter-button" class="button">Filter</button>
-        <button id="zoom-button" class="button">Zoom</button>
+        <button id="zoom-button" class="button mt-2">Zoom</button>
+        <div id="suggestions"></div> <!-- Suggestions container -->
+       
     </div>
+    
     <!-- Popup for marker information -->
     <div id="popup" class="footer-popup">
         <div class="popup-header">
@@ -73,6 +85,7 @@
         var map;
         var popup = document.getElementById('popup');
         var markers = []; // Array to store all markers
+        var suggestionsContainer = document.getElementById('suggestions');
 
         function loadMapScenario() {
             // Initialize Leaflet map
@@ -136,19 +149,27 @@
             document.getElementById('search-input').addEventListener('input', function(event) {
                 var searchTerm = event.target.value.trim().toLowerCase(); // Get search term from input field
 
-                // Filter markers based on search term
+                // Clear previous suggestions
+                suggestionsContainer.innerHTML = '';
+
+                // Filter markers based on search term and show suggestions
                 markers.forEach(marker => {
                     var markerTitle = marker.options.title.toLowerCase();
                     if (markerTitle.includes(searchTerm)) {
-                        marker.addTo(map); // Show marker if title includes search term
-                    } else {
-                        map.removeLayer(marker); // Hide marker if title does not include search term
+                        var suggestion = document.createElement('div');
+                        suggestion.classList.add('suggestion');
+                        suggestion.textContent = marker.options.title;
+                        suggestion.addEventListener('click', function() {
+                            // Set the selected suggestion as the search input value
+                            document.getElementById('search-input').value = marker.options.title;
+                            // Hide suggestions
+                            suggestionsContainer.innerHTML = '';
+                            // Zoom to the selected marker
+                            map.setView(marker.getLatLng(), 15);
+                        });
+                        suggestionsContainer.appendChild(suggestion);
                     }
                 });
-
-                // Zoom to the filtered markers if any
-                var group = new L.featureGroup(markers);
-                map.fitBounds(group.getBounds());
             });
 
             // Add click event listener to filter button
