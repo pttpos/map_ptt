@@ -40,8 +40,35 @@
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description:</label>
-                            <input type="text" class="form-control" id="description" name="description" required>
+                            <label class="form-label">Service:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="amazon" name="description[]"
+                                    value="Amazon">
+                                <label class="form-check-label" for="amazon">Amazon</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="7eleven" name="description[]"
+                                    value="7-Eleven">
+                                <label class="form-check-label" for="7eleven">7-Eleven</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="fleetcard" name="service[]"
+                                    value="Fleet card">
+                                <label class="form-check-label" for="fleetcard">Fleet Card</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="aba" name="service[]" value="ABA">
+                                <label class="form-check-label" for="aba">ABA QR</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="test" name="service[]" value="Cash">
+                                <label class="form-check-label" for="test">Cash</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
                         </div>
                         <div class="mb-3">
                             <label for="picture" class="form-label">Picture:</label>
@@ -53,57 +80,85 @@
             </div>
         </div>
     </div>
-<!-- Add a new modal form for editing markers -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Marker</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="edit-marker-form" method="POST" action="marker-interface.php" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label for="edit-id" class="form-label">ID:</label>
-                        <input type="text" class="form-control" id="edit-id" name="id" readonly>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-latitude" class="form-label">Latitude:</label>
-                        <input type="text" class="form-control" id="edit-latitude" name="latitude" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-longitude" class="form-label">Longitude:</label>
-                        <input type="text" class="form-control" id="edit-longitude" name="longitude" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-title" class="form-label">Title:</label>
-                        <input type="text" class="form-control" id="edit-title" name="title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-description" class="form-label">Description:</label>
-                        <input type="text" class="form-control" id="edit-description" name="description" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-picture" class="form-label">New Picture:</label>
-                        <input type="file" class="form-control" id="edit-picture" name="picture">
-                    </div>
-                    <input type="hidden" id="old-picture" name="old_picture">
-                    <!-- Display selected file name -->
-                    <div id="file-name"></div>
-                    <button type="submit" class="btn btn-primary">Update Marker</button>
-                </form>
+    <!-- Add a new modal form for editing markers -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit Marker</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-marker-form" method="POST" action="marker-interface.php"
+                        enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="edit-id" class="form-label">ID:</label>
+                            <input type="text" class="form-control" id="edit-id" name="id" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-latitude" class="form-label">Latitude:</label>
+                            <input type="text" class="form-control" id="edit-latitude" name="latitude" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-longitude" class="form-label">Longitude:</label>
+                            <input type="text" class="form-control" id="edit-longitude" name="longitude" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-title" class="form-label">Title:</label>
+                            <input type="text" class="form-control" id="edit-title" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Service:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="amazon" name="description[]"
+                                    value="Amazon">
+                                <label class="form-check-label" for="amazon">Amazon</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="7eleven" name="description[]"
+                                    value="7-Eleven">
+                                <label class="form-check-label" for="7eleven">7-Eleven</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="fleetcard" name="service[]"
+                                    value="Fleet card">
+                                <label class="form-check-label" for="fleetcard">Fleet Card</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="aba" name="service[]" value="ABA">
+                                <label class="form-check-label" for="aba">ABA QR</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="test" name="service[]" value="Cash">
+                                <label class="form-check-label" for="test">Cash</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-picture" class="form-label">New Picture:</label>
+                            <input type="file" class="form-control" id="edit-picture" name="picture">
+                        </div>
+                        <input type="hidden" id="old-picture" name="old_picture">
+                        <!-- Display selected file name -->
+                        <div id="file-name"></div>
+                        <button type="submit" class="btn btn-primary">Update Marker</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    // Function to update the selected file name in the form
-    document.getElementById('edit-picture').addEventListener('change', function() {
-        var fileName = this.value.split('\\').pop(); // Get the file name without path
-        document.getElementById('file-name').textContent = 'Selected File: ' + fileName;
-    });
-</script>
+    <script>
+        // Function to update the selected file name in the form
+        document.getElementById('edit-picture').addEventListener('change', function () {
+            var fileName = this.value.split('\\').pop(); // Get the file name without path
+            document.getElementById('file-name').textContent = 'Selected File: ' + fileName;
+        });
+    </script>
 
 
     <div class="container mt-5">
@@ -121,7 +176,8 @@
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Title</th>
-                            <th>Description</th>
+                            <th>Service</th>
+                            <th>Payment</th>
                             <th>Image</th>
                             <th>Actions</th>
                         </tr>
@@ -172,6 +228,7 @@
                                 <td>${marker.longitude}</td>
                                 <td>${marker.title}</td>
                                 <td>${marker.description}</td>
+                                <td>${marker.service}</td>
                                 <td>${marker.picture ? `<img src="pictures/${marker.picture}" alt="Marker Image" style="max-width: 100px; border-radius: 50%;">` : 'No Image'}</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm" onclick="deleteMarker(${marker.id})">Delete</button>
@@ -186,38 +243,50 @@
             .catch(error => console.error('Error:', error));
 
         // Function to populate edit form and show edit modal
-        function editMarker(id) {
-            // Fetch marker data corresponding to the ID
-            fetch(`marker-interface.php?id=${id}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Check if data is not empty and has the expected structure
-                    if (data && data.STATION.length > 0) {
-                        // Populate the modal form fields with the marker data
-                        const marker = data.STATION[0];
-                        document.getElementById('edit-id').value = marker.id;
-                        document.getElementById('edit-latitude').value = marker.latitude;
-                        document.getElementById('edit-longitude').value = marker.longitude;
-                        document.getElementById('edit-title').value = marker.title;
-                        document.getElementById('edit-description').value = marker.description;
-                        document.getElementById('old-picture').value = marker.picture; // Store old picture filename
-                        // Display the filename of the existing picture, if available
-                        if (marker.picture) {
-                            const fileName = marker.picture.split('/').pop(); // Extract filename from the path
-                            document.getElementById('file-name').textContent = 'Selected File: ' + fileName;
-                        } else {
-                            document.getElementById('file-name').textContent = 'No Picture Selected';
-                        }
-                    } else {
-                        console.error('No data found for the specified ID.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-        
+        // Function to populate edit form and show edit modal
+function editMarker(id) {
+    // Fetch marker data corresponding to the ID
+    fetch(`marker-interface.php?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            // Check if data is not empty and has the expected structure
+            if (data && data.STATION.length > 0) {
+                // Populate the modal form fields with the marker data
+                const marker = data.STATION[0];
+                document.getElementById('edit-id').value = marker.id;
+                document.getElementById('edit-latitude').value = marker.latitude;
+                document.getElementById('edit-longitude').value = marker.longitude;
+                document.getElementById('edit-title').value = marker.title;
+
+                // Populate checkbox groups
+                marker.description.forEach(desc => {
+                    document.querySelector(`input[name="description[]"][value="${desc}"]`).checked = true;
+                });
+
+                marker.service.forEach(serv => {
+                    document.querySelector(`input[name="service[]"][value="${serv}"]`).checked = true;
+                });
+
+                document.getElementById('old-picture').value = marker.picture; // Store old picture filename
+
+                // Display the filename of the existing picture, if available
+                if (marker.picture) {
+                    const fileName = marker.picture.split('/').pop(); // Extract filename from the path
+                    document.getElementById('file-name').textContent = 'Selected File: ' + fileName;
+                } else {
+                    document.getElementById('file-name').textContent = 'No Picture Selected';
+                }
+            } else {
+                console.error('No data found for the specified ID.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
 
     </script>
 
 </body>
 
-</html> 
+</html>

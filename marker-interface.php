@@ -14,24 +14,21 @@ function saveMarkerData($markers) {
 function addOrUpdateMarker($markerData) {
     // Check if a new file was uploaded
     if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = 'pictures/'; // Directory to upload pictures
-        $uploadFileName = uniqid() . '_' . basename($_FILES['picture']['name']);
-        $uploadFile = $uploadDir . $uploadFileName;
-        // Move the uploaded file to the specified directory
-        if (move_uploaded_file($_FILES['picture']['tmp_name'], $uploadFile)) {
-            // Delete the old picture if it exists
-            if (!empty($markerData['old_picture'])) {
-                unlink('pictures/' . $markerData['old_picture']);
+        // Code to handle uploading and updating picture
+
+        // Delete old picture if it exists
+        if (!empty($markerData['old_picture'])) {
+            $oldPicturePath = 'pictures/' . $markerData['old_picture'];
+            if (file_exists($oldPicturePath)) {
+                unlink($oldPicturePath);
             }
-            // Add the new picture path to the marker data
-            $markerData['picture'] = $uploadFileName;
-        } else {
-            echo "Failed to upload picture.";
-            return;
         }
     } elseif (isset($markerData['old_picture'])) {
         // Keep the old picture if no new picture is selected
         $markerData['picture'] = $markerData['old_picture'];
+    } else {
+        // Set picture to an empty string if no new picture is uploaded and no old picture exists
+        $markerData['picture'] = '';
     }
 
     $markers = loadMarkerData();
@@ -50,6 +47,9 @@ function addOrUpdateMarker($markerData) {
     }
     saveMarkerData($markers['STATION']);
 }
+
+
+
 
 
 // Function to delete a marker
@@ -88,16 +88,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'longitude' => $_POST['longitude'],
         'title' => $_POST['title'],
         'description' => $_POST['description'],
+        'service' => $_POST['service'],
+        'picture' => $_FILES['picture']['name'], // Capture the file name
         'old_picture' => $_POST['old_picture'] ?? '' // Store old picture filename if exists
     ];
-    
+
     // Add or update the marker
     addOrUpdateMarker($formData);
-    
+
+    // Handle file upload
+    $uploadDir = 'pictures/'; // Directory where uploaded files will be stored
+    $uploadedFile = $uploadDir . basename($_FILES['picture']['name']);
+    move_uploaded_file($_FILES['picture']['tmp_name'], $uploadedFile);
+
     // Redirect back to the HTML page
     header('Location: index.html'); // Change index.html to the name of your HTML file
     exit();
 }
+
 
 // Check if request is for deleting a marker
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
