@@ -11,10 +11,11 @@ function saveMarkerData($markers) {
     file_put_contents('data/markers.json', $markersJson); // Corrected path
 }
 // Function to add or update a marker
+// Function to add or update a marker
 function addOrUpdateMarker($markerData) {
     // Check if a new file was uploaded
     if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
-        // Code to handle uploading and updating picture
+        // Handle uploading and updating picture
 
         // Delete old picture if it exists
         if (!empty($markerData['old_picture'])) {
@@ -23,6 +24,7 @@ function addOrUpdateMarker($markerData) {
                 unlink($oldPicturePath);
             }
         }
+        $markerData['picture'] = $_FILES['picture']['name']; // Update picture filename
     } elseif (isset($markerData['old_picture'])) {
         // Keep the old picture if no new picture is selected
         $markerData['picture'] = $markerData['old_picture'];
@@ -78,7 +80,6 @@ function getMarkerById($id) {
     }
     return null;
 }
-
 // Check if form is submitted for adding, updating, or deleting marker
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
@@ -88,10 +89,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'longitude' => $_POST['longitude'],
         'title' => $_POST['title'],
         'description' => $_POST['description'],
+        'product' => $_POST['product'],
+        'other_product' => $_POST['other_product'],
         'service' => $_POST['service'],
-        'picture' => $_FILES['picture']['name'], // Capture the file name
-        'old_picture' => $_POST['old_picture'] ?? '' // Store old picture filename if exists
+        'old_picture' => $_POST['old_picture'] ?? '' // Set old_picture to existing picture filename or empty string
     ];
+
+    // Check if a new file was uploaded
+    if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
+        // Code to handle uploading and updating picture
+        $formData['picture'] = $_FILES['picture']['name']; // Capture the file name
+
+        // Delete old picture if it exists
+        if (!empty($formData['old_picture'])) {
+            $oldPicturePath = 'pictures/' . $formData['old_picture'];
+            if (file_exists($oldPicturePath)) {
+                unlink($oldPicturePath);
+            }
+        }
+    } else {
+        // Keep the old picture if no new picture is selected
+        $formData['picture'] = $formData['old_picture'];
+    }
 
     // Add or update the marker
     addOrUpdateMarker($formData);
@@ -105,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: index.html'); // Change index.html to the name of your HTML file
     exit();
 }
+
 
 
 // Check if request is for deleting a marker

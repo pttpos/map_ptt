@@ -39,6 +39,40 @@
                             <label for="title" class="form-label">Title:</label>
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
+                        <!-- product -->
+                        <div class="mb-3">
+                            <label class="form-label">Product:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ulg95" name="product[]"
+                                    value="ULG 95">
+                                <label class="form-check-label" for="ulg95">ULG 95</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ulr91" name="product[]"
+                                    value="ULR 91">
+                                <label class="form-check-label" for="7eleven">ULR 91</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hsd" name="product[]" value="HSD">
+                                <label class="form-check-label" for="ev">HSD</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
+                        <!-- other_product -->
+                        <div class="mb-3">
+                            <label class="form-label">Other Product:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ev" name="other_product[]"
+                                    value="EV">
+                                <label class="form-check-label" for="ev">EV</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="onion" name="other_product[]"
+                                    value="Onion">
+                                <label class="form-check-label" for="onion">Onion</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Service:</label><br>
                             <div class="form-check">
@@ -51,6 +85,7 @@
                                     value="7-Eleven">
                                 <label class="form-check-label" for="7eleven">7-Eleven</label>
                             </div>
+
                             <!-- Add more checkboxes as needed -->
                         </div>
                         <div class="mb-3">
@@ -107,6 +142,42 @@
                             <label for="edit-title" class="form-label">Title:</label>
                             <input type="text" class="form-control" id="edit-title" name="title" required>
                         </div>
+                        <!-- product  -->
+                        <div class="mb-3">
+                            <label class="form-label">Product:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ulg95" name="product[]"
+                                    value="ULG 95">
+                                <label class="form-check-label" for="ulg95">ULG 95</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ulr91" name="product[]"
+                                    value="ULR 91">
+                                <label class="form-check-label" for="ulr91">ULR 91</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hsd" name="product[]" value="HSD">
+                                <label class="form-check-label" for="hsd">HSD</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
+
+                        <!-- other product  -->
+                        <div class="mb-3">
+                            <label class="form-label">Other Product:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ev" name="other_product[]"
+                                    value="EV">
+                                <label class="form-check-label" for="ev">EV</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="onion" name="other_product[]"
+                                    value="Onion">
+                                <label class="form-check-label" for="onion">Onion</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
+                        <!-- service  -->
                         <div class="mb-3">
                             <label class="form-label">Service:</label><br>
                             <div class="form-check">
@@ -136,6 +207,7 @@
                                 <input class="form-check-input" type="checkbox" id="test" name="service[]" value="Cash">
                                 <label class="form-check-label" for="test">Cash</label>
                             </div>
+
                             <!-- Add more checkboxes as needed -->
                         </div>
                         <div class="mb-3">
@@ -176,6 +248,8 @@
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Title</th>
+                            <th>Product</th>
+                            <th>Other product</th>
                             <th>Service</th>
                             <th>Payment</th>
                             <th>Image</th>
@@ -227,9 +301,11 @@
                                 <td>${marker.latitude}</td>
                                 <td>${marker.longitude}</td>
                                 <td>${marker.title}</td>
+                                <td>${marker.product}</td>
+                                <td>${marker.other_product}</td>
                                 <td>${marker.description}</td>
                                 <td>${marker.service}</td>
-                                <td>${marker.picture ? `<img src="pictures/${marker.picture}" alt="Marker Image" style="max-width: 100px; border-radius: 50%;">` : 'No Image'}</td>
+                                <td>${marker.picture ? `<img src="pictures/${marker.picture}" alt="Marker Image" style="max-width:40px; border-radius: 50%;">` : 'No Image'}</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm" onclick="deleteMarker(${marker.id})">Delete</button>
                                     <button class="btn btn-primary btn-sm" onclick="editMarker(${marker.id})" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
@@ -244,46 +320,53 @@
 
         // Function to populate edit form and show edit modal
         // Function to populate edit form and show edit modal
-function editMarker(id) {
-    // Fetch marker data corresponding to the ID
-    fetch(`marker-interface.php?id=${id}`)
-        .then(response => response.json())
-        .then(data => {
-            // Check if data is not empty and has the expected structure
-            if (data && data.STATION.length > 0) {
-                // Populate the modal form fields with the marker data
-                const marker = data.STATION[0];
-                document.getElementById('edit-id').value = marker.id;
-                document.getElementById('edit-latitude').value = marker.latitude;
-                document.getElementById('edit-longitude').value = marker.longitude;
-                document.getElementById('edit-title').value = marker.title;
+        // Function to populate edit form and show edit modal
+        // Function to populate edit form and show edit modal
+        function editMarker(id) {
+            // Fetch marker data corresponding to the ID
+            fetch(`marker-interface.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if data is not empty and has the expected structure
+                    if (data && data.STATION.length > 0) {
+                        // Populate the modal form fields with the marker data
+                        const marker = data.STATION[0];
+                        document.getElementById('edit-id').value = marker.id;
+                        document.getElementById('edit-latitude').value = marker.latitude;
+                        document.getElementById('edit-longitude').value = marker.longitude;
+                        document.getElementById('edit-title').value = marker.title;
 
-                // Populate checkbox groups
-                marker.description.forEach(desc => {
-                    document.querySelector(`input[name="description[]"][value="${desc}"]`).checked = true;
-                });
+                        // Populate checkbox groups
+                        marker.product.forEach(prod => {
+                            document.querySelector(`input[name="product[]"][value="${prod}"]`).checked = true;
+                        });
+                        marker.other_product.forEach(oprod => {
+                            document.querySelector(`input[name="other_product[]"][value="${oprod}"]`).checked = true;
+                        });
+                        marker.description.forEach(desc => {
+                            document.querySelector(`input[name="description[]"][value="${desc}"]`).checked = true;
+                        });
 
-                marker.service.forEach(serv => {
-                    document.querySelector(`input[name="service[]"][value="${serv}"]`).checked = true;
-                });
+                        marker.service.forEach(serv => {
+                            document.querySelector(`input[name="service[]"][value="${serv}"]`).checked = true;
+                        });
 
-                document.getElementById('old-picture').value = marker.picture; // Store old picture filename
+                        // Set the old picture filename or an empty string if no picture exists
+                        document.getElementById('old-picture').value = marker.picture || '';
 
-                // Display the filename of the existing picture, if available
-                if (marker.picture) {
-                    const fileName = marker.picture.split('/').pop(); // Extract filename from the path
-                    document.getElementById('file-name').textContent = 'Selected File: ' + fileName;
-                } else {
-                    document.getElementById('file-name').textContent = 'No Picture Selected';
-                }
-            } else {
-                console.error('No data found for the specified ID.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
-
-
+                        // Display the filename of the existing picture, if available
+                        if (marker.picture) {
+                            const fileName = marker.picture.split('/').pop(); // Extract filename from the path
+                            document.getElementById('file-name').textContent = 'Selected File: ' + fileName;
+                        } else {
+                            document.getElementById('file-name').textContent = 'No Picture Selected';
+                        }
+                    } else {
+                        console.error('No data found for the specified ID.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
     </script>
 

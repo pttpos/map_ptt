@@ -1,19 +1,50 @@
 {
     "STATION": [
         {
-            "id": "1",
-            "latitude": "11.532510070248858",
-            "longitude": "104.95401723105172",
+            "id": "6",
+            "latitude": "11.585459292678992",
+            "longitude": "106.86114249416275",
             "title": "test",
             "description": [
-                "Amazon"
+                "Amazon",
+                "7-Eleven"
+            ],
+            "product": [
+                "ULR 91"
+            ],
+            "other_product": [
+                "EV",
+                "Onion"
             ],
             "service": [
                 "Fleet card",
+                "ABA",
                 "Cash"
             ],
-            "picture": "pngwing.com(1).png",
-            "old_picture": "pngwing.com(1).png"
+            "old_picture": "riY59TkM-1.png",
+            "picture": "riY59TkM-1.png"
+        },
+        {
+            "id": "3",
+            "latitude": "11.532341878512193",
+            "longitude": "104.95404679375464",
+            "title": "test",
+            "description": [
+                "7-Eleven"
+            ],
+            "product": [
+                "ULG 95",
+                "ULR 91",
+                "HSD"
+            ],
+            "other_product": [
+                "Onion"
+            ],
+            "service": [
+                "ABA"
+            ],
+            "picture": "transparent-technical-support-icon-help-support-icon-support-5fce5531842a90.5513994516073577455414.png",
+            "old_picture": ""
         }
     ]
 }

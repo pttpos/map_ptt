@@ -16,8 +16,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
+        body {
+            overflow: hidden; /* Locks the entire screen from scrolling */
+        }
         #map {
-            height: 88vh;
+            height: 98vh;
             width: 100%;
             z-index: 0;
         }
@@ -51,7 +54,8 @@
             padding: 20px;
             border-top: 1px solid #ccc;
             transition: bottom 0.5s ease;
-            z-index: 1000;
+            z-index: 1000px;
+            height:300px;
         }
 
         .show-popup {
@@ -61,7 +65,7 @@
         .popup-content {
             position: relative;
             padding-bottom: 40px;
-            /* Adjust the padding to make space for the button */
+    
         }
 
         .btn-google-maps {
@@ -102,11 +106,65 @@
             cursor: pointer;
             margin-right: 10px;
             /* Add margin between buttons */
-            font-size: 18px;
+            font-size: 14px;
             /* Adjust font size for better readability */
         }
     </style>
+    <style>
+        #description-content {
+            display: flex;
+            align-items: center;
+        }
 
+        #description-content .popup-image-title {
+            display: flex;
+            align-items: center;
+        }
+
+        #description-content .popup-image-title img {
+            max-width: 60px;
+            vertical-align: middle;
+            margin-right: 5px;
+            /* Add margin to separate the image and buttons */
+        }
+    </style>
+        <style>
+        .btn-google-maps {
+            display: inline-block;
+            padding: 0;
+            width: 60px;
+            /* Adjust the width and height to your desired button size */
+            height: 60px;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-google-maps img {
+            width: 30px;
+            /* Set the image width to half of the button's width */
+            height: 45px;
+            /* Set the image height accordingly */
+            /* Ensure the image retains a circular shape */
+            margin: 15px;
+            /* Center the image within the button */
+        }
+
+
+        .btn-google-maps:hover {
+            background-color: #3b79db;
+            /* Darker shade of Google blue on hover */
+        }
+
+        .btn-google-maps:focus {
+            outline: none;
+            /* Remove outline on focus */
+        }
+    </style>
 </head>
 
 <body>
@@ -122,16 +180,24 @@
         <!-- Suggestions container -->
     </div>
     <!-- Popup for marker information -->
+
     <div id="popup" class="footer-popup">
         <div class="popup-header">
+            <div class="popup-content">
+                <a href="#" class="btn btn-primary btn-google-maps">
+                    <img src="#" alt="Image Alt Text">
+                </a>
+            </div>
+
             <img src="./pictures/logo_Station.png" style="max-width: 100px" />
             <i id="close-button" class="fa fa-times-circle"
-                style="margin-left:65%; color: red; font-size: 24px; cursor: pointer;"></i>
+                style="margin-left:60%; color: red; font-size: 24px; cursor: pointer;"></i>
         </div>
         <hr />
-        <div class="popup-content">
+        <div class="popup-content" style="overflow-y: auto; height:200px;">
             <div class="popup-image-title">
-                <img id="marker-image" src="" alt="Marker Image" style="max-width: 60px; vertical-align: middle;" />
+                <img id="marker-image" src="" alt="Marker Image" style="max-width: 100px; vertical-align: middle; border-radius: 20px;" />
+
                 <button id="title-tab" class="popup-tab">Station</button>
                 <button id="description-tab" class="popup-tab">Service</button>
                 <button id="service-tab" class="popup-tab">Payment</button>
@@ -139,9 +205,30 @@
             <hr />
             <div id="title-content">
                 <h3>Title:</h3>
+                <div id="product-content" style="display: flex; align-items: center;">
+                    <div class="popup-image-title">
+                        <!-- Display the first product image -->
+                        <img id="product-image-1" src="" alt="Marker Image"
+                            style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                        <!-- Display the second product image -->
+                        <img id="product-image-2" src="" alt="Marker Image"
+                            style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                    </div>
+                </div>
+                <div id="other-product-content" style="display: flex; align-items: center;">
+                    <div class="popup-image-title">
+                        <!-- Display the first other product image -->
+                        <img id="other-product-image-1" src="" alt="Marker Image"
+                            style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                        <!-- Display the second other product image -->
+                        <img id="other-product-image-2" src="" alt="Marker Image"
+                            style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                    </div>
+                </div>
             </div>
-            <br>
-            <br>
+            
+         
+
             <div id="description-content" style="display: flex; align-items: center;">
                 <div class="popup-image-title">
                     <!-- Display the first image -->
@@ -152,25 +239,8 @@
                         style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
                 </div>
             </div>
-            <style>
-                #description-content {
-                    display: flex;
-                    align-items: center;
-                }
 
-                #description-content .popup-image-title {
-                    display: flex;
-                    align-items: center;
-                }
-
-                #description-content .popup-image-title img {
-                    max-width: 60px;
-                    vertical-align: middle;
-                    margin-right: 5px;
-                    /* Add margin to separate the image and buttons */
-                }
-            </style>
-            <br>
+   
 
             <div id="service-content" style="display: flex; align-items: center;">
                 <div class="popup-image-title">
@@ -183,14 +253,10 @@
                 </div>
             </div>
 
-            <a href="#" class="btn btn-primary btn-google-maps">
-                <i class="fab fa-google"></i> View Directions on Google Maps
-            </a>
             
+
         </div>
     </div>
-
-
 
     <script>
         var map;
@@ -247,58 +313,110 @@
                         selectInput.appendChild(option);
 
                         // Inside the click event listener for the marker
-                        customMarker.on("click", function (e) {
-                            // Set popup content dynamically from marker data
-                            popup.querySelector(".popup-header img").src = "./pictures/logo_Station.png";
-                            document.getElementById("marker-image").src = "pictures/" + marker.picture;
+                        // Inside the click event listener for the marker
+                        // Inside the click event listener for the marker
+customMarker.on("click", function (e) {
+    // Set popup content dynamically from marker data
+    popup.querySelector(".popup-header img").src = "./pictures/Google_Maps_icon.png";
+    document.getElementById("marker-image").src = "pictures/" + marker.picture;
 
-                            // Set default tab to "Title" when marker is clicked
-                            document.getElementById("title-tab").click();
+    // Set default tab to "Title" when marker is clicked
+    document.getElementById("title-tab").click();
 
-                            // Set content for each tab
-                            document.getElementById("title-content").innerHTML = "<h3>Title: " + marker.title + "</h3>";
-                            document.getElementById("description-content").innerHTML = "<p>Description: " + marker.description.join(", ") + "</p>";
-                            var directionsButton = popup.querySelector('.popup-content a');
-                            directionsButton.setAttribute('onclick', `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
+    // Set content for the title and product
+    document.getElementById("title-content").innerHTML = "<div id='title-and-product' style='display: flex; align-items: center;'><h3>Station: " + marker.title + "</h3>";
 
-                            // Display service buttons dynamically
-                            var serviceButtons = document.getElementById("service-buttons");
-                            serviceButtons.innerHTML = ""; // Clear previous buttons
-                            marker.service.forEach(function (service) {
-                                var button = document.createElement("button");
-                                button.textContent = service;
-                                // Set different colors based on the service
-                                if (service === "fleetcard") {
-                                    button.classList.add("btn-fleetcard");
-                                } else if (service === "ABA") {
-                                    button.classList.add("btn-aba");
-                                } else {
-                                    button.classList.add("btn-default");
-                                }
-                                serviceButtons.appendChild(button);
-                            });
+    var titleContent = document.createElement("div");
+    titleContent.innerHTML = "<h3>Product</h3>";
+    document.getElementById("title-content").appendChild(titleContent);
+    var productContent = document.createElement("div");
+    productContent.style.display = "flex";
+    productContent.style.alignItems = "center";
+    marker.product.forEach(function (product) {
+        var imgSrc = ''; // Default empty image source
+        if (product === "HSD") {
+            imgSrc = "pictures/HSD.png"; // Set image source for HSD
+        } else if (product === "ULG 95") {
+            imgSrc = "pictures/ULG95.png"; // Set image source for ULG 95
+        } else if (product === "ULR 91") {
+            imgSrc = "pictures/ULR91.png"; // Set image source for ULR 91
+        }
+        // Append image tag with the corresponding source
+        productContent.innerHTML += '<img src="' + imgSrc + '" alt="' + product + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;border-radius: 50%;" />';
+    });
+    document.getElementById("title-content").appendChild(productContent);
+    document.getElementById("title-content").innerHTML += "</div>";
 
-                            // Display description images dynamically
-                            var descriptionContent = document.getElementById("description-content");
-                            var descriptionImages = '';
-                            marker.description.forEach(function (description) {
-                                var imgSrc = ''; // Default empty image source
-                                if (description === "7-Eleven") {
-                                    imgSrc = "pictures/7eleven.png"; // Set image source for 7-Eleven
-                                    // Append image tag with the corresponding source
-                                    descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />';
-                                } else if (description === "Amazon") {
-                                    imgSrc = "pictures/amazon.png"; // Set image source for Amazon
-                                    // Append image tag with the corresponding source
-                                    descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />';
-                                }
-                            });
-                            // Set the HTML content of the description content div
-                            descriptionContent.innerHTML = descriptionImages;
+    // Add other product content
+    var otherProductContent = document.createElement("div");
+    otherProductContent.innerHTML = "<h3>Other Product</h3>";
+    document.getElementById("title-content").appendChild(otherProductContent);
+    var otherProductImages = document.createElement("div");
+    otherProductImages.style.display = "flex";
+    otherProductImages.style.alignItems = "center";
+    marker.other_product.forEach(function (otherProduct) {
+        var imgSrc = ''; // Default empty image source
+        if (otherProduct === "EV") {
+            imgSrc = "pictures/EV.png"; // Set image source for EV
+        } else if (otherProduct === "Onion") {
+            imgSrc = "pictures/onion.png"; // Set image source for ULG 98
+        } 
+        // Append image tag with the corresponding source
+        otherProductImages.innerHTML += '<img src="' + imgSrc + '" alt="' + otherProduct + '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;"  />';
+    });
+    document.getElementById("title-content").appendChild(otherProductImages);
+    document.getElementById("title-content").innerHTML += "</div>";
 
-                            // Display the popup with animation
-                            popup.classList.add("show-popup");
-                        });
+    document.getElementById("description-content").innerHTML = "<p>Description: " + marker.description.join(", ") + "</p>";
+    var directionsButton = popup.querySelector('.popup-content a');
+    directionsButton.setAttribute('onclick', `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
+
+    // Display service buttons dynamically
+    var serviceButtons = document.getElementById("service-buttons");
+    serviceButtons.innerHTML = ""; // Clear previous buttons
+    marker.service.forEach(function (service) {
+        var button = document.createElement("button");
+        button.textContent = service;
+        // Set different colors based on the service
+        if (service === "Fleet card") {
+            button.classList.add("btn-fleetcard");
+        } else if (service === "ABA") {
+            button.classList.add("btn-aba");
+        } else if (service === "Cash") { // Add condition for "cash"
+            button.classList.add("btn-cash"); // Add class "btn-cash" for "cash" service
+        } else {
+            button.classList.add("btn-default");
+        }
+        
+        serviceButtons.appendChild(button);
+    });
+
+    // Display description images dynamically
+    var descriptionContent = document.getElementById("description-content");
+    var descriptionImages = '';
+    marker.description.forEach(function (description) {
+        var imgSrc = ''; // Default empty image source
+        if (description === "7-Eleven") {
+            imgSrc = "pictures/7eleven.png"; // Set image source for 7-Eleven
+            // Append image tag with the corresponding source
+            descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;" />';
+        } else if (description === "Amazon") {
+            imgSrc = "pictures/amazon.png"; // Set image source for Amazon
+            // Append image tag with the corresponding source
+            descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
+        } else if (description === "EV") {
+            imgSrc = "pictures/ev.png"; // Set image source for EV
+            // Append image tag with the corresponding source
+            descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
+        }
+    });
+    // Set the HTML content of the description content div
+    descriptionContent.innerHTML = descriptionImages;
+
+    // Display the popup with animation
+    popup.classList.add("show-popup");
+});
+
 
 
                         // Add click event listeners for each tab
@@ -410,9 +528,10 @@
     </script>
     <style>
         .btn-fleetcard,
+        .btn-cash,
         .btn-aba,
         .btn-default {
-            background-color: #007bff;
+            background-color: #444744;
             /* Blue color for fleetcard */
             color: white;
             border-radius: 20px;
@@ -431,47 +550,16 @@
         }
 
         .btn-aba {
-            background-color: #28a745;
+            background-color: #1d3a8a;
             /* Green color for ABA */
         }
 
-        .btn-default {
-            background-color: #6c757d;
+        .btn-fleetcard {
+            background-color: #62db11;
             /* Grey color for other services */
         }
     </style>
-    <style>
-        .btn-7eleven,
-        .btn-amazon,
-        .btn-default {
-            background-color: #007bff;
-            /* Blue color for fleetcard */
-            color: white;
-            border-radius: 20px;
-            /* Increased border-radius for rounder buttons */
-            padding: 12px 24px;
-            /* Increased padding for larger buttons */
-            font-size: 16px;
-            /* Adjust font size for better readability */
-            border: none;
-            /* Remove border for cleaner appearance */
-            cursor: pointer;
-            margin-right: 10px;
-            /* Add margin between buttons */
-            margin-bottom: 10px;
-            /* Add margin between buttons and other elements */
-        }
 
-        .btn-7eleven {
-            background-color: #28a745;
-            /* Green color for ABA */
-        }
-
-        .btn-default {
-            background-color: #6c757d;
-            /* Grey color for other services */
-        }
-    </style>
 
 
 </body>
