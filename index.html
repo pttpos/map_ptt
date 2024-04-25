@@ -404,11 +404,7 @@ customMarker.on("click", function (e) {
             imgSrc = "pictures/amazon.png"; // Set image source for Amazon
             // Append image tag with the corresponding source
             descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
-        } else if (description === "EV") {
-            imgSrc = "pictures/ev.png"; // Set image source for EV
-            // Append image tag with the corresponding source
-            descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
-        }
+        } 
     });
     // Set the HTML content of the description content div
     descriptionContent.innerHTML = descriptionImages;
