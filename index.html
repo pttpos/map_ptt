@@ -17,8 +17,10 @@
 
     <style>
         body {
-            overflow: hidden; /* Locks the entire screen from scrolling */
+            overflow: hidden;
+            /* Locks the entire screen from scrolling */
         }
+
         #map {
             height: 98vh;
             width: 100%;
@@ -55,7 +57,7 @@
             border-top: 1px solid #ccc;
             transition: bottom 0.5s ease;
             z-index: 1000px;
-            height:300px;
+            height: 300px;
         }
 
         .show-popup {
@@ -65,7 +67,7 @@
         .popup-content {
             position: relative;
             padding-bottom: 40px;
-    
+
         }
 
         .btn-google-maps {
@@ -128,7 +130,7 @@
             /* Add margin to separate the image and buttons */
         }
     </style>
-        <style>
+    <style>
         .btn-google-maps {
             display: inline-block;
             padding: 0;
@@ -196,7 +198,8 @@
         <hr />
         <div class="popup-content" style="overflow-y: auto; height:200px;">
             <div class="popup-image-title">
-                <img id="marker-image" src="" alt="Marker Image" style="max-width: 100px; vertical-align: middle; border-radius: 20px;" />
+                <img id="marker-image" src="" alt="Marker Image"
+                    style="max-width: 100px; vertical-align: middle; border-radius: 20px;" />
 
                 <button id="title-tab" class="popup-tab">Station</button>
                 <button id="description-tab" class="popup-tab">Service</button>
@@ -226,8 +229,8 @@
                     </div>
                 </div>
             </div>
-            
-         
+
+
 
             <div id="description-content" style="display: flex; align-items: center;">
                 <div class="popup-image-title">
@@ -240,7 +243,7 @@
                 </div>
             </div>
 
-   
+
 
             <div id="service-content" style="display: flex; align-items: center;">
                 <div class="popup-image-title">
@@ -253,7 +256,7 @@
                 </div>
             </div>
 
-            
+
 
         </div>
     </div>
@@ -315,103 +318,103 @@
                         // Inside the click event listener for the marker
                         // Inside the click event listener for the marker
                         // Inside the click event listener for the marker
-customMarker.on("click", function (e) {
-    // Set popup content dynamically from marker data
-    popup.querySelector(".popup-header img").src = "./pictures/Google_Maps_icon.png";
-    document.getElementById("marker-image").src = "pictures/" + marker.picture;
+                        customMarker.on("click", function (e) {
+                            // Set popup content dynamically from marker data
+                            popup.querySelector(".popup-header img").src = "./pictures/Google_Maps_icon.png";
+                            document.getElementById("marker-image").src = "pictures/" + marker.picture;
 
-    // Set default tab to "Title" when marker is clicked
-    document.getElementById("title-tab").click();
+                            // Set default tab to "Title" when marker is clicked
+                            document.getElementById("title-tab").click();
 
-    // Set content for the title and product
-    document.getElementById("title-content").innerHTML = "<div id='title-and-product' style='display: flex; align-items: center;'><h3>Station: " + marker.title + "</h3>";
+                            // Set content for the title and product
+                            document.getElementById("title-content").innerHTML = "<div id='title-and-product' style='display: flex; align-items: center;'><h3>Station: " + marker.title + "</h3>";
 
-    var titleContent = document.createElement("div");
-    titleContent.innerHTML = "<h3>Product</h3>";
-    document.getElementById("title-content").appendChild(titleContent);
-    var productContent = document.createElement("div");
-    productContent.style.display = "flex";
-    productContent.style.alignItems = "center";
-    marker.product.forEach(function (product) {
-        var imgSrc = ''; // Default empty image source
-        if (product === "HSD") {
-            imgSrc = "pictures/HSD.png"; // Set image source for HSD
-        } else if (product === "ULG 95") {
-            imgSrc = "pictures/ULG95.png"; // Set image source for ULG 95
-        } else if (product === "ULR 91") {
-            imgSrc = "pictures/ULR91.png"; // Set image source for ULR 91
-        }
-        // Append image tag with the corresponding source
-        productContent.innerHTML += '<img src="' + imgSrc + '" alt="' + product + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;border-radius: 50%;" />';
-    });
-    document.getElementById("title-content").appendChild(productContent);
-    document.getElementById("title-content").innerHTML += "</div>";
+                            var titleContent = document.createElement("div");
+                            titleContent.innerHTML = "<h3>Product</h3>";
+                            document.getElementById("title-content").appendChild(titleContent);
+                            var productContent = document.createElement("div");
+                            productContent.style.display = "flex";
+                            productContent.style.alignItems = "center";
+                            marker.product.forEach(function (product) {
+                                var imgSrc = ''; // Default empty image source
+                                if (product === "HSD") {
+                                    imgSrc = "pictures/HSD.png"; // Set image source for HSD
+                                } else if (product === "ULG 95") {
+                                    imgSrc = "pictures/ULG95.png"; // Set image source for ULG 95
+                                } else if (product === "ULR 91") {
+                                    imgSrc = "pictures/ULR91.png"; // Set image source for ULR 91
+                                }
+                                // Append image tag with the corresponding source
+                                productContent.innerHTML += '<img src="' + imgSrc + '" alt="' + product + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;border-radius: 50%;" />';
+                            });
+                            document.getElementById("title-content").appendChild(productContent);
+                            document.getElementById("title-content").innerHTML += "</div>";
 
-    // Add other product content
-    var otherProductContent = document.createElement("div");
-    otherProductContent.innerHTML = "<h3>Other Product</h3>";
-    document.getElementById("title-content").appendChild(otherProductContent);
-    var otherProductImages = document.createElement("div");
-    otherProductImages.style.display = "flex";
-    otherProductImages.style.alignItems = "center";
-    marker.other_product.forEach(function (otherProduct) {
-        var imgSrc = ''; // Default empty image source
-        if (otherProduct === "EV") {
-            imgSrc = "pictures/EV.png"; // Set image source for EV
-        } else if (otherProduct === "Onion") {
-            imgSrc = "pictures/onion.png"; // Set image source for ULG 98
-        } 
-        // Append image tag with the corresponding source
-        otherProductImages.innerHTML += '<img src="' + imgSrc + '" alt="' + otherProduct + '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;"  />';
-    });
-    document.getElementById("title-content").appendChild(otherProductImages);
-    document.getElementById("title-content").innerHTML += "</div>";
+                            // Add other product content
+                            var otherProductContent = document.createElement("div");
+                            otherProductContent.innerHTML = "<h3>Other Product</h3>";
+                            document.getElementById("title-content").appendChild(otherProductContent);
+                            var otherProductImages = document.createElement("div");
+                            otherProductImages.style.display = "flex";
+                            otherProductImages.style.alignItems = "center";
+                            marker.other_product.forEach(function (otherProduct) {
+                                var imgSrc = ''; // Default empty image source
+                                if (otherProduct === "EV") {
+                                    imgSrc = "pictures/EV.png"; // Set image source for EV
+                                } else if (otherProduct === "Onion") {
+                                    imgSrc = "pictures/onion.png"; // Set image source for ULG 98
+                                }
+                                // Append image tag with the corresponding source
+                                otherProductImages.innerHTML += '<img src="' + imgSrc + '" alt="' + otherProduct + '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;"  />';
+                            });
+                            document.getElementById("title-content").appendChild(otherProductImages);
+                            document.getElementById("title-content").innerHTML += "</div>";
 
-    document.getElementById("description-content").innerHTML = "<p>Description: " + marker.description.join(", ") + "</p>";
-    var directionsButton = popup.querySelector('.popup-content a');
-    directionsButton.setAttribute('onclick', `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
+                            document.getElementById("description-content").innerHTML = "<p>Description: " + marker.description.join(", ") + "</p>";
+                            var directionsButton = popup.querySelector('.popup-content a');
+                            directionsButton.setAttribute('onclick', `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
 
-    // Display service buttons dynamically
-    var serviceButtons = document.getElementById("service-buttons");
-    serviceButtons.innerHTML = ""; // Clear previous buttons
-    marker.service.forEach(function (service) {
-        var button = document.createElement("button");
-        button.textContent = service;
-        // Set different colors based on the service
-        if (service === "Fleet card") {
-            button.classList.add("btn-fleetcard");
-        } else if (service === "ABA") {
-            button.classList.add("btn-aba");
-        } else if (service === "Cash") { // Add condition for "cash"
-            button.classList.add("btn-cash"); // Add class "btn-cash" for "cash" service
-        } else {
-            button.classList.add("btn-default");
-        }
-        
-        serviceButtons.appendChild(button);
-    });
+                            // Display service buttons dynamically
+                            var serviceButtons = document.getElementById("service-buttons");
+                            serviceButtons.innerHTML = ""; // Clear previous buttons
+                            marker.service.forEach(function (service) {
+                                var button = document.createElement("button");
+                                button.textContent = service;
+                                // Set different colors based on the service
+                                if (service === "Fleet card") {
+                                    button.classList.add("btn-fleetcard");
+                                } else if (service === "ABA") {
+                                    button.classList.add("btn-aba");
+                                } else if (service === "Cash") { // Add condition for "cash"
+                                    button.classList.add("btn-cash"); // Add class "btn-cash" for "cash" service
+                                } else {
+                                    button.classList.add("btn-default");
+                                }
 
-    // Display description images dynamically
-    var descriptionContent = document.getElementById("description-content");
-    var descriptionImages = '';
-    marker.description.forEach(function (description) {
-        var imgSrc = ''; // Default empty image source
-        if (description === "7-Eleven") {
-            imgSrc = "pictures/7eleven.png"; // Set image source for 7-Eleven
-            // Append image tag with the corresponding source
-            descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;" />';
-        } else if (description === "Amazon") {
-            imgSrc = "pictures/amazon.png"; // Set image source for Amazon
-            // Append image tag with the corresponding source
-            descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
-        } 
-    });
-    // Set the HTML content of the description content div
-    descriptionContent.innerHTML = descriptionImages;
+                                serviceButtons.appendChild(button);
+                            });
 
-    // Display the popup with animation
-    popup.classList.add("show-popup");
-});
+                            // Display description images dynamically
+                            var descriptionContent = document.getElementById("description-content");
+                            var descriptionImages = '';
+                            marker.description.forEach(function (description) {
+                                var imgSrc = ''; // Default empty image source
+                                if (description === "7-Eleven") {
+                                    imgSrc = "pictures/7eleven.png"; // Set image source for 7-Eleven
+                                    // Append image tag with the corresponding source
+                                    descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;" />';
+                                } else if (description === "Amazon") {
+                                    imgSrc = "pictures/amazon.png"; // Set image source for Amazon
+                                    // Append image tag with the corresponding source
+                                    descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
+                                }
+                            });
+                            // Set the HTML content of the description content div
+                            descriptionContent.innerHTML = descriptionImages;
+
+                            // Display the popup with animation
+                            popup.classList.add("show-popup");
+                        });
 
 
 
