@@ -172,9 +172,20 @@
 <body>
     <div id="map"></div>
     <div id="button-container" class="d-flex flex-column align-items-center">
-        <select id="search-input" class="form-select mb-2" aria-label="Search by title">
-            <option value="" selected disabled>Select station</option>
-        </select>
+        <form id="search-form"> <!-- Add the search form -->
+            <select id="search-input" class="form-select mb-2" aria-label="Search by title">
+                <option value="" selected disabled>Select station</option>
+            </select>
+            <select id="service-select" class="form-select mb-2" aria-label="Search by service">
+                <option value="" selected disabled>Select service</option>
+                <option value="all">Show all</option>
+                <option value="ABA">ABA</option>
+                <option value="Fleet card">Fleet card</option>
+                <option value="Cash">Cash</option>
+                <!-- Add more options as needed -->
+            </select>
+            <button type="submit" class="button mb-2">Search</button> <!-- Add a search button -->
+        </form>
         <button id="find-location-button" class="button mb-2">My Location</button>
         <!-- <button id="filter-button" class="button">Filter</button> -->
         <button id="zoom-button" class="button mt-2">Zoom</button>
@@ -306,6 +317,7 @@
                         var customMarker = L.marker(loc, {
                             icon: customIcon,
                             title: marker.title,
+                            service: marker.service,
                         }).addTo(map);
                         markers.push(customMarker); // Add marker to the markers array
 
@@ -484,6 +496,40 @@
                         }
                     }
                 });
+
+
+       // Add submit event listener to search form
+       document.getElementById("search-form").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent default form submission behavior
+    
+        var selectedService = document.getElementById("service-select").value.toLowerCase(); // Retrieve selected service
+    
+        markers.forEach(function (marker) {
+            var markerServices = marker.options.service.map(service => service.toLowerCase()); // Retrieve marker services
+    
+            // Check if marker's services include the selected service
+            if (selectedService === "" || markerServices.includes(selectedService)) {
+                marker.addTo(map); // Show marker if service matches selected service or no service is selected
+            } else {
+                map.removeLayer(marker); // Hide marker if service does not match selected service
+            }
+        });
+    });
+    
+document.getElementById("search-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    var selectedService = document.getElementById("service-select").value.toLowerCase(); // Retrieve selected service
+
+    markers.forEach(function (marker) {
+        if (selectedService === "all" || marker.options.service.toLowerCase() === selectedService) {
+            marker.addTo(map); // Show marker if "Show all" is selected or if marker's service matches the selected service
+        } else {
+            map.removeLayer(marker); // Hide marker if service does not match selected service
+        }
+    });
+});
+
 
             // Add zoom control to the bottom right corner
             L.control.zoom({ position: "bottomright" }).addTo(map);
