@@ -28,7 +28,7 @@
 
         #button-container {
             position: absolute;
-            top: 10px;
+            top: 20px;
             left: 10px;
             z-index: 1000;
         }
@@ -165,32 +165,81 @@
             outline: none;
             /* Remove outline on focus */
         }
+        #filter-popup .popup-content {
+            position: relative; /* Ensure relative positioning for absolute positioning */
+        }
+        
+        #close-filter-popup {
+            background-color: red;
+            position: absolute;
+            right: 10px; /* Adjust as needed */
+        }
+         
+        #close-filter-popup12 {
+            background-color: red;
+            position: absolute;
+            top:170px; /* Adjust as needed */
+            left: 0px; /* Adjust as needed */
+        }
+        .custom-select {
+            font-size: 16px; /* Adjust the font size */
+            padding: 20px; /* Adjust the padding */
+            background-color: #f5f5f5; /* Adjust the background color */
+            border: 1px solid #ccc; /* Adjust the border */
+            border-radius: 5px; /* Add border radius for rounded corners */
+            width: 100%; /* Set the width */
+            margin: 5px;
+        }
+        
     </style>
 </head>
 
 <body>
     <div id="map"></div>
     <div id="button-container" class="d-flex flex-column align-items-center">
-        <form id="search-form"> <!-- Add the search form -->
-            <select id="search-input" class="form-select mb-2" aria-label="Search by title">
-                <option value="" selected disabled>Select station</option>
-            </select>
-            <select id="service-select" class="form-select mb-2" aria-label="Search by service">
-                <option value="" selected disabled>Select service</option>
-                <option value="all">Show all</option>
-                <option value="ABA">ABA</option>
-                <option value="Fleet card">Fleet card</option>
-                <option value="Cash">Cash</option>
-                <!-- Add more options as needed -->
-            </select>
-            <button type="submit" class="button mb-2">Search</button> <!-- Add a search button -->
-        </form>
+        <button id="filter-button" class="button">Filter</button>
+        <div id="filter-popup" class="footer-popup">
+            <div class="popup-content">
+                <button id="close-filter-popup" class="button">
+                    <i class="fas fa-times"></i> <!-- Font Awesome icon for "times" -->
+                </button>
+                <h3 class="mb-4">Filter Markers</h3>
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col-md-6">
+                        <form id="filter-form">        
+                            <select id="search-input" class="form-select mb-2 custom-select" aria-label="Search by title">
+                                <option value="" selected disabled>Select station</option>
+                            </select>
+                            <select id="service-filter" class="form-select mb-2 custom-select">
+                                <option value="" selected disabled>Select Payment</option>
+                                <option value="all">Show all</option>
+                                <option value="ABA">ABA</option>
+                                <option value="Fleet card">Fleet card</option>
+                                <option value="Cash">Cash</option>
+                            </select>
+                            
+                            <select id="description-filter" class="form-select mb-2 custom-select" aria-label="Search by service">
+                                <option value="" selected disabled>Select Server</option>
+                                <option value="all">Show all</option>
+                                <option value="Amazon">Amazon</option>
+                                <option value="7-Eleven">7 Eleven</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                            <button type="submit" class="button" id="close-filter-popup12">Apply Filter</button>
+                        </form>
+                    </div>
+                    <!-- Add more columns or content as needed -->
+                </div>
+            </div>
+        </div>
+        
+    
         <button id="find-location-button" class="button mb-2">My Location</button>
-        <!-- <button id="filter-button" class="button">Filter</button> -->
         <button id="zoom-button" class="button mt-2">Zoom</button>
         <div id="suggestions"></div>
         <!-- Suggestions container -->
     </div>
+
     <!-- Popup for marker information -->
 
     <div id="popup" class="footer-popup">
@@ -317,6 +366,7 @@
                             icon: customIcon,
                             title: marker.title,
                             service: marker.service,
+                            description: marker.description,
                         }).addTo(map);
                         markers.push(customMarker); // Add marker to the markers array
 
@@ -497,42 +547,77 @@
                 });
 
 
-            // Add submit event listener to search form
-            document.getElementById("search-form").addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent default form submission behavior
+            //document.getElementById("search-form").addEventListener("submit", function (event) {
+            //  event.preventDefault(); // Prevent default form submission behavior
 
-                var selectedService = document.getElementById("service-select").value.toLowerCase(); // Retrieve selected service
+            // var selectedService = document.getElementById("service-select").value.toLowerCase(); // Retrieve selected service
+            //var selectedDescription = document.getElementById("description-select").value.toLowerCase(); // Retrieve selected description
 
-                markers.forEach(function (marker) {
-                    var markerServices = marker.options.service.map(service => service.toLowerCase()); // Retrieve marker services
+            //markers.forEach(function (marker) {
+            //var markerServices = marker.options.service.map(service => service.toLowerCase()); // Retrieve marker services
+            //var markerDescriptions = marker.options.description.map(description => description.toLowerCase()); // Retrieve marker descriptions
 
-                    // Check if marker's services include the selected service
-                    if (selectedService === "" || markerServices.includes(selectedService)) {
-                        marker.addTo(map); // Show marker if service matches selected service or no service is selected
-                    } else {
-                        map.removeLayer(marker); // Hide marker if service does not match selected service
-                    }
-                });
-            });
+            //var serviceMatch = selectedService === "all" || markerServices.includes(selectedService);
+            //var descriptionMatch = selectedDescription === "all" || markerDescriptions.includes(selectedDescription);
 
-            document.getElementById("search-form").addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent default form submission behavior
+            // Check if either service or description matches the selected criteria, or if no criteria are selected
+            //if ((selectedService === "" || serviceMatch) && (selectedDescription === "" || descriptionMatch)) {
+            //marker.addTo(map);
+            // } else {
+            //map.removeLayer(marker);
+            //  }
+            // });
+            //  });
 
-                var selectedService = document.getElementById("service-select").value.toLowerCase(); // Retrieve selected service
-
-                markers.forEach(function (marker) {
-                    if (selectedService === "all" || marker.options.service.toLowerCase() === selectedService) {
-                        marker.addTo(map); // Show marker if "Show all" is selected or if marker's service matches the selected service
-                    } else {
-                        map.removeLayer(marker); // Hide marker if service does not match selected service
-                    }
-                });
-            });
 
 
             // Add zoom control to the bottom right corner
             L.control.zoom({ position: "bottomright" }).addTo(map);
         }
+        // Get a reference to the filter popup close button
+        var closeFilterPopupButton = document.getElementById("close-filter-popup");
+
+        // When the user clicks on the close button, hide the filter popup
+        closeFilterPopupButton.onclick = function () {
+            filterPopup.classList.remove("show-popup");
+        };
+
+        // Get a reference to the filter popup
+        var filterPopup = document.getElementById("filter-popup");
+
+        // Get a reference to the filter button
+        var filterButton = document.getElementById("filter-button");
+
+        // When the user clicks on the filter button, open the filter popup
+        filterButton.onclick = function () {
+            filterPopup.classList.add("show-popup");
+        };
+        /// Add event listener to the filter form
+        document.getElementById("filter-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission behavior
+
+            // Retrieve selected filter criteria
+            var selectedService = document.getElementById("service-filter").value;
+            var selectedDescription = document.getElementById("description-filter").value;
+
+            // Filter markers based on selected criteria
+            markers.forEach(function (marker) {
+                var serviceMatch = selectedService === "" || marker.options.service.includes(selectedService);
+                var descriptionMatch = selectedDescription === "" || marker.options.description.includes(selectedDescription);
+
+                // Check if both service and description match the selected criteria, or if "Show all" is selected
+                if ((selectedService === "all" || serviceMatch) && (selectedDescription === "all" || descriptionMatch)) {
+                    marker.addTo(map); // Add marker to the map
+                } else {
+                    map.removeLayer(marker); // Remove marker from the map
+                }
+            });
+
+            // Close the filter popup
+            filterPopup.classList.remove("show-popup");
+        });
+
+
 
         function findMyLocation() {
             if (navigator.geolocation) {
@@ -603,8 +688,6 @@
             /* Grey color for other services */
         }
     </style>
-
-
 
 </body>
 
