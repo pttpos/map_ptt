@@ -183,21 +183,44 @@
         }
         .custom-select {
             font-size: 16px; /* Adjust the font size */
-            padding: 20px; /* Adjust the padding */
+            padding: 10px; /* Adjust the padding */
             background-color: #f5f5f5; /* Adjust the background color */
             border: 1px solid #ccc; /* Adjust the border */
             border-radius: 5px; /* Add border radius for rounded corners */
             width: 100%; /* Set the width */
             margin: 5px;
         }
+     
         
+        .button13 {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px; /* Adjust the border-radius to make it rounded */
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value (0.5) for the desired level of transparency */
+    backdrop-filter: blur(10px); /* Adjust the blur radius as needed */
+    color: white; /* Text color */
+}
+
+.button13:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker background color on hover */
+}
+
+/* Adjust icon size and color */
+.button13 i {
+    margin-right: 5px; /* Spacing between icon and text */
+    font-size: 20px; /* Adjust icon size as needed */
+}
+
     </style>
 </head>
 
 <body>
     <div id="map"></div>
     <div id="button-container" class="d-flex flex-column align-items-center">
-        <button id="filter-button" class="button">Filter</button>
+        <button id="filter-button" class="button13">
+            <i class="fas fa-filter"></i>
+        </button>
+        
         <div id="filter-popup" class="footer-popup">
             <div class="popup-content">
                 <button id="close-filter-popup" class="button">
@@ -234,8 +257,13 @@
         </div>
         
     
-        <button id="find-location-button" class="button mb-2">My Location</button>
-        <button id="zoom-button" class="button mt-2">Zoom</button>
+        <button id="find-location-button" class="button13 mb-2">
+            <i class="fas fa-map-marker-alt"></i> My Location
+        </button>
+        <button id="zoom-button" class="button13 mt-2">
+            <i class="fas fa-search-plus"></i> Zoom
+        </button>
+        
         <div id="suggestions"></div>
         <!-- Suggestions container -->
     </div>
