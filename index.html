@@ -21,7 +21,7 @@
         }
 
         #map {
-            height: 98vh;
+            height: 89vh;
             width: 100%;
             z-index: 0;
         }
@@ -51,12 +51,12 @@
             left: 0;
             right: 0;
             width: auto;
-            background-color: rgb(201, 201, 201);
+            background-color: rgb(255, 255, 255);
             padding: 20px;
             border-top: 1px solid #ccc;
             transition: bottom 0.5s ease;
             z-index: 1000px;
-            height: 300px;
+            height: 380px;
         }
 
         .show-popup {
@@ -136,7 +136,7 @@
             width: 60px;
             /* Adjust the width and height to your desired button size */
             height: 60px;
-            background-color: #000000;
+            background-color: #ffffff;
             color: white;
             border: none;
             border-radius: 50%;
@@ -165,52 +165,104 @@
             outline: none;
             /* Remove outline on focus */
         }
+
         #filter-popup .popup-content {
-            position: relative; /* Ensure relative positioning for absolute positioning */
+            position: relative;
+            /* Ensure relative positioning for absolute positioning */
         }
-        
+
         #close-filter-popup {
             background-color: red;
             position: absolute;
-            right: 10px; /* Adjust as needed */
+            right: 10px;
+            /* Adjust as needed */
         }
-         
+
         #close-filter-popup12 {
             background-color: red;
             position: absolute;
-            top:200px; /* Adjust as needed */
-            left: 0px; /* Adjust as needed */
+            top: 200px;
+            /* Adjust as needed */
+            left: 0px;
+            /* Adjust as needed */
         }
+
         .custom-select {
-            font-size: 16px; /* Adjust the font size */
-            padding: 10px; /* Adjust the padding */
-            background-color: #f5f5f5; /* Adjust the background color */
-            border: 1px solid #ccc; /* Adjust the border */
-            border-radius: 5px; /* Add border radius for rounded corners */
-            width: 100%; /* Set the width */
+            font-size: 16px;
+            /* Adjust the font size */
+
+            /* Adjust the padding */
+            background-color: #f5f5f5;
+            /* Adjust the background color */
+            border: 1px solid #ccc;
+            /* Adjust the border */
+            border-radius: 5px;
+            /* Add border radius for rounded corners */
+            width: 100%;
+            /* Set the width */
             margin: 5px;
         }
-     
-        
+
         .button13 {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px; /* Adjust the border-radius to make it rounded */
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value (0.5) for the desired level of transparency */
-    backdrop-filter: blur(10px); /* Adjust the blur radius as needed */
-    color: white; /* Text color */
-}
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            /* Adjust the border-radius to make it rounded */
+            background-color: rgb(17, 0, 255);
+            /* Adjust the alpha value (0.5) for the desired level of transparency */
+            backdrop-filter: blur(10px);
+            /* Adjust the blur radius as needed */
+            color: white;
+            /* Text color */
+        }
 
-.button13:hover {
-    background-color: rgba(0, 0, 0, 0.7); /* Darker background color on hover */
-}
 
-/* Adjust icon size and color */
-.button13 i {
-    margin-right: 5px; /* Spacing between icon and text */
-    font-size: 20px; /* Adjust icon size as needed */
-}
+        .button13:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Darker background color on hover */
+        }
 
+        /* Adjust icon size and color */
+        .button13 i {
+            margin-right: 5px;
+            /* Spacing between icon and text */
+            font-size: 20px;
+            /* Adjust icon size as needed */
+        }
+
+        #powered-by {
+            position: fixed;
+            bottom: 10px;
+            left: 25%;
+            transform: translateX(-50%);
+            font-family: Arial, sans-serif;
+            /* Change the font-family as needed */
+            font-size: 14px;
+            /* Adjust font size as needed */
+            font-weight: bold;
+            transform: translateX(-50%);
+            z-index: 999; /* Ensure it appears behind the pop-up */
+        }
+
+        @media (max-width: 768px) {
+            #powered-by {
+                font-weight: bold;
+                font-size: 12px;
+                /* Adjust font size for smaller screens */
+                bottom: 5px;
+                /* Adjust bottom spacing for smaller screens */
+            }
+        }
+
+        @media (max-width: 576px) {
+            #powered-by {
+                font-weight: bold;
+                font-size: 10px;
+                /* Adjust font size for even smaller screens */
+                bottom: 2px;
+                /* Further adjust bottom spacing for smaller screens */
+            }
+        }
     </style>
 </head>
 
@@ -220,50 +272,110 @@
         <button id="filter-button" class="button13">
             <i class="fas fa-filter"></i>
         </button>
+
         <div id="filter-popup" class="footer-popup">
             <div class="popup-content">
                 <button id="close-filter-popup" class="button">
                     <i class="fas fa-times"></i> <!-- Font Awesome icon for "times" -->
                 </button>
                 <h3 class="mb-4">Filter Markers</h3>
-                <div class="row" style="margin-top: 30px;">
-                    <div class="col-md-6">
-                        <form id="filter-form">        
-                            <select id="search-input" class="form-select mb-2 custom-select" aria-label="Search by title">
+
+                <div class="col-12 col-md-6">
+                    <form id="filter-form">
+                        <div class="mb-3">
+                            <label for="province-filter" class="form-label"><i class="fas fa-map-marker-alt"></i>
+                                Location </label>
+                            <select id="province-filter" class="form-select custom-select">
                                 <option value="" selected disabled>Select Location</option>
+                                <option value="all">Show all</option>
+                                <option value="Banteay Meanchey">Banteay Meanchey</option>
+                                <option value="Battambang">Battambang</option>
+                                <option value="Kampong Cham">Kampong Cham</option>
+                                <option value="Kampong Chhnang">Kampong Chhnang</option>
+                                <option value="Kampong Speu">Kampong Speu</option>
+                                <option value="Kampong Thom">Kampong Thom</option>
+                                <option value="Kampot">Kampot</option>
+                                <option value="Kandal">Kandal</option>
+                                <option value="Koh Kong">Koh Kong</option>
+                                <option value="Kratié">Kratié</option>
+                                <option value="Mondulkiri">Mondulkiri</option>
+                                <option value="Oddar Meanchey">Oddar Meanchey</option>
+                                <option value="Pailin">Pailin</option>
+                                <option value="Preah Sihanouk">Preah Sihanouk</option>
+                                <option value="Preah Vihear">Preah Vihear</option>
+                                <option value="Pursat">Pursat</option>
+                                <option value="Ratanakiri">Ratanakiri</option>
+                                <option value="Siem Reap">Siem Reap</option>
+                                <option value="Prey Veng">Prey Veng</option>
+                                <option value="Stung Treng">Stung Treng</option>
+                                <option value="Svay Rieng">Svay Rieng</option>
+                                <option value="Takéo">Takéo</option>
+                                <option value="Kep">Kep</option>
+                                <option value="Otdar Meanchey">Otdar Meanchey</option>
+                                <option value="Pursat">Pursat</option>
                             </select>
-                            <select id="service-filter" class="form-select mb-2 custom-select">
+                        </div>
+                        <div class="mb-3">
+                            <label for="search-input" class="form-label"><i class="fas fa-gas-pump"></i>
+                                Station Available</label>
+                            <select id="search-input" class="form-select custom-select" aria-label="Search by title">
+                                <option value="" selected disabled>Select Station</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="service-filter" class="form-label"><i class="fas fa-money-bill-wave"></i>
+                                Payment</label>
+                            <select id="service-filter" class="form-select custom-select">
                                 <option value="" selected disabled>Select Payment</option>
                                 <option value="all">Show all</option>
                                 <option value="ABA">ABA</option>
                                 <option value="Fleet card">Fleet card</option>
                                 <option value="Cash">Cash</option>
                             </select>
-                            
-                            <select id="description-filter" class="form-select mb-2 custom-select" aria-label="Search by service">
-                                <option value="" selected disabled>Select Server</option>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description-filter" class="form-label"><i class="fas fa-concierge-bell"></i>
+                                Service</label>
+                            <select id="description-filter" class="form-select custom-select"
+                                aria-label="Search by service">
+                                <option value="" selected disabled>Select Service</option>
                                 <option value="all">Show all</option>
                                 <option value="Amazon">Amazon</option>
                                 <option value="7-Eleven">7 Eleven</option>
                                 <!-- Add more options as needed -->
                             </select>
-                            <button type="submit" class="button" id="close-filter-popup12">Apply Filter</button>
-                        </form>
-                    </div>
-                    <!-- Add more columns or content as needed -->
+                        </div>
+                        <button type="submit" class="button" style="background-color: #007bff;">
+                            <i class="fas fa-filter me-2"></i> Apply Filter
+                        </button>
+                    </form>
+                    
                 </div>
+                <!-- Add more columns or content as needed -->
+
             </div>
         </div>
-        
-    
+
+
+
         <button id="find-location-button" class="button13 mb-2">
             <i class="fas fa-map-marker-alt"></i> My Location
         </button>
         <button id="zoom-button" class="button13 mt-2">
             <i class="fas fa-search-plus"></i> Zoom
         </button>
-        
         <div id="suggestions"></div>
+        <p id="powered-by">Powered By Oil Retail System</p>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var poweredBy = document.getElementById('powered-by');
+                var currentYear = new Date().getFullYear();
+                poweredBy.textContent += ' @' + currentYear;
+            });
+        </script>
+
+
         <!-- Suggestions container -->
     </div>
 
@@ -287,7 +399,7 @@
                 <img id="marker-image" src="" alt="Marker Image"
                     style="max-width: 100px; vertical-align: middle; border-radius: 20px;" />
 
-                <button id="title-tab" class="popup-tab">Station</button>
+                <button id="title-tab" class="popup-tab">Product</button>
                 <button id="description-tab" class="popup-tab">Service</button>
                 <button id="service-tab" class="popup-tab">Payment</button>
             </div>
@@ -388,6 +500,7 @@
                             icon: customIcon,
                             title: marker.title,
                             service: marker.service,
+                            province: marker.province,
                             description: marker.description,
                         }).addTo(map);
                         markers.push(customMarker); // Add marker to the markers array
@@ -567,6 +680,35 @@
                         }
                     }
                 });
+            // Add change event listener to province selection dropdown
+            document.getElementById("province-filter").addEventListener("change", function (event) {
+                var selectedProvince = event.target.value;
+                updateTitleOptions(selectedProvince);
+            });
+
+            // Function to update the options in the title dropdown based on selected province
+            function updateTitleOptions(selectedProvince) {
+                var titleDropdown = document.getElementById("search-input");
+                titleDropdown.innerHTML = ""; // Clear existing options
+
+                // Add a default option
+                var defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Select Title";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                titleDropdown.appendChild(defaultOption);
+
+                // Filter markers based on selected province and add titles to dropdown
+                markers.forEach(function (marker) {
+                    if (selectedProvince === "" || marker.options.province.includes(selectedProvince)) {
+                        var option = document.createElement("option");
+                        option.value = marker.options.title;
+                        option.textContent = marker.options.title;
+                        titleDropdown.appendChild(option);
+                    }
+                });
+            }
 
 
             //document.getElementById("search-form").addEventListener("submit", function (event) {
@@ -621,14 +763,16 @@
             // Retrieve selected filter criteria
             var selectedService = document.getElementById("service-filter").value;
             var selectedDescription = document.getElementById("description-filter").value;
+            var selectedProvince = document.getElementById("province-filter").value;
 
             // Filter markers based on selected criteria
             markers.forEach(function (marker) {
                 var serviceMatch = selectedService === "" || marker.options.service.includes(selectedService);
                 var descriptionMatch = selectedDescription === "" || marker.options.description.includes(selectedDescription);
+                var provinceMatch = selectedProvince === "" || marker.options.province.includes(selectedProvince);
 
                 // Check if both service and description match the selected criteria, or if "Show all" is selected
-                if ((selectedService === "all" || serviceMatch) && (selectedDescription === "all" || descriptionMatch)) {
+                if ((selectedService === "all" || serviceMatch) && (selectedDescription === "all" || descriptionMatch) && (selectedProvince === "all" || provinceMatch)) {
                     marker.addTo(map); // Add marker to the map
                 } else {
                     map.removeLayer(marker); // Remove marker from the map

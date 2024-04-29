@@ -92,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'product' => $_POST['product'],
         'other_product' => $_POST['other_product'],
         'service' => $_POST['service'],
+        'province' => $_POST['province'],
         'old_picture' => $_POST['old_picture'] ?? '' // Set old_picture to existing picture filename or empty string
     ];
 

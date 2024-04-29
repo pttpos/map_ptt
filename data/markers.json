@@ -1,12 +1,12 @@
 {
     "STATION": [
         {
-            "id": "6",
+            "id": "1",
             "latitude": "11.585459292678992",
-            "longitude": "106.86114249416275",
-            "title": "Reona",
+            "longitude": "104.9164125083547",
+            "title": "test",
             "description": [
-                "Amazon"
+                "7-Eleven"
             ],
             "product": [
                 "ULG 95",
@@ -19,16 +19,40 @@
             ],
             "service": [
                 "Fleet card",
-                "Cash"
+                "ABA"
             ],
-            "old_picture": "riY59TkM-1.png",
+            "province": "Banteay Meanchey",
+            "old_picture": "",
             "picture": "riY59TkM-1.png"
         },
         {
-            "id": "3",
-            "latitude": "11.532341878512193",
-            "longitude": "104.95404679375464",
-            "title": "test",
+            "id": "2",
+            "latitude": "11.549502116971485",
+            "longitude": "103.15692485213602",
+            "title": "titi",
+            "description": [
+                "Amazon"
+            ],
+            "product": [
+                "ULG 95",
+                "ULR 91",
+                "HSD"
+            ],
+            "other_product": [
+                "EV"
+            ],
+            "service": [
+                "Cash"
+            ],
+            "province": "Preah Vihear",
+            "old_picture": "",
+            "picture": "photo_2020-09-24_15-26-55.jpg"
+        },
+        {
+            "id": "12",
+            "latitude": "11.585459292678992",
+            "longitude": "103.21205834385312",
+            "title": "test112212",
             "description": [
                 "7-Eleven"
             ],
@@ -41,10 +65,11 @@
                 "Onion"
             ],
             "service": [
-                "ABA"
+                "Fleet card"
             ],
-            "picture": "transparent-technical-support-icon-help-support-icon-support-5fce5531842a90.5513994516073577455414.png",
-            "old_picture": ""
+            "province": "Banteay Meanchey",
+            "old_picture": "",
+            "picture": "2022-05-03_Godji-Icon-01ss.png"
         }
     ]
 }
