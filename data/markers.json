@@ -70,6 +70,31 @@
             "province": "Banteay Meanchey",
             "old_picture": "",
             "picture": "2022-05-03_Godji-Icon-01ss.png"
+        },
+        {
+            "id": "35343",
+            "latitude": "14.14420481285191",
+            "longitude": "104.40723480799393",
+            "title": "ffff",
+            "description": [
+                "7-Eleven"
+            ],
+            "product": [
+                "ULG 95",
+                "ULR 91",
+                "HSD"
+            ],
+            "other_product": [
+                "EV",
+                "Onion"
+            ],
+            "service": [
+                "Fleet card",
+                "Cash"
+            ],
+            "province": "Banteay Meanchey",
+            "old_picture": "",
+            "picture": "flight-dispatcher.png"
         }
     ]
 }

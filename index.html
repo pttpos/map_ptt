@@ -835,30 +835,37 @@
                 updateTitleOptions(selectedProvince);
             });
 
-            // Function to update the options in the title dropdown based on selected province
-            function updateTitleOptions(selectedProvince) {
-                var titleDropdown = document.getElementById("search-input");
-                titleDropdown.innerHTML = ""; // Clear existing options
+// Function to update the options in the title dropdown based on selected province
+function updateTitleOptions(selectedProvince) {
+    var titleDropdown = document.getElementById("search-input");
+    titleDropdown.innerHTML = ""; // Clear existing options
 
-                // Add a default option
-                var defaultOption = document.createElement("option");
-                defaultOption.value = "";
-                defaultOption.textContent = "Select Title";
-                defaultOption.disabled = true;
-                defaultOption.selected = true;
-                titleDropdown.appendChild(defaultOption);
+    // Add a default option
+    var defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select Title";
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    titleDropdown.appendChild(defaultOption);
 
-                // Filter markers based on selected province and add titles to dropdown
-                markers.forEach(function (marker) {
-                    if (selectedProvince === "" || selectedProvince === "all" || marker.options.province.includes(selectedProvince)) {
-                        var option = document.createElement("option");
-                        option.value = marker.options.title;
-                        option.textContent = marker.options.title;
-                        titleDropdown.appendChild(option);
-                    }
-                });
-            }
+    // Filter markers based on selected province and add titles to dropdown
+    var provinceMarkers = [];
+    markers.forEach(function (marker) {
+        if (selectedProvince === "" || selectedProvince === "all" || marker.options.province.includes(selectedProvince)) {
+            provinceMarkers.push(marker); // Add marker to provinceMarkers array
+            var option = document.createElement("option");
+            option.value = marker.options.title;
+            option.textContent = marker.options.title;
+            titleDropdown.appendChild(option);
+        }
+    });
 
+    // If there are markers in the selected province, set map view to their bounds
+    if (provinceMarkers.length > 0) {
+        var group = new L.featureGroup(provinceMarkers);
+        map.fitBounds(group.getBounds());
+    }
+}
 
 
             //document.getElementById("search-form").addEventListener("submit", function (event) {
@@ -932,6 +939,7 @@
             // Close the filter popup
             filterPopup.classList.remove("show-popup");
         });
+
 
 
 

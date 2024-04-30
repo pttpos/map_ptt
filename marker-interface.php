@@ -10,7 +10,7 @@ function saveMarkerData($markers) {
     $markersJson = json_encode(['STATION' => $markers], JSON_PRETTY_PRINT);
     file_put_contents('data/markers.json', $markersJson); // Corrected path
 }
-// Function to add or update a marker
+
 // Function to add or update a marker
 function addOrUpdateMarker($markerData) {
     // Check if a new file was uploaded
@@ -50,10 +50,6 @@ function addOrUpdateMarker($markerData) {
     saveMarkerData($markers['STATION']);
 }
 
-
-
-
-
 // Function to delete a marker
 function deleteMarker($id) {
     $markers = loadMarkerData();
@@ -80,6 +76,7 @@ function getMarkerById($id) {
     }
     return null;
 }
+
 // Check if form is submitted for adding, updating, or deleting marker
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
@@ -126,13 +123,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-
-
 // Check if request is for deleting a marker
 if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $id = $_GET['id']; // Get id parameter from the query string
     deleteMarker($id);
     exit(json_encode(['success' => true]));
+}
+
+// Function to load marker data by ID for editing
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $marker = getMarkerById($id);
+    if ($marker) {
+        header('Content-Type: application/json');
+        echo json_encode(['STATION' => [$marker]], JSON_PRETTY_PRINT);
+    } else {
+        echo json_encode(['error' => 'Marker not found'], JSON_PRETTY_PRINT);
+    }
+    exit();
 }
 
 // Load marker data for GET request

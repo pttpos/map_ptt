@@ -368,51 +368,60 @@
 
         // Function to populate edit form and show edit modal
         function editMarker(id) {
-            // Fetch marker data corresponding to the ID
-            fetch(`marker-interface.php?id=${id}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Check if data is not empty and has the expected structure
-                    if (data && data.STATION.length > 0) {
-                        // Populate the modal form fields with the marker data
-                        const marker = data.STATION[0];
-                        document.getElementById('edit-id').value = marker.id;
-                        document.getElementById('edit-latitude').value = marker.latitude;
-                        document.getElementById('edit-longitude').value = marker.longitude;
-                        document.getElementById('edit-title').value = marker.title;
-                        document.getElementById('edit-province').value = marker.province;
+    // Fetch marker data corresponding to the ID
+    fetch(`marker-interface.php?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            // Check if data is not empty and has the expected structure
+            if (data && data.STATION.length > 0) {
+                // Populate the modal form fields with the marker data
+                const marker = data.STATION[0];
+                document.getElementById('edit-id').value = marker.id;
+                document.getElementById('edit-latitude').value = marker.latitude;
+                document.getElementById('edit-longitude').value = marker.longitude;
+                document.getElementById('edit-title').value = marker.title;
+                document.getElementById('edit-province').value = marker.province;
 
-                        // Populate checkbox groups
-                        marker.product.forEach(prod => {
-                            document.querySelector(`input[name="product[]"][value="${prod}"]`).checked = true;
-                        });
-                        marker.other_product.forEach(oprod => {
-                            document.querySelector(`input[name="other_product[]"][value="${oprod}"]`).checked = true;
-                        });
-                        marker.description.forEach(desc => {
-                            document.querySelector(`input[name="description[]"][value="${desc}"]`).checked = true;
-                        });
+                // Populate checkbox groups if the arrays are not null
+                if (marker.product !== null) {
+                    marker.product.forEach(prod => {
+                        document.querySelector(`input[name="product[]"][value="${prod}"]`).checked = true;
+                    });
+                }
+                if (marker.other_product !== null) {
+                    marker.other_product.forEach(oprod => {
+                        document.querySelector(`input[name="other_product[]"][value="${oprod}"]`).checked = true;
+                    });
+                }
+                if (marker.description !== null) {
+                    marker.description.forEach(desc => {
+                        document.querySelector(`input[name="description[]"][value="${desc}"]`).checked = true;
+                    });
+                }
+                if (marker.service !== null) {
+                    marker.service.forEach(serv => {
+                        document.querySelector(`input[name="service[]"][value="${serv}"]`).checked = true;
+                    });
+                }
 
-                        marker.service.forEach(serv => {
-                            document.querySelector(`input[name="service[]"][value="${serv}"]`).checked = true;
-                        });
+                // Set the old picture filename or an empty string if no picture exists
+                document.getElementById('old-picture').value = marker.picture || '';
 
-                        // Set the old picture filename or an empty string if no picture exists
-                        document.getElementById('old-picture').value = marker.picture || '';
+                // Display the filename of the existing picture, if available
+                if (marker.picture) {
+                    const fileName = marker.picture.split('/').pop(); // Extract filename from the path
+                    document.getElementById('edit-file-name').textContent = 'Selected File: ' + fileName;
+                } else {
+                    document.getElementById('edit-file-name').textContent = 'No Picture Selected';
+                }
+            } else {
+                console.error('No data found for the specified ID.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
 
-                        // Display the filename of the existing picture, if available
-                        if (marker.picture) {
-                            const fileName = marker.picture.split('/').pop(); // Extract filename from the path
-                            document.getElementById('edit-file-name').textContent = 'Selected File: ' + fileName;
-                        } else {
-                            document.getElementById('edit-file-name').textContent = 'No Picture Selected';
-                        }
-                    } else {
-                        console.error('No data found for the specified ID.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
+
     </script>
 
 </body>
