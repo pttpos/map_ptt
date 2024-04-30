@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Leaflet Maps with OpenStreetMap</title>
+    <title>PTT Station Map</title>
     <!-- Include Leaflet CSS and JavaScript -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -21,10 +21,14 @@
         }
 
         #map {
-            height: 89vh;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 90vh; /* Set height to 100% of the viewport height */
             z-index: 0;
         }
+        
 
         #button-container {
             position: absolute;
@@ -63,7 +67,6 @@
             border-top: 1px solid #ccc;
             transition: bottom 0.5s ease;
             z-index: 1000;
-            border-radius: 10px;
             overflow-y: auto;
             /* Enable vertical scrolling if content exceeds height */
         }
@@ -73,9 +76,36 @@
             height: auto;
             /* Auto height to fit content */
         }
-        .footer-popup{
-            height:720px;
+
+        .footer-popup {
+            height: 720px;
             /* Auto height to fit content */
+        }
+
+        /* Responsive adjustments for medium screens */
+        @media screen and (max-width: 768px) {
+
+            .footer-popup,
+            .footer-popup1 {
+                max-width: 100%;
+                /* Adjust maximum width for smaller screens */
+                border-radius: 0;
+                /* Remove border radius for smaller screens */
+                border-top-left-radius: 10px;
+                /* Add border radius to top-left corner for better appearance */
+                border-top-right-radius: 10px;
+                /* Add border radius to top-right corner for better appearance */
+            }
+
+            .footer-popup {
+                height: 720px;
+                /* Auto height to fit content on smaller screens */
+            }
+
+            .footer-popup1 {
+                height: auto;
+                /* Auto height to fit content on smaller screens */
+            }
         }
 
         /* Media query for smaller screens */
@@ -93,6 +123,7 @@
                 /* Decrease padding for smaller screens */
             }
         }
+
 
         .show-popup {
             bottom: 0;
@@ -357,6 +388,20 @@
 </head>
 
 <body>
+    <header>
+        <style>
+            /* Custom styles for the logo */
+            .logo {
+                max-width: 100px; /* Adjust maximum width as needed */
+                height: auto; /* Maintain aspect ratio */
+                display: block; /* Make the logo a block element */
+                margin: 0 auto; /* Center horizontally */
+                margin-top: 20px; /* Adjust top margin as needed */
+            }
+        </style>
+        <!-- Logo -->
+        <img src="./pictures/logo_Station.png" alt="Your Logo" class="logo">
+    </header>
     <div id="map"></div>
 
     <div id="button-container" class="d-flex flex-column align-items-center">
@@ -474,7 +519,7 @@
 
 
     <div id="popup" class="footer-popup">
-        <div class="popup-header">
+        <div class="popup-header" style="margin-top: 70px;">
             <div class="popup-content" style="margin-top:30px;">
                 <a href="#" class="btn btn-primary btn-google-maps">
                     <img src="#" alt="Image Alt Text">
@@ -485,7 +530,7 @@
                 style="margin-left:60%; color: red; font-size: 24px; cursor: pointer;"></i>
         </div>
         <hr />
-        <div class="popup-content" style="overflow-y: auto; height:600px;">
+        <div class="popup-content" style="overflow-y: auto; height:600px; ">
             <div class="popup-image-title">
                 <img id="marker-image" src="" alt="Marker Image"
                     style="max-width: 100px; vertical-align: middle; border-radius: 20px;" />
