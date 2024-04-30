@@ -43,20 +43,51 @@
             margin-bottom: 10px;
         }
 
-        /* Keep the old style for the footer popup */
-        .footer-popup {
-            border-radius: 10px 10px 0 0;
+        /* Adjust footer popup styles for responsiveness */
+        .footer-popup,
+        .footer-popup1 {
+            border-radius: 10px;
+            /* Simplify border radius */
             position: fixed;
             bottom: -100%;
             left: 0;
             right: 0;
-            width: auto;
+            width: calc(100% - 40px);
+            /* Take full width with some padding */
+            max-width: 400px;
+            /* Limit maximum width for better readability */
+            margin: 0 auto;
+            /* Center horizontally */
             background-color: rgb(255, 255, 255);
             padding: 20px;
             border-top: 1px solid #ccc;
             transition: bottom 0.5s ease;
-            z-index: 1000px;
-            height: 380px;
+            z-index: 1000;
+            border-radius: 10px;
+            overflow-y: auto;
+            /* Enable vertical scrolling if content exceeds height */
+        }
+
+        /* Adjust height of footer popup1 for better visibility on smaller screens */
+        .footer-popup1 {
+            height: auto;
+            /* Auto height to fit content */
+        }
+
+        /* Media query for smaller screens */
+        @media (max-width: 576px) {
+
+            .footer-popup,
+            .footer-popup1 {
+                width: calc(100% - 20px);
+                /* Adjust width for smaller screens */
+                max-width: 100%;
+                /* Take full width on smaller screens */
+                border-radius: 0;
+                /* Remove border radius on smaller screens */
+                padding: 10px;
+                /* Decrease padding for smaller screens */
+            }
         }
 
         .show-popup {
@@ -64,6 +95,12 @@
         }
 
         .popup-content {
+            position: relative;
+            padding-bottom: 40px;
+
+        }
+
+        .popup-content1 {
             position: relative;
             padding-bottom: 40px;
 
@@ -132,29 +169,31 @@
     <style>
         .btn-google-maps {
             display: inline-block;
-            padding: 0;
             width: 60px;
-            /* Adjust the width and height to your desired button size */
+            /* Set the width */
             height: 60px;
+            /* Set the height */
             background-color: #ffffff;
-            color: white;
-            border: none;
+            /* Background color */
+            color: #007bff;
+            /* Text color */
+            border: 2px solid #007bff;
+            /* Border */
             border-radius: 50%;
-            cursor: pointer;
+            /* Make it round */
             text-decoration: none;
-            transition: background-color 0.3s;
+            text-align: center;
+            line-height: 60px;
+            /* Center the content vertically */
         }
 
         .btn-google-maps img {
-            width: 30px;
-            /* Set the image width to half of the button's width */
-            height: 45px;
-            /* Set the image height accordingly */
-            /* Ensure the image retains a circular shape */
-            margin: 15px;
-            /* Center the image within the button */
+            width: 23px;
+            /* Adjust image width */
+            height: 30px;
+            /* Adjust image height */
+            vertical-align: middle;
         }
-
 
         .btn-google-maps:hover {
             background-color: #3b79db;
@@ -164,6 +203,11 @@
         .btn-google-maps:focus {
             outline: none;
             /* Remove outline on focus */
+        }
+
+        #filter-popup1 .popup-content1 {
+            position: relative;
+            /* Ensure relative positioning for absolute positioning */
         }
 
         #filter-popup .popup-content {
@@ -189,18 +233,13 @@
 
         .custom-select {
             font-size: 16px;
-            /* Adjust the font size */
-
-            /* Adjust the padding */
             background-color: #f5f5f5;
-            /* Adjust the background color */
             border: 1px solid #ccc;
-            /* Adjust the border */
-            border-radius: 5px;
-            /* Add border radius for rounded corners */
+            border-radius: 20px;
             width: 100%;
-            /* Set the width */
             margin: 5px;
+            padding: 10px;
+            /* Add padding for better spacing */
         }
 
         .button13 {
@@ -234,14 +273,14 @@
             position: fixed;
             bottom: 10px;
             left: 25%;
-            transform: translateX(-50%);
             font-family: Arial, sans-serif;
             /* Change the font-family as needed */
             font-size: 14px;
             /* Adjust font size as needed */
             font-weight: bold;
             transform: translateX(-50%);
-            z-index: 999; /* Ensure it appears behind the pop-up */
+            z-index: -999;
+            /* Ensure it appears behind the pop-up */
         }
 
         @media (max-width: 768px) {
@@ -264,30 +303,78 @@
             }
         }
     </style>
+    <!-- overly image view  -->
+    <style>
+        /* Style for overlay container */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Semi-transparent black background */
+            display: none;
+            /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            /* Ensure it appears above other content */
+        }
+
+        /* Style for overlay content */
+        .overlay-content {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        /* Style for overlay image */
+        .overlay-content img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 20px;
+        }
+    </style>
+    <style>
+        /* Adjust the icon styling */
+        .form-label .icon-container {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 5px;
+            /* Adjust spacing between icon and text */
+        }
+
+        /* Optionally, you can adjust the color of the icon */
+        .form-label .icon-container i {
+            color: #007bff;
+            /* Change to your desired color */
+        }
+    </style>
 </head>
 
 <body>
     <div id="map"></div>
+
     <div id="button-container" class="d-flex flex-column align-items-center">
         <button id="filter-button" class="button13">
             <i class="fas fa-filter"></i>
         </button>
-
-        <div id="filter-popup" class="footer-popup">
-            <div class="popup-content">
+        <div id="filter-popup" class="footer-popup1">
+            <div class="popup-content1">
                 <button id="close-filter-popup" class="button">
                     <i class="fas fa-times"></i> <!-- Font Awesome icon for "times" -->
                 </button>
                 <h3 class="mb-4">Filter Markers</h3>
-
                 <div class="col-12 col-md-6">
                     <form id="filter-form">
                         <div class="mb-3">
-                            <label for="province-filter" class="form-label"><i class="fas fa-map-marker-alt"></i>
-                                Location </label>
+                            <label for="province-filter" class="form-label">
+                                <span class="icon-container"><i class="fas fa-map-marker-alt"></i></span>
+                                Location
+                            </label>
+
                             <select id="province-filter" class="form-select custom-select">
-                                <option value="" selected disabled>Select Location</option>
-                                <option value="all">Show all</option>
+                                <option value="all">All</option>
                                 <option value="Banteay Meanchey">Banteay Meanchey</option>
                                 <option value="Battambang">Battambang</option>
                                 <option value="Kampong Cham">Kampong Cham</option>
@@ -316,30 +403,36 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="search-input" class="form-label"><i class="fas fa-gas-pump"></i>
-                                Station Available</label>
+                            <label for="search-input" class="form-label">
+                                <span class="icon-container"><i class="fas fa-gas-pump"></i></span>
+                                Station Available
+                            </label>
                             <select id="search-input" class="form-select custom-select" aria-label="Search by title">
-                                <option value="" selected disabled>Select Station</option>
+
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="service-filter" class="form-label"><i class="fas fa-money-bill-wave"></i>
-                                Payment</label>
+                            <label for="service-filter" class="form-label">
+                                <span class="icon-container"><i class="fas fa-money-bill-wave"></i></span>
+                                Payment
+                            </label>
                             <select id="service-filter" class="form-select custom-select">
-                                <option value="" selected disabled>Select Payment</option>
-                                <option value="all">Show all</option>
+
+                                <option value="all">All</option>
                                 <option value="ABA">ABA</option>
                                 <option value="Fleet card">Fleet card</option>
                                 <option value="Cash">Cash</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="description-filter" class="form-label"><i class="fas fa-concierge-bell"></i>
-                                Service</label>
+                            <label for="description-filter" class="form-label">
+                                <span class="icon-container"><i class="fas fa-concierge-bell"></i></span>
+                                Service
+                            </label>
                             <select id="description-filter" class="form-select custom-select"
                                 aria-label="Search by service">
                                 <option value="" selected disabled>Select Service</option>
-                                <option value="all">Show all</option>
+                                <option value="all">All</option>
                                 <option value="Amazon">Amazon</option>
                                 <option value="7-Eleven">7 Eleven</option>
                                 <!-- Add more options as needed -->
@@ -349,14 +442,12 @@
                             <i class="fas fa-filter me-2"></i> Apply Filter
                         </button>
                     </form>
-                    
+
                 </div>
                 <!-- Add more columns or content as needed -->
 
             </div>
         </div>
-
-
 
         <button id="find-location-button" class="button13 mb-2">
             <i class="fas fa-map-marker-alt"></i> My Location
@@ -375,20 +466,16 @@
             });
         </script>
 
-
-        <!-- Suggestions container -->
     </div>
 
-    <!-- Popup for marker information -->
 
     <div id="popup" class="footer-popup">
         <div class="popup-header">
-            <div class="popup-content">
+            <div class="popup-content" style="margin-top:30px;">
                 <a href="#" class="btn btn-primary btn-google-maps">
                     <img src="#" alt="Image Alt Text">
                 </a>
             </div>
-
             <img src="./pictures/logo_Station.png" style="max-width: 100px" />
             <i id="close-button" class="fa fa-times-circle"
                 style="margin-left:60%; color: red; font-size: 24px; cursor: pointer;"></i>
@@ -398,11 +485,19 @@
             <div class="popup-image-title">
                 <img id="marker-image" src="" alt="Marker Image"
                     style="max-width: 100px; vertical-align: middle; border-radius: 20px;" />
-
                 <button id="title-tab" class="popup-tab">Product</button>
                 <button id="description-tab" class="popup-tab">Service</button>
                 <button id="service-tab" class="popup-tab">Payment</button>
             </div>
+            <!-- Add an overlay container -->
+            <div id="overlay" class="overlay">
+                <!-- Overlay content -->
+                <div class="overlay-content">
+                    <img id="overlay-image" src="" alt="Marker Image">
+                    <!-- Additional content can be added here -->
+                </div>
+            </div>
+
             <hr />
             <div id="title-content">
                 <h3>Title:</h3>
@@ -445,13 +540,11 @@
                     <h2 style="display: inline-block; margin-left: 5px;">
                         <div id="service-buttons"></div>
                     </h2>
-
                 </div>
             </div>
 
-
-
         </div>
+
     </div>
 
     <script>
@@ -610,9 +703,28 @@
 
                             // Display the popup with animation
                             popup.classList.add("show-popup");
+                            // Get references to the marker image and overlay
+                            var markerImage = document.getElementById("marker-image");
+                            var overlay = document.getElementById("overlay");
+                            var overlayImage = document.getElementById("overlay-image");
+
+                            // Add a click event listener to the marker image
+                            markerImage.addEventListener("click", function () {
+                                // Set the source of the overlay image to the marker image source
+                                overlayImage.src = markerImage.src;
+
+                                // Show the overlay
+                                overlay.style.display = "flex"; // Show the overlay as flex container
+                            });
+
+                            // Add a click event listener to the overlay to close it when clicked
+                            overlay.addEventListener("click", function () {
+                                // Hide the overlay
+                                overlay.style.display = "none";
+                            });
+
+
                         });
-
-
 
                         // Add click event listeners for each tab
                         document.getElementById("title-tab").addEventListener("click", function () {
@@ -701,7 +813,7 @@
 
                 // Filter markers based on selected province and add titles to dropdown
                 markers.forEach(function (marker) {
-                    if (selectedProvince === "" || marker.options.province.includes(selectedProvince)) {
+                    if (selectedProvince === "" || selectedProvince === "all" || marker.options.province.includes(selectedProvince)) {
                         var option = document.createElement("option");
                         option.value = marker.options.title;
                         option.textContent = marker.options.title;
@@ -709,6 +821,7 @@
                     }
                 });
             }
+
 
 
             //document.getElementById("search-form").addEventListener("submit", function (event) {
