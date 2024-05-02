@@ -1025,6 +1025,7 @@
         });
 
 
+
         function showRouteToMarker(markerLocation) {
             // Get the current location and add routing control to show the route
             findMyLocation(function (userLocation) {
@@ -1039,7 +1040,7 @@
                 routingControl = L.Routing.control({
                     waypoints: [
                         L.latLng(myLocation.lat, myLocation.lng), // Your location
-                        L.latLng(markerLocation.lat, markerLocation.lng), // Marker's location
+                        markerLocation, // Marker's location
                     ],
                     routeWhileDragging: true, // Show route while dragging the marker
                 }).addTo(map);
@@ -1059,21 +1060,19 @@
                         var durationMin = duration / 60;
         
                         // Update popup content with route information
-                        var popupContent = "<div id='route-info'><h3>Route Information</h3>";
-                        popupContent += "<p>Distance: " + distanceKm.toFixed(2) + " km</p>";
-                        popupContent += "<p>Duration: " + durationMin.toFixed(0) + " minutes</p>";
-                        popupContent += "<h4>Route Steps:</h4><ol>";
-                        route.instructions.forEach(function (instruction) {
-                            popupContent += "<li>" + instruction.text + "</li>";
-                        });
-                        popupContent += "</ol></div>";
+                        var popupContent = "<div id='route-info'><h4>Route Information</h4>";
+                        popupContent += "<p><strong>Distance:</strong> " + distanceKm.toFixed(2) + " km</p>";
+                        popupContent += "<p><strong>Duration:</strong> " + durationMin.toFixed(0) + " minutes</p>";
+                        popupContent += "</div>";
         
-                        document.getElementById("popup-content").innerHTML = popupContent;
+                        // Update the popup content with route information
+                        document.getElementById("title-content").innerHTML += popupContent;
                     }
                 });
             });
         }
         
+
 
         function findMyLocation(callback) {
             if (navigator.geolocation) {
