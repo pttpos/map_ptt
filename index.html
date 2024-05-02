@@ -28,6 +28,8 @@
     <style>
         body {
             overflow: hidden;
+            font-family: Arial, sans-serif;
+            /* Font stack */
             /* Locks the entire screen from scrolling */
         }
 
@@ -607,7 +609,7 @@
     </div>
 
     <div id="popup" class="footer-popup">
-        <div class="popup-header" style="margin-top: 70px;">
+        <div class="popup-header" style="margin-top: 70px; margin-bottom: 10px;">
             <div class="popup-content" style="margin-top:30px; border-radius: 10px;">
                 <a href="#" class="btn btn-primary btn-google-maps">
                     <img src="#" alt="Image Alt Text">
@@ -619,6 +621,7 @@
         </div>
 
         <div class="popup-content" style="overflow-y: auto; height:600px; ">
+
             <div class="popup-image-title"
                 style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
                 <img id="marker-image" src="" alt="Marker Image"
@@ -626,11 +629,12 @@
                 <div id="vertical-line"></div> <!-- Vertical line -->
                 <div id="title-content1" style="margin-left: 20px;"></div>
             </div>
+
             <div class="tab112" style="text-align: center; margin-top: 20px; width: 100%;">
                 <button id="title-tab" class="popup-tab">Product</button>
                 <button id="description-tab" class="popup-tab">Service</button>
                 <button id="service-tab" class="popup-tab">Payment</button>
-                <button id="service-tab" class="popup-tab">Information</button>
+                <button id="title-tab1" class="popup-tab">Information</button>
             </div>
 
             <!-- Add an overlay container -->
@@ -666,6 +670,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="description-content" style="display: flex; align-items: center;">
                 <div class="popup-image-title">
                     <!-- Display the first image -->
@@ -684,11 +689,22 @@
                 </div>
             </div>
 
+            <div id="title-content2">
+                <div>
+                    <h2></h2>
+                </div>
+                <div>
+                    <h2></h2>
+                </div>
+            </div>
+
+
         </div>
 
     </div>
 
     <script>
+
         var map;
         var popup = document.getElementById("popup");
         var markers = []; // Array to store all markers
@@ -751,11 +767,28 @@
                                 "./pictures/Google_Maps_icon.png";
                             document.getElementById("marker-image").src = "pictures/" + marker
                                 .picture;
+
+                            document.getElementById("title-tab1").click();
+                            document.getElementById("title-content2").innerHTML =
+                                "<div id='title-and-product1' style='display: flex; flex-direction: column;'>" +
+                                "<div style='display: flex; align-items: center;'>" +
+                                "<i class='fas fa-gas-pump'></i>" +
+                                "<h3 style='margin-left: 5px;'>Station: " + "<button style=' font-family: Arial, sans-serif; font-size:20px;border-radius:10px;background-color:#3b79db;color:white;'>" + marker.title + "</button>" + "</h3></button>" +
+                                "</div>" +
+                                "<div style='display: flex; align-items: center;'>" +
+                                "<i class='fas fa-map-marker-alt'></i>" +
+                                "<h3 style='margin-left: 5px;'>Province: " + "<button style=' font-family: Arial, sans-serif; font-size:20px;border-radius:10px;background-color:#ce3a3a;color:white;'>" + marker.province + "</button>" + "</h3>" +
+                                "</div>" +
+                                "</div>";
+
+
+
                             // Set default tab to "Title" when marker is clicked
                             document.getElementById("title-tab").click();
                             document.getElementById("title-content").innerHTML =
-                                "<div id='title-and-product' style='display: flex; align-items: center;'><h3>Station: " +
-                                marker.title + "</h3>";
+                                "<div id='title-and-product' style='display: flex; align-items: center;'>";
+
+
                             var titleContent = document.createElement("div");
                             titleContent.innerHTML = "<h3>Product</h3>";
                             document.getElementById("title-content").appendChild(titleContent);
@@ -780,6 +813,7 @@
                             });
                             document.getElementById("title-content").appendChild(productContent);
                             document.getElementById("title-content").innerHTML += "</div>";
+
                             // Add other product content
                             var otherProductContent = document.createElement("div");
                             otherProductContent.innerHTML = "<h3>Other Product</h3>";
@@ -801,9 +835,12 @@
                                     '" alt="' + otherProduct +
                                     '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;"  />';
                             });
+
                             document.getElementById("title-content").appendChild(
                                 otherProductImages);
                             document.getElementById("title-content").innerHTML += "</div>";
+
+
                             document.getElementById("description-content").innerHTML =
                                 "<p>Description: " + marker.description.join(", ") + "</p>";
                             var directionsButton = popup.querySelector('.popup-content a');
@@ -906,16 +943,25 @@
                             document.getElementById("title-content").style.display = "block";
                             document.getElementById("description-content").style.display = "none";
                             document.getElementById("service-content").style.display = "none";
+                            document.getElementById("title-content2").style.display = "none";
                         });
                         document.getElementById("description-tab").addEventListener("click", function () {
                             document.getElementById("title-content").style.display = "none";
                             document.getElementById("description-content").style.display = "block";
                             document.getElementById("service-content").style.display = "none";
+                            document.getElementById("title-content2").style.display = "none";
                         });
                         document.getElementById("service-tab").addEventListener("click", function () {
                             document.getElementById("title-content").style.display = "none";
                             document.getElementById("description-content").style.display = "none";
                             document.getElementById("service-content").style.display = "block";
+                            document.getElementById("title-content2").style.display = "none";
+                        });
+                        document.getElementById("title-tab1").addEventListener("click", function () {
+                            document.getElementById("title-content2").style.display = "block";
+                            document.getElementById("description-content").style.display = "none";
+                            document.getElementById("service-content").style.display = "none";
+                            document.getElementById("title-content").style.display = "none";
                         });
                     });
                 })
@@ -993,24 +1039,7 @@
                     map.fitBounds(group.getBounds());
                 }
             }
-            //document.getElementById("search-form").addEventListener("submit", function (event) {
-            //  event.preventDefault(); // Prevent default form submission behavior
-            // var selectedService = document.getElementById("service-select").value.toLowerCase(); // Retrieve selected service
-            //var selectedDescription = document.getElementById("description-select").value.toLowerCase(); // Retrieve selected description
-            //markers.forEach(function (marker) {
-            //var markerServices = marker.options.service.map(service => service.toLowerCase()); // Retrieve marker services
-            //var markerDescriptions = marker.options.description.map(description => description.toLowerCase()); // Retrieve marker descriptions
-            //var serviceMatch = selectedService === "all" || markerServices.includes(selectedService);
-            //var descriptionMatch = selectedDescription === "all" || markerDescriptions.includes(selectedDescription);
-            // Check if either service or description matches the selected criteria, or if no criteria are selected
-            //if ((selectedService === "" || serviceMatch) && (selectedDescription === "" || descriptionMatch)) {
-            //marker.addTo(map);
-            // } else {
-            //map.removeLayer(marker);
-            //  }
-            // });
-            //  });
-            // Add zoom control to the bottom right corner
+
             L.control.zoom({
                 position: "bottomright"
             }).addTo(map);
