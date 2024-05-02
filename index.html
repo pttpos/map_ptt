@@ -443,11 +443,11 @@
         .popup-image-title {
             border: 1px solid #ccc;
             background-color: #f0f0f0;
-           
+
             border-radius: 10px;
         }
 
-    
+
 
         .tab112 {
             display: flex;
@@ -1095,12 +1095,11 @@
                     var minutes = Math.round((durationInSeconds % 3600) / 60);
 
 
-// Update popup content with route information
-var popupContent = "<div id='route-info'><h4 style='font-size: 9px;'>Route Information</h4>";
-    popupContent += "<p><strong>Distance:</strong> <span class='distance-button' style='font-size: 8px; padding: 2px 5px;'>" + distance.toFixed(2) + " km</span></p>";
-    popupContent += "<p><strong>Duration:</strong> <span class='duration-button' style='font-size: 8px; padding: 2px 5px;'>" + hours + " hours " + minutes + " minutes</span></p>";
-    popupContent += "</div>";
-    
+
+                    popupContent += "<p><strong>Distance:</strong> <span class='distance-button' style='font-size: 15px; padding: 2px 5px;'>" + distance.toFixed(2) + " km</span></p>";
+                    popupContent += "<p><strong>Duration:</strong> <span class='duration-button' style='font-size: 15px; padding: 2px 5px;'>" + hours + " hours " + minutes + " minutes</span></p>";
+                    popupContent += "</div>";
+
 
                     // Update the popup content with route information
                     document.getElementById("title-content1").innerHTML = popupContent;
