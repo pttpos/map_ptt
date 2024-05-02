@@ -437,6 +437,24 @@
         .leaflet-top.leaflet-right {
             margin-top: 70px; /* Adjust the margin value as needed */
         }
+        .popup-image-title {
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .popup-image-title img {
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .tab112 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
         
         
     </style>
@@ -571,21 +589,18 @@
             <i id="close-button" class="fa fa-times-circle"
                 style="margin-left:60%; color: red; font-size: 24px; cursor: pointer;"></i>
         </div>
-        <hr />
+        
         <div class="popup-content" style="overflow-y: auto; height:600px; ">
-            <div class="popup-image-title" 
-                style="border: 1px solid #ccc; background-color: #f0f0f0; padding: 10px; border-radius: 10px;">
-
-                <img id="marker-image" src="" alt="Marker Image"
-                    style="max-width: 100px; display: block; margin: 0 auto; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px;" />
-                    <div id="title-content1"></div>
-                <div class="tab112" style="text-align: center; margin-top: 20px;">
-                    <button id="title-tab" class="popup-tab">Product</button>
-                    <button id="description-tab" class="popup-tab">Service</button>
-                    <button id="service-tab" class="popup-tab">Payment</button>
-                </div>
-
+            <div class="popup-image-title" style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                <img id="marker-image" src="" alt="Marker Image" style="max-width: 100px; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px;" />
+                <div id="title-content1" style="margin-left: 20px;"></div>
             </div>
+            <div class="tab112" style="text-align: center; margin-top: 20px; width: 100%;">
+                <button id="title-tab" class="popup-tab">Product</button>
+                <button id="description-tab" class="popup-tab">Service</button>
+                <button id="service-tab" class="popup-tab">Payment</button>
+            </div>
+            
             <!-- Add an overlay container -->
             <div id="overlay" class="overlay">
                 <!-- Overlay content -->
