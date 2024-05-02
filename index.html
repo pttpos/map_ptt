@@ -25,7 +25,6 @@
     <!-- Leaflet Routing Machine JavaScript -->
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
-
     <style>
         body {
             overflow: hidden;
@@ -443,15 +442,19 @@
         .popup-image-title {
             border: 1px solid #ccc;
             background-color: #f0f0f0;
-           
+
             border-radius: 10px;
         }
 
         #vertical-line {
-            width: 3px; /* Adjust width as needed */
-            height: 50px; /* Adjust height as needed */
-            background-color: #ccc; /* Change color as needed */
-            margin: 0 20px; /* Adjust margin as needed */
+            width: 3px;
+            /* Adjust width as needed */
+            height: 50px;
+            /* Adjust height as needed */
+            background-color: #ccc;
+            /* Change color as needed */
+            margin: 0 20px;
+            /* Adjust margin as needed */
         }
 
         .tab112 {
@@ -620,13 +623,13 @@
                 style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
                 <img id="marker-image" src="" alt="Marker Image"
                     style="max-width: 100px; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px;" />
-                    <div id="vertical-line"></div> <!-- Vertical line -->
+                <div id="vertical-line"></div> <!-- Vertical line -->
                 <div id="title-content1" style="margin-left: 20px;"></div>
             </div>
             <div class="tab112" style="text-align: center; margin-top: 20px; width: 100%;">
                 <button id="title-tab" class="popup-tab">Product</button>
                 <button id="description-tab" class="popup-tab">Service</button>
-                <button id="service-tab" class="popup-tab">Payment</button> 
+                <button id="service-tab" class="popup-tab">Payment</button>
                 <button id="service-tab" class="popup-tab">Information</button>
             </div>
 
@@ -698,27 +701,21 @@
             map = L.map("map", {
                 zoomControl: false, // Disable default zoom control
             }).setView([12.5657, 104.991], 7);
-
             // Add OpenStreetMap tile layer to the map
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 maxZoom: 19,
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             }).addTo(map);
-
             // Automatically find user's location
             findMyLocation();
-
             // Fetch marker data from JSON file
             fetch("data/markers.json")
                 .then((response) => response.json())
                 .then((markerData) => {
                     markerData.STATION.forEach((marker) => {
                         var loc = [marker.latitude, marker.longitude];
-
                         // Define the custom icon URL for the marker
                         var customIconUrl = "./pictures/6.png";
-
                         // Create a custom icon
                         var customIcon = L.icon({
                             iconUrl: customIconUrl,
@@ -726,7 +723,6 @@
                             iconAnchor: [24, 75], // Adjust anchor position if needed
                             popupAnchor: [0, -1000], // Adjust popup anchor if needed
                         });
-
                         // Create a marker with custom icon
                         var customMarker = L.marker(loc, {
                             icon: customIcon,
@@ -736,31 +732,30 @@
                             description: marker.description,
                         }).addTo(map);
                         markers.push(customMarker); // Add marker to the markers array
-
                         // Add option to select input
                         var option = document.createElement("option");
                         option.textContent = marker.title;
                         option.value = marker.title;
                         selectInput.appendChild(option);
-
                         // Inside the click event listener for the marker
                         customMarker.on("click", function (e) {
-
                             // Show route to the clicked marker
                             showRouteToMarker(customMarker.getLatLng());
-
-                            var myLocation = map.getCenter(); // Assuming your location is the center of the map
+                            var myLocation = map
+                                .getCenter(); // Assuming your location is the center of the map
                             var markerLocation = customMarker.getLatLng();
-                            var distance = calculateDistance(myLocation.lat, myLocation.lng, markerLocation.lat, markerLocation.lng);
+                            var distance = calculateDistance(myLocation.lat, myLocation.lng,
+                                markerLocation.lat, markerLocation.lng);
                             // Set popup content dynamically from marker data
-                            popup.querySelector(".popup-header img").src = "./pictures/Google_Maps_icon.png";
-                            document.getElementById("marker-image").src = "pictures/" + marker.picture;
-
+                            popup.querySelector(".popup-header img").src =
+                                "./pictures/Google_Maps_icon.png";
+                            document.getElementById("marker-image").src = "pictures/" + marker
+                                .picture;
                             // Set default tab to "Title" when marker is clicked
                             document.getElementById("title-tab").click();
-
-                            document.getElementById("title-content").innerHTML = "<div id='title-and-product' style='display: flex; align-items: center;'><h3>Station: " + marker.title + "</h3>";
-
+                            document.getElementById("title-content").innerHTML =
+                                "<div id='title-and-product' style='display: flex; align-items: center;'><h3>Station: " +
+                                marker.title + "</h3>";
                             var titleContent = document.createElement("div");
                             titleContent.innerHTML = "<h3>Product</h3>";
                             document.getElementById("title-content").appendChild(titleContent);
@@ -772,20 +767,24 @@
                                 if (product === "HSD") {
                                     imgSrc = "pictures/HSD.png"; // Set image source for HSD
                                 } else if (product === "ULG 95") {
-                                    imgSrc = "pictures/ULG95.png"; // Set image source for ULG 95
+                                    imgSrc =
+                                        "pictures/ULG95.png"; // Set image source for ULG 95
                                 } else if (product === "ULR 91") {
-                                    imgSrc = "pictures/ULR91.png"; // Set image source for ULR 91
+                                    imgSrc =
+                                        "pictures/ULR91.png"; // Set image source for ULR 91
                                 }
                                 // Append image tag with the corresponding source
-                                productContent.innerHTML += '<img src="' + imgSrc + '" alt="' + product + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;border-radius: 50%;" />';
+                                productContent.innerHTML += '<img src="' + imgSrc +
+                                    '" alt="' + product +
+                                    '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;border-radius: 50%;" />';
                             });
                             document.getElementById("title-content").appendChild(productContent);
                             document.getElementById("title-content").innerHTML += "</div>";
-
                             // Add other product content
                             var otherProductContent = document.createElement("div");
                             otherProductContent.innerHTML = "<h3>Other Product</h3>";
-                            document.getElementById("title-content").appendChild(otherProductContent);
+                            document.getElementById("title-content").appendChild(
+                                otherProductContent);
                             var otherProductImages = document.createElement("div");
                             otherProductImages.style.display = "flex";
                             otherProductImages.style.alignItems = "center";
@@ -794,89 +793,101 @@
                                 if (otherProduct === "EV") {
                                     imgSrc = "pictures/ev.png"; // Set image source for EV
                                 } else if (otherProduct === "Onion") {
-                                    imgSrc = "pictures/onion.png"; // Set image source for ULG 98
+                                    imgSrc =
+                                        "pictures/onion.png"; // Set image source for ULG 98
                                 }
                                 // Append image tag with the corresponding source
-                                otherProductImages.innerHTML += '<img src="' + imgSrc + '" alt="' + otherProduct + '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;"  />';
+                                otherProductImages.innerHTML += '<img src="' + imgSrc +
+                                    '" alt="' + otherProduct +
+                                    '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;"  />';
                             });
-                            document.getElementById("title-content").appendChild(otherProductImages);
+                            document.getElementById("title-content").appendChild(
+                                otherProductImages);
                             document.getElementById("title-content").innerHTML += "</div>";
-
-                            document.getElementById("description-content").innerHTML = "<p>Description: " + marker.description.join(", ") + "</p>";
+                            document.getElementById("description-content").innerHTML =
+                                "<p>Description: " + marker.description.join(", ") + "</p>";
                             var directionsButton = popup.querySelector('.popup-content a');
-                            directionsButton.setAttribute('onclick', `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
-
+                            directionsButton.setAttribute('onclick',
+                                `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
                             // Display service buttons dynamically
                             // Display service buttons dynamically
                             var serviceButtons = document.getElementById("service-buttons");
-                            var serviceImages = ''; // Initialize an empty string to store the HTML for service images
-
+                            var serviceImages =
+                                ''; // Initialize an empty string to store the HTML for service images
                             marker.service.forEach(function (service) {
                                 var imgSrc = ""; // Default empty image source
                                 // Set different images based on the service
                                 if (service === "Fleet card") {
-                                    imgSrc = "pictures/fleet.png"; // Set image source for Fleet card
+                                    imgSrc =
+                                        "pictures/fleet.png"; // Set image source for Fleet card
                                 } else if (service === "ABA") {
-                                    imgSrc = "pictures/aba.jpeg"; // Set image source for ABA
+                                    imgSrc =
+                                        "pictures/aba.jpeg"; // Set image source for ABA
                                 } else if (service === "Cash") {
-                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                    imgSrc =
+                                        "pictures/cash.png"; // Set image source for Cash
                                 } else {
-                                    imgSrc = "default-image.png"; // Default image if service is not recognized
+                                    imgSrc =
+                                        "default-image.png"; // Default image if service is not recognized
                                 }
                                 // Append image tag with the corresponding source and service name to the serviceImages string
-                                serviceImages += '<div class="service-container"><img src="' + imgSrc + '" alt="' + service + '" style="max-width: 100px; max-height:auto; padding: 10px; vertical-align: middle; margin-right: 5px;" /><span>' + service + '</span></div>';
+                                serviceImages +=
+                                    '<div class="service-container"><img src="' + imgSrc +
+                                    '" alt="' + service +
+                                    '" style="max-width: 100px; max-height:auto; padding: 10px; vertical-align: middle; margin-right: 5px;" /><span>' +
+                                    service + '</span></div>';
                             });
-
                             // Set the HTML content of the service buttons container
                             serviceButtons.innerHTML = serviceImages;
-
-
-
                             // Display description images dynamically
                             var descriptionContent = document.getElementById("description-content");
                             var descriptionImages = '';
                             marker.description.forEach(function (description) {
                                 var imgSrc = ''; // Default empty image source
                                 if (description === "7-Eleven") {
-                                    imgSrc = "pictures/7eleven.png"; // Set image source for 7-Eleven
+                                    imgSrc =
+                                        "pictures/7eleven.png"; // Set image source for 7-Eleven
                                     // Append image tag with the corresponding source
-                                    descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;" />';
+                                    descriptionImages += '<img src="' + imgSrc + '" alt="' +
+                                        description +
+                                        '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;" />';
                                 } else if (description === "Amazon") {
-                                    imgSrc = "pictures/amazon.png"; // Set image source for Amazon
+                                    imgSrc =
+                                        "pictures/amazon.png"; // Set image source for Amazon
                                     // Append image tag with the corresponding source
-                                    descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
+                                    descriptionImages += '<img src="' + imgSrc + '" alt="' +
+                                        description +
+                                        '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
                                 }
                             });
                             // Set the HTML content of the description content div
                             descriptionContent.innerHTML = descriptionImages;
-
                             // Display the popup with animation
                             popup.classList.add("show-popup");
                             // Get references to the marker image and overlay
                             var markerImage = document.getElementById("marker-image");
                             var overlay = document.getElementById("overlay");
                             var overlayImage = document.getElementById("overlay-image");
-
                             // Add a click event listener to the marker image
                             markerImage.addEventListener("click", function () {
                                 // Set the source of the overlay image to the marker image source
                                 overlayImage.src = markerImage.src;
-
                                 // Show the overlay
-                                overlay.style.display = "flex"; // Show the overlay as flex container
+                                overlay.style.display =
+                                    "flex"; // Show the overlay as flex container
                             });
-
                             // Add a click event listener to the overlay to close it when clicked
                             overlay.addEventListener("click", function () {
                                 // Hide the overlay
                                 overlay.style.display = "none";
                             });
 
-
                             function calculateDistance(lat1, lon1, lat2, lon2) {
                                 const R = 6371; // Radius of the Earth in kilometers
-                                const dLat = deg2rad(lat2 - lat1); // Difference in latitude, converted to radians
-                                const dLon = deg2rad(lon2 - lon1); // Difference in longitude, converted to radians
+                                const dLat = deg2rad(lat2 -
+                                    lat1); // Difference in latitude, converted to radians
+                                const dLon = deg2rad(lon2 -
+                                    lon1); // Difference in longitude, converted to radians
                                 const a =
                                     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                                     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
@@ -885,17 +896,11 @@
                                 const distance = R * c; // Distance in kilometers
                                 return distance;
                             }
-
                             // Function to convert degrees to radians
                             function deg2rad(deg) {
                                 return deg * (Math.PI / 180);
                             }
-
-
-
-
                         });
-
                         // Add click event listeners for each tab
                         document.getElementById("title-tab").addEventListener("click", function () {
                             document.getElementById("title-content").style.display = "block";
@@ -912,13 +917,9 @@
                             document.getElementById("description-content").style.display = "none";
                             document.getElementById("service-content").style.display = "block";
                         });
-
-
-
                     });
                 })
                 .catch((error) => console.error("Error loading marker data:", error));
-
             // Add click event listener to close button
             document
                 .getElementById("close-button")
@@ -926,7 +927,6 @@
                     event.stopPropagation(); // Prevent click event from propagating to popup
                     popup.classList.remove("show-popup");
                 });
-
             // Add change event listener to select input
             selectInput.addEventListener("change", function (event) {
                 var selectedTitle = event.target.value;
@@ -939,15 +939,12 @@
                     }
                 }
             });
-
-
             // Add click event listener to find location button
             document
                 .getElementById("find-location-button")
                 .addEventListener("click", function () {
                     findMyLocation();
                 });
-
             // Add click event listener to zoom button
             document
                 .getElementById("zoom-button")
@@ -967,12 +964,10 @@
                 var selectedProvince = event.target.value;
                 updateTitleOptions(selectedProvince);
             });
-
             // Function to update the options in the title dropdown based on selected province
             function updateTitleOptions(selectedProvince) {
                 var titleDropdown = document.getElementById("search-input");
                 titleDropdown.innerHTML = ""; // Clear existing options
-
                 // Add a default option
                 var defaultOption = document.createElement("option");
                 defaultOption.value = "";
@@ -980,11 +975,11 @@
                 defaultOption.disabled = true;
                 defaultOption.selected = true;
                 titleDropdown.appendChild(defaultOption);
-
                 // Filter markers based on selected province and add titles to dropdown
                 var provinceMarkers = [];
                 markers.forEach(function (marker) {
-                    if (selectedProvince === "" || selectedProvince === "all" || marker.options.province.includes(selectedProvince)) {
+                    if (selectedProvince === "" || selectedProvince === "all" || marker.options.province
+                        .includes(selectedProvince)) {
                         provinceMarkers.push(marker); // Add marker to provinceMarkers array
                         var option = document.createElement("option");
                         option.value = marker.options.title;
@@ -992,28 +987,21 @@
                         titleDropdown.appendChild(option);
                     }
                 });
-
                 // If there are markers in the selected province, set map view to their bounds
                 if (provinceMarkers.length > 0) {
                     var group = new L.featureGroup(provinceMarkers);
                     map.fitBounds(group.getBounds());
                 }
             }
-
-
             //document.getElementById("search-form").addEventListener("submit", function (event) {
             //  event.preventDefault(); // Prevent default form submission behavior
-
             // var selectedService = document.getElementById("service-select").value.toLowerCase(); // Retrieve selected service
             //var selectedDescription = document.getElementById("description-select").value.toLowerCase(); // Retrieve selected description
-
             //markers.forEach(function (marker) {
             //var markerServices = marker.options.service.map(service => service.toLowerCase()); // Retrieve marker services
             //var markerDescriptions = marker.options.description.map(description => description.toLowerCase()); // Retrieve marker descriptions
-
             //var serviceMatch = selectedService === "all" || markerServices.includes(selectedService);
             //var descriptionMatch = selectedDescription === "all" || markerDescriptions.includes(selectedDescription);
-
             // Check if either service or description matches the selected criteria, or if no criteria are selected
             //if ((selectedService === "" || serviceMatch) && (selectedDescription === "" || descriptionMatch)) {
             //marker.addTo(map);
@@ -1022,26 +1010,21 @@
             //  }
             // });
             //  });
-
-
-
             // Add zoom control to the bottom right corner
-            L.control.zoom({ position: "bottomright" }).addTo(map);
+            L.control.zoom({
+                position: "bottomright"
+            }).addTo(map);
         }
         // Get a reference to the filter popup close button
         var closeFilterPopupButton = document.getElementById("close-filter-popup");
-
         // When the user clicks on the close button, hide the filter popup
         closeFilterPopupButton.onclick = function () {
             filterPopup.classList.remove("show-popup");
         };
-
         // Get a reference to the filter popup
         var filterPopup = document.getElementById("filter-popup");
-
         // Get a reference to the filter button
         var filterButton = document.getElementById("filter-button");
-
         // When the user clicks on the filter button, open the filter popup
         filterButton.onclick = function () {
             filterPopup.classList.add("show-popup");
@@ -1049,26 +1032,26 @@
         /// Add event listener to the filter form
         document.getElementById("filter-form").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent default form submission behavior
-
             // Retrieve selected filter criteria
             var selectedService = document.getElementById("service-filter").value;
             var selectedDescription = document.getElementById("description-filter").value;
             var selectedProvince = document.getElementById("province-filter").value;
-
             // Filter markers based on selected criteria
             markers.forEach(function (marker) {
-                var serviceMatch = selectedService === "" || marker.options.service.includes(selectedService);
-                var descriptionMatch = selectedDescription === "" || marker.options.description.includes(selectedDescription);
-                var provinceMatch = selectedProvince === "" || marker.options.province.includes(selectedProvince);
-
+                var serviceMatch = selectedService === "" || marker.options.service.includes(
+                    selectedService);
+                var descriptionMatch = selectedDescription === "" || marker.options.description
+                    .includes(selectedDescription);
+                var provinceMatch = selectedProvince === "" || marker.options.province.includes(
+                    selectedProvince);
                 // Check if both service and description match the selected criteria, or if "Show all" is selected
-                if ((selectedService === "all" || serviceMatch) && (selectedDescription === "all" || descriptionMatch) && (selectedProvince === "all" || provinceMatch)) {
+                if ((selectedService === "all" || serviceMatch) && (selectedDescription === "all" ||
+                    descriptionMatch) && (selectedProvince === "all" || provinceMatch)) {
                     marker.addTo(map); // Add marker to the map
                 } else {
                     map.removeLayer(marker); // Remove marker from the map
                 }
             });
-
             // Close the filter popup
             filterPopup.classList.remove("show-popup");
         });
@@ -1077,12 +1060,10 @@
             // Get the current location and add routing control to show the route
             findMyLocation(function (userLocation) {
                 var myLocation = userLocation;
-
                 // Remove existing routing control if it exists
                 if (routingControl) {
                     map.removeControl(routingControl);
                 }
-
                 // Add routing control to show the route
                 routingControl = L.Routing.control({
                     waypoints: [
@@ -1096,26 +1077,23 @@
                     var route = e.routes[0]; // Assuming there's only one route
                     var distance = route.summary.totalDistance / 1000; // Convert meters to kilometers
                     var durationInSeconds = route.summary.totalTime; // Duration in seconds
-
                     // Convert duration from seconds to hours and minutes
                     var hours = Math.floor(durationInSeconds / 3600);
                     var minutes = Math.round((durationInSeconds % 3600) / 60);
-
-
-// Update popup content with route information
-var popupContent = "<div id='route-info'>";
-    popupContent += "<p><strong>Distance:</strong> <span class='distance-button' style='font-size:12px; padding: 2px 5px;'>" + distance.toFixed(2) + " km</span></p>";
-    popupContent += "<p><strong>Duration:</strong> <span class='duration-button' style='font-size: 12px; padding: 2px 5px;'>" + hours + " hours " + minutes + " minutes</span></p>";
-    popupContent += "</div>";
-    
-
+                    // Update popup content with route information
+                    var popupContent = "<div id='route-info'>";
+                    popupContent +=
+                        "<p><strong>Distance:</strong> <span class='distance-button' style='font-size:12px; padding: 2px 5px;'>" +
+                        distance.toFixed(2) + " km</span></p>";
+                    popupContent +=
+                        "<p><strong>Duration:</strong> <span class='duration-button' style='font-size: 12px; padding: 2px 5px;'>" +
+                        hours + " hours " + minutes + " minutes</span></p>";
+                    popupContent += "</div>";
                     // Update the popup content with route information
                     document.getElementById("title-content1").innerHTML = popupContent;
                 });
-
             });
         }
-
 
         function findMyLocation(callback) {
             if (navigator.geolocation) {
@@ -1125,14 +1103,13 @@ var popupContent = "<div id='route-info'>";
                             position.coords.latitude,
                             position.coords.longitude,
                         ];
-
                         // Add a new marker at the user's location
                         var userLocation = L.latLng(latlng[0], latlng[1]);
-                        var userMarker = L.marker(latlng, { color: "red" }).addTo(map);
-
+                        var userMarker = L.marker(latlng, {
+                            color: "red"
+                        }).addTo(map);
                         // Set map view to user's location with zoom level
                         map.setView(latlng, 15);
-
                         // Invoke the callback function with the user's location
                         callback(userLocation);
                     },
