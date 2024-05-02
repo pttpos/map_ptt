@@ -447,7 +447,12 @@
             border-radius: 10px;
         }
 
-    
+        #vertical-line {
+            width: 3px; /* Adjust width as needed */
+            height: 50px; /* Adjust height as needed */
+            background-color: #ccc; /* Change color as needed */
+            margin: 0 20px; /* Adjust margin as needed */
+        }
 
         .tab112 {
             display: flex;
@@ -615,12 +620,14 @@
                 style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
                 <img id="marker-image" src="" alt="Marker Image"
                     style="max-width: 100px; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px;" />
+                    <div id="vertical-line"></div> <!-- Vertical line -->
                 <div id="title-content1" style="margin-left: 20px;"></div>
             </div>
             <div class="tab112" style="text-align: center; margin-top: 20px; width: 100%;">
                 <button id="title-tab" class="popup-tab">Product</button>
                 <button id="description-tab" class="popup-tab">Service</button>
-                <button id="service-tab" class="popup-tab">Payment</button>
+                <button id="service-tab" class="popup-tab">Payment</button> 
+                <button id="service-tab" class="popup-tab">Information</button>
             </div>
 
             <!-- Add an overlay container -->
