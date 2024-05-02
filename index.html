@@ -573,12 +573,12 @@
         </div>
         <hr />
         <div class="popup-content" style="overflow-y: auto; height:600px; ">
-            <div class="popup-image-title"
+            <div class="popup-image-title" 
                 style="border: 1px solid #ccc; background-color: #f0f0f0; padding: 10px; border-radius: 10px;">
 
                 <img id="marker-image" src="" alt="Marker Image"
                     style="max-width: 100px; display: block; margin: 0 auto; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px;" />
-
+                    <div id="title-content1"></div>
                 <div class="tab112" style="text-align: center; margin-top: 20px;">
                     <button id="title-tab" class="popup-tab">Product</button>
                     <button id="description-tab" class="popup-tab">Service</button>
@@ -1071,7 +1071,7 @@
                         popupContent += "</div>";
         
                         // Update the popup content with route information
-                        document.getElementById("title-content").innerHTML += popupContent;
+                        document.getElementById("title-content1").innerHTML += popupContent;
                     }
                 });
             });
