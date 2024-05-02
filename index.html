@@ -13,6 +13,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" href="./pictures/logo.png" type="image/png" sizes="10x30">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+    <!-- Leaflet Routing Machine JavaScript -->
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
 
     <style>
         body {
@@ -630,6 +642,7 @@
         var markers = []; // Array to store all markers
         var suggestionsContainer = document.getElementById("suggestions");
         var selectInput = document.getElementById("search-input");
+        var routingControl = null;
 
         function loadMapScenario() {
             // Initialize Leaflet map
@@ -682,9 +695,10 @@
                         selectInput.appendChild(option);
 
                         // Inside the click event listener for the marker
-                        // Inside the click event listener for the marker
-                        // Inside the click event listener for the marker
                         customMarker.on("click", function (e) {
+
+                            // Show route to the clicked marker
+                            showRouteToMarker(customMarker.getLatLng());
 
                             var myLocation = map.getCenter(); // Assuming your location is the center of the map
                             var markerLocation = customMarker.getLatLng();
@@ -810,25 +824,26 @@
                             });
 
 
-                          
                             function calculateDistance(lat1, lon1, lat2, lon2) {
-                                var R = 6371; // Radius of the Earth in kilometers
-                                var dLat = deg2rad(lat2 - lat1); // Convert latitude difference to radians
-                                var dLon = deg2rad(lon2 - lon1); // Convert longitude difference to radians
-                                var a =
+                                const R = 6371; // Radius of the Earth in kilometers
+                                const dLat = deg2rad(lat2 - lat1); // Difference in latitude, converted to radians
+                                const dLon = deg2rad(lon2 - lon1); // Difference in longitude, converted to radians
+                                const a =
                                     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                                     Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
                                     Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                                var distance = R * c; // Distance in kilometers
+                                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                                const distance = R * c; // Distance in kilometers
                                 return distance;
                             }
-                            
+
                             // Function to convert degrees to radians
                             function deg2rad(deg) {
                                 return deg * (Math.PI / 180);
                             }
-                            
+
+
+
 
                         });
 
@@ -1011,8 +1026,29 @@
 
 
 
+        function showRouteToMarker(markerLocation) {
+            // Get the current location and add routing control to show the route
+            findMyLocation(function (userLocation) {
+                var myLocation = userLocation;
 
-        function findMyLocation() {
+                // Remove existing routing control if it exists
+                if (routingControl !== null) {
+                    map.removeControl(routingControl);
+                }
+
+                // Add routing control to show the route
+                routingControl = L.Routing.control({
+                    waypoints: [
+                        L.latLng(myLocation.lat, myLocation.lng), // Your location
+                        markerLocation, // Marker's location
+                    ],
+                    routeWhileDragging: true, // Show route while dragging the marker
+                }).addTo(map);
+            });
+        }
+
+
+        function findMyLocation(callback) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function (position) {
@@ -1022,10 +1058,14 @@
                         ];
 
                         // Add a new marker at the user's location
+                        var userLocation = L.latLng(latlng[0], latlng[1]);
                         var userMarker = L.marker(latlng, { color: "red" }).addTo(map);
 
                         // Set map view to user's location with zoom level
                         map.setView(latlng, 15);
+
+                        // Invoke the callback function with the user's location
+                        callback(userLocation);
                     },
                     function (error) {
                         console.error("Error getting the user location:", error);
@@ -1035,7 +1075,6 @@
                 console.error("Geolocation is not supported by this browser.");
             }
         }
-
         // Load Leaflet map when the window is loaded
         window.onload = loadMapScenario;
 
