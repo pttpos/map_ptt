@@ -434,29 +434,52 @@
             margin-right: 10px;
             /* Add some spacing between service buttons */
         }
+
         .leaflet-top.leaflet-right {
-            margin-top: 70px; /* Adjust the margin value as needed */
+            margin-top: 70px;
+            /* Adjust the margin value as needed */
         }
+
         .popup-image-title {
             border: 1px solid #ccc;
             background-color: #f0f0f0;
             padding: 10px;
             border-radius: 10px;
         }
-        
+
         .popup-image-title img {
             display: block;
             margin: 0 auto;
         }
-        
+
         .tab112 {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
         }
-        
-        
+
+        .distance-button {
+            background-color: #ff0000;
+            /* Red color */
+            color: #fff;
+            /* White text color */
+            padding: 5px 10px;
+            /* Adjust padding as needed */
+            border-radius: 5px;
+            /* Rounded corners */
+        }
+
+        .duration-button {
+            background-color: #00ff00;
+            /* Green color */
+            color: #fff;
+            /* White text color */
+            padding: 5px 10px;
+            /* Adjust padding as needed */
+            border-radius: 5px;
+            /* Rounded corners */
+        }
     </style>
 
 </head>
@@ -589,10 +612,12 @@
             <i id="close-button" class="fa fa-times-circle"
                 style="margin-left:60%; color: red; font-size: 24px; cursor: pointer;"></i>
         </div>
-        
+
         <div class="popup-content" style="overflow-y: auto; height:600px; ">
-            <div class="popup-image-title" style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
-                <img id="marker-image" src="" alt="Marker Image" style="max-width: 100px; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px;" />
+            <div class="popup-image-title"
+                style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                <img id="marker-image" src="" alt="Marker Image"
+                    style="max-width: 100px; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px;" />
                 <div id="title-content1" style="margin-left: 20px;"></div>
             </div>
             <div class="tab112" style="text-align: center; margin-top: 20px; width: 100%;">
@@ -600,7 +625,7 @@
                 <button id="description-tab" class="popup-tab">Service</button>
                 <button id="service-tab" class="popup-tab">Payment</button>
             </div>
-            
+
             <!-- Add an overlay container -->
             <div id="overlay" class="overlay">
                 <!-- Overlay content -->
@@ -1044,54 +1069,47 @@
             filterPopup.classList.remove("show-popup");
         });
 
-
-
         function showRouteToMarker(markerLocation) {
             // Get the current location and add routing control to show the route
             findMyLocation(function (userLocation) {
                 var myLocation = userLocation;
-        
+
                 // Remove existing routing control if it exists
-                if (routingControl !== null) {
+                if (routingControl) {
                     map.removeControl(routingControl);
                 }
-        
+
                 // Add routing control to show the route
                 routingControl = L.Routing.control({
                     waypoints: [
-                        L.latLng(myLocation.lat, myLocation.lng), // Your location
-                        markerLocation, // Marker's location
+                        myLocation,
+                        markerLocation,
                     ],
-                    routeWhileDragging: true, // Show route while dragging the marker
+                    routeWhileDragging: true,
                 }).addTo(map);
-        
                 // Event listener to update popup content when route is ready
                 routingControl.on('routesfound', function (e) {
-                    var routes = e.routes;
-                    if (routes.length > 0) {
-                        var route = routes[0]; // Assuming there's only one route
-                        var distance = route.summary.totalDistance; // Distance in meters
-                        var duration = route.summary.totalTime; // Duration in seconds
-        
-                        // Convert distance from meters to kilometers
-                        var distanceKm = distance / 1000;
-        
-                        // Convert duration from seconds to minutes
-                        var durationMin = duration / 60;
-        
-                        // Update popup content with route information
-                        var popupContent = "<div id='route-info'><h4>Route Information</h4>";
-                        popupContent += "<p><strong>Distance:</strong> " + distanceKm.toFixed(2) + " km</p>";
-                        popupContent += "<p><strong>Duration:</strong> " + durationMin.toFixed(0) + " minutes</p>";
-                        popupContent += "</div>";
-        
-                        // Update the popup content with route information
-                        document.getElementById("title-content1").innerHTML += popupContent;
-                    }
+                    var route = e.routes[0]; // Assuming there's only one route
+                    var distance = route.summary.totalDistance / 1000; // Convert meters to kilometers
+                    var durationInSeconds = route.summary.totalTime; // Duration in seconds
+
+                    // Convert duration from seconds to hours and minutes
+                    var hours = Math.floor(durationInSeconds / 3600);
+                    var minutes = Math.round((durationInSeconds % 3600) / 60);
+
+
+                    // Update popup content with route information
+                    var popupContent = "<div id='route-info'><h4>Route Information</h4>";
+                    popupContent += "<p><strong>Distance:</strong> <span class='distance-button'>" + distance.toFixed(2) + " km</span></p>";
+                    popupContent += "<p><strong>Duration:</strong> <span class='duration-button'>" + hours + " hours " + minutes + " minutes</span></p>";
+                    popupContent += "</div>";
+
+                    // Update the popup content with route information
+                    document.getElementById("title-content1").innerHTML = popupContent;
                 });
+
             });
         }
-        
 
 
         function findMyLocation(callback) {
