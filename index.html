@@ -1025,28 +1025,55 @@
         });
 
 
-
         function showRouteToMarker(markerLocation) {
             // Get the current location and add routing control to show the route
             findMyLocation(function (userLocation) {
                 var myLocation = userLocation;
-
+        
                 // Remove existing routing control if it exists
                 if (routingControl !== null) {
                     map.removeControl(routingControl);
                 }
-
+        
                 // Add routing control to show the route
                 routingControl = L.Routing.control({
                     waypoints: [
                         L.latLng(myLocation.lat, myLocation.lng), // Your location
-                        markerLocation, // Marker's location
+                        L.latLng(markerLocation.lat, markerLocation.lng), // Marker's location
                     ],
                     routeWhileDragging: true, // Show route while dragging the marker
                 }).addTo(map);
+        
+                // Event listener to update popup content when route is ready
+                routingControl.on('routesfound', function (e) {
+                    var routes = e.routes;
+                    if (routes.length > 0) {
+                        var route = routes[0]; // Assuming there's only one route
+                        var distance = route.summary.totalDistance; // Distance in meters
+                        var duration = route.summary.totalTime; // Duration in seconds
+        
+                        // Convert distance from meters to kilometers
+                        var distanceKm = distance / 1000;
+        
+                        // Convert duration from seconds to minutes
+                        var durationMin = duration / 60;
+        
+                        // Update popup content with route information
+                        var popupContent = "<div id='route-info'><h3>Route Information</h3>";
+                        popupContent += "<p>Distance: " + distanceKm.toFixed(2) + " km</p>";
+                        popupContent += "<p>Duration: " + durationMin.toFixed(0) + " minutes</p>";
+                        popupContent += "<h4>Route Steps:</h4><ol>";
+                        route.instructions.forEach(function (instruction) {
+                            popupContent += "<li>" + instruction.text + "</li>";
+                        });
+                        popupContent += "</ol></div>";
+        
+                        document.getElementById("popup-content").innerHTML = popupContent;
+                    }
+                });
             });
         }
-
+        
 
         function findMyLocation(callback) {
             if (navigator.geolocation) {
