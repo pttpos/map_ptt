@@ -79,7 +79,7 @@
         }
 
         .footer-popup {
-            height:750px;
+            height: 750px;
             /* Auto height to fit content */
         }
 
@@ -108,7 +108,7 @@
                 /* Auto height to fit content on smaller screens */
             }
         }
-        
+
         /* Responsive adjustments for medium screens */
         @media screen and (max-width: 768px) {
 
@@ -690,10 +690,10 @@
                             document.getElementById("marker-image").src = "pictures/" + marker.picture;
 
                             var imageId = marker.picture.split(".")[0]; // Extract the image ID from the picture filename
-   var imageId = marker.picture.split(".")[0]; // Extract the image ID from the picture filename
-    var imageUrl = `url('./pictures/${imageId}.jpg'), url('./pictures/${imageId}.png')`; // Construct the image URL
-    document.querySelector(".popup-image-title").style.backgroundImage = imageUrl;
-    document.querySelector(".popup-image-title").style.backgroundImage = imageUrl;
+                            var imageId = marker.picture.split(".")[0]; // Extract the image ID from the picture filename
+                            var imageUrl = `url('./pictures/${imageId}.jpg'), url('./pictures/${imageId}.png')`; // Construct the image URL
+                            document.querySelector(".popup-image-title").style.backgroundImage = imageUrl;
+                            document.querySelector(".popup-image-title").style.backgroundImage = imageUrl;
 
                             // Set default tab to "Title" when marker is clicked
                             document.getElementById("title-tab").click();
