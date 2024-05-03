@@ -744,6 +744,7 @@
                             service: marker.service,
                             province: marker.province,
                             description: marker.description,
+                            address: marker.address,
                         }).addTo(map);
                         markers.push(customMarker); // Add marker to the markers array
                         // Add option to select input
@@ -776,6 +777,10 @@
                                 "<div style='display: flex; align-items: center;'>" +
                                 "<i class='fas fa-map-marker-alt'></i>" +
                                 "<h3 style='margin-left: 5px;'>Province: " + "<button style=' font-family: Arial, sans-serif; font-size:20px;border-radius:10px;background-color:#ce3a3a;color:white; border: 0px;'>" + marker.province + "</button>" + "</h3>" +
+                                "</div>" +
+                                "<div style='display: flex; align-items: center;'>" +
+                                "<i class='fas fa-address-card'></i>" +
+                                "<h3 style='margin-left: 5px; white-space: nowrap;'>Address: " + marker.address + "</h3>" +
                                 "</div>" +
                                 "</div>";
 
@@ -1146,7 +1151,7 @@
                 console.error("Geolocation is not supported by this browser.");
             }
         }
-        
+
         // Load Leaflet map when the window is loaded
         window.onload = loadMapScenario;
 
