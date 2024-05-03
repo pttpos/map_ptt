@@ -773,11 +773,11 @@
                                 "<div id='title-and-product1' style='display: flex; flex-direction: column;'>" +
                                 "<div style='display: flex; align-items: center;'>" +
                                 "<i class='fas fa-gas-pump'></i>" +
-                                "<h3 style='margin-left: 5px;'>Station: " + "<button style=' font-family: Arial, sans-serif; font-size:20px;border-radius:10px;background-color:#3b79db;color:white;'>" + marker.title + "</button>" + "</h3></button>" +
+                                "<h3 style='margin-left: 5px;'>Station: " + "<button style=' font-family: Arial, sans-serif; font-size:20px;border-radius:10px;background-color:#3b79db;color:white; border: 0px;'>" + marker.title + "</button>" + "</h3></button>" +
                                 "</div>" +
                                 "<div style='display: flex; align-items: center;'>" +
                                 "<i class='fas fa-map-marker-alt'></i>" +
-                                "<h3 style='margin-left: 5px;'>Province: " + "<button style=' font-family: Arial, sans-serif; font-size:20px;border-radius:10px;background-color:#ce3a3a;color:white;'>" + marker.province + "</button>" + "</h3>" +
+                                "<h3 style='margin-left: 5px;'>Province: " + "<button style=' font-family: Arial, sans-serif; font-size:20px;border-radius:10px;background-color:#ce3a3a;color:white; border: 0px;'>" + marker.province + "</button>" + "</h3>" +
                                 "</div>" +
                                 "</div>";
 
@@ -1150,6 +1150,7 @@
                 console.error("Geolocation is not supported by this browser.");
             }
         }
+        
         // Load Leaflet map when the window is loaded
         window.onload = loadMapScenario;
 
