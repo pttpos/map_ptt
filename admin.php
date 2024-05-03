@@ -102,6 +102,10 @@
                             <!-- Add more checkboxes as needed -->
                         </div>
                         <div class="mb-3">
+                            <label for="address" class="form-label"><Address></Address> :</label>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="picture" class="form-label">Picture:</label>
                             <input type="file" class="form-control" id="picture" name="picture">
                         </div>
@@ -226,6 +230,10 @@
                                 <label class="form-check-label" for="edit-test">Cash</label>
                             </div>
                             <!-- Add more checkboxes as needed -->
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label"><Address></Address> :</label>
+                            <input type="text" class="form-control" id="address" name="address" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-picture" class="form-label">New Picture:</label>
@@ -353,6 +361,7 @@
                                 <td>${marker.description}</td>
                                 <td>${marker.service}</td>
                                 <td>${marker.province}</td>
+                                <td>${marker.address}</td>
                                 <td>${marker.picture ? `<img src="pictures/${marker.picture}" alt="Marker Image" style="max-width:40px; border-radius: 50%;">` : 'No Image'}</td>
                                 <td>
                                     <button class="btn btn-danger btn-sm" onclick="deleteMarker(${marker.id})">Delete</button>
@@ -381,7 +390,7 @@
                 document.getElementById('edit-longitude').value = marker.longitude;
                 document.getElementById('edit-title').value = marker.title;
                 document.getElementById('edit-province').value = marker.province;
-
+                document.getElementById('edit-address').value = marker.address;
                 // Populate checkbox groups if the arrays are not null
                 if (marker.product !== null) {
                     marker.product.forEach(prod => {

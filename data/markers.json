@@ -26,29 +26,6 @@
             "picture": "riY59TkM-1.png"
         },
         {
-            "id": "2",
-            "latitude": "11.549502116971485",
-            "longitude": "103.15692485213602",
-            "title": "titi",
-            "description": [
-                "Amazon"
-            ],
-            "product": [
-                "ULG 95",
-                "ULR 91",
-                "HSD"
-            ],
-            "other_product": [
-                "EV"
-            ],
-            "service": [
-                "Cash"
-            ],
-            "province": "Preah Vihear",
-            "old_picture": "",
-            "picture": "photo_2020-09-24_15-26-55.jpg"
-        },
-        {
             "id": "12",
             "latitude": "11.585459292678992",
             "longitude": "103.21205834385312",
@@ -96,6 +73,34 @@
             "province": "Banteay Meanchey",
             "old_picture": "",
             "picture": "flight-dispatcher.png"
+        },
+        {
+            "id": "5665",
+            "latitude": "13.103777483788228",
+            "longitude": "104.9164125083547",
+            "title": "yuuuu",
+            "description": [
+                "Amazon",
+                "7-Eleven"
+            ],
+            "product": [
+                "ULG 95",
+                "ULR 91",
+                "HSD"
+            ],
+            "other_product": [
+                "EV",
+                "Onion"
+            ],
+            "service": [
+                "Fleet card",
+                "ABA",
+                "Cash"
+            ],
+            "province": "Kampot",
+            "address": "fbfdhgngnngfnthrhengdndnfgngfnnbtn",
+            "old_picture": "",
+            "picture": "2.png"
         }
     ]
 }
