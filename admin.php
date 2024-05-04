@@ -46,11 +46,13 @@
                         <div class="mb-3">
                             <label class="form-label">Product:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="ulg95" name="product[]" value="ULG 95">
+                                <input class="form-check-input" type="checkbox" id="ulg95" name="product[]"
+                                    value="ULG 95">
                                 <label class="form-check-label" for="ulg95">ULG 95</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="ulr91" name="product[]" value="ULR 91">
+                                <input class="form-check-input" type="checkbox" id="ulr91" name="product[]"
+                                    value="ULR 91">
                                 <label class="form-check-label" for="7eleven">ULR 91</label>
                             </div>
                             <div class="form-check">
@@ -63,11 +65,13 @@
                         <div class="mb-3">
                             <label class="form-label">Other Product:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="ev" name="other_product[]" value="EV">
+                                <input class="form-check-input" type="checkbox" id="ev" name="other_product[]"
+                                    value="EV">
                                 <label class="form-check-label" for="ev">EV</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="onion" name="other_product[]" value="Onion">
+                                <input class="form-check-input" type="checkbox" id="onion" name="other_product[]"
+                                    value="Onion">
                                 <label class="form-check-label" for="onion">Onion</label>
                             </div>
                             <!-- Add more checkboxes as needed -->
@@ -75,11 +79,13 @@
                         <div class="mb-3">
                             <label class="form-label">Service:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="amazon" name="description[]" value="Amazon">
+                                <input class="form-check-input" type="checkbox" id="amazon" name="description[]"
+                                    value="Amazon">
                                 <label class="form-check-label" for="amazon">Amazon</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="7eleven" name="description[]" value="7-Eleven">
+                                <input class="form-check-input" type="checkbox" id="7eleven" name="description[]"
+                                    value="7-Eleven">
                                 <label class="form-check-label" for="7eleven">7-Eleven</label>
                             </div>
 
@@ -88,7 +94,8 @@
                         <div class="mb-3">
                             <label class="form-label">Payment:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="fleetcard" name="service[]" value="Fleet card">
+                                <input class="form-check-input" type="checkbox" id="fleetcard" name="service[]"
+                                    value="Fleet card">
                                 <label class="form-check-label" for="fleetcard">Fleet Card</label>
                             </div>
                             <div class="form-check">
@@ -102,7 +109,9 @@
                             <!-- Add more checkboxes as needed -->
                         </div>
                         <div class="mb-3">
-                            <label for="address" class="form-label"><Address></Address> :</label>
+                            <label for="address" class="form-label">
+                                <Address></Address> :
+                            </label>
                             <input type="text" class="form-control" id="address" name="address" required>
                         </div>
                         <div class="mb-3">
@@ -124,43 +133,48 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="edit-marker-form" method="POST" action="marker-interface.php" enctype="multipart/form-data">
+                    <form id="edit-marker-form" method="POST" action="marker-interface.php"
+                        enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="edit-id" class="form-label">Station ID:</label>
                             <input type="text" class="form-control" id="edit-id" name="id" readonly>
                         </div>
                         <div class="mb-3">
-                            <label for="edit-title" class="form-label">Title:</label>
+                            <label for="edit-title" class="form-label">Station Name:</label>
                             <input type="text" class="form-control" id="edit-title" name="title" required>
                         </div>
-                        <select id="edit-province" class="form-select" name="province" required>
-                            <option value="" selected disabled>Select Province</option>
-                            <option value="Banteay Meanchey">Banteay Meanchey</option>
-                            <option value="Battambang">Battambang</option>
-                            <option value="Kampong Cham">Kampong Cham</option>
-                            <option value="Kampong Chhnang">Kampong Chhnang</option>
-                            <option value="Kampong Speu">Kampong Speu</option>
-                            <option value="Kampong Thom">Kampong Thom</option>
-                            <option value="Kampot">Kampot</option>
-                            <option value="Kandal">Kandal</option>
-                            <option value="Koh Kong">Koh Kong</option>
-                            <option value="Kratié">Kratié</option>
-                            <option value="Mondulkiri">Mondulkiri</option>
-                            <option value="Oddar Meanchey">Oddar Meanchey</option>
-                            <option value="Pailin">Pailin</option>
-                            <option value="Preah Sihanouk">Preah Sihanouk</option>
-                            <option value="Preah Vihear">Preah Vihear</option>
-                            <option value="Pursat">Pursat</option>
-                            <option value="Ratanakiri">Ratanakiri</option>
-                            <option value="Siem Reap">Siem Reap</option>
-                            <option value="Prey Veng">Prey Veng</option>
-                            <option value="Stung Treng">Stung Treng</option>
-                            <option value="Svay Rieng">Svay Rieng</option>
-                            <option value="Takéo">Takéo</option>
-                            <option value="Kep">Kep</option>
-                            <option value="Otdar Meanchey">Otdar Meanchey</option>
-                            <option value="Pursat">Pursat</option>
-                        </select>
+                        <div class="mb-3">
+                        <label for="edit-picture" class="form-label">Province:</label>
+                            <select id="edit-province" class="form-select" name="province" required>
+                                <option value="" selected disabled>Select Province</option>
+                                <option value="Banteay Meanchey">Banteay Meanchey</option>
+                                <option value="Battambang">Battambang</option>
+                                <option value="Kampong Cham">Kampong Cham</option>
+                                <option value="Kampong Chhnang">Kampong Chhnang</option>
+                                <option value="Kampong Speu">Kampong Speu</option>
+                                <option value="Kampong Thom">Kampong Thom</option>
+                                <option value="Kampot">Kampot</option>
+                                <option value="Kandal">Kandal</option>
+                                <option value="Koh Kong">Koh Kong</option>
+                                <option value="Kratié">Kratié</option>
+                                <option value="Mondulkiri">Mondulkiri</option>
+                                <option value="Oddar Meanchey">Oddar Meanchey</option>
+                                <option value="Phnom Penh">Phnom Penh</option>
+                                <option value="Pailin">Pailin</option>
+                                <option value="Preah Sihanouk">Preah Sihanouk</option>
+                                <option value="Preah Vihear">Preah Vihear</option>
+                                <option value="Pursat">Pursat</option>
+                                <option value="Ratanakiri">Ratanakiri</option>
+                                <option value="Siem Reap">Siem Reap</option>
+                                <option value="Prey Veng">Prey Veng</option>
+                                <option value="Stung Treng">Stung Treng</option>
+                                <option value="Svay Rieng">Svay Rieng</option>
+                                <option value="Takéo">Takéo</option>
+                                <option value="Kep">Kep</option>
+                                <option value="Otdar Meanchey">Otdar Meanchey</option>
+                                <option value="Pursat">Pursat</option>
+                            </select>
+                        </div>
 
                         <div class="mb-3">
                             <label for="edit-latitude" class="form-label">Latitude:</label>
@@ -175,15 +189,18 @@
                         <div class="mb-3">
                             <label class="form-label">Product:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-ulg95" name="product[]" value="ULG 95">
+                                <input class="form-check-input" type="checkbox" id="edit-ulg95" name="product[]"
+                                    value="ULG 95">
                                 <label class="form-check-label" for="edit-ulg95">ULG 95</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-ulr91" name="product[]" value="ULR 91">
+                                <input class="form-check-input" type="checkbox" id="edit-ulr91" name="product[]"
+                                    value="ULR 91">
                                 <label class="form-check-label" for="edit-ulr91">ULR 91</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-hsd" name="product[]" value="HSD">
+                                <input class="form-check-input" type="checkbox" id="edit-hsd" name="product[]"
+                                    value="HSD">
                                 <label class="form-check-label" for="edit-hsd">HSD</label>
                             </div>
                             <!-- Add more checkboxes as needed -->
@@ -193,11 +210,13 @@
                         <div class="mb-3">
                             <label class="form-label">Other Product:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-ev" name="other_product[]" value="EV">
+                                <input class="form-check-input" type="checkbox" id="edit-ev" name="other_product[]"
+                                    value="EV">
                                 <label class="form-check-label" for="edit-ev">EV</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-onion" name="other_product[]" value="Onion">
+                                <input class="form-check-input" type="checkbox" id="edit-onion" name="other_product[]"
+                                    value="Onion">
                                 <label class="form-check-label" for="edit-onion">Onion</label>
                             </div>
                             <!-- Add more checkboxes as needed -->
@@ -206,11 +225,13 @@
                         <div class="mb-3">
                             <label class="form-label">Service:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-amazon" name="description[]" value="Amazon">
+                                <input class="form-check-input" type="checkbox" id="edit-amazon" name="description[]"
+                                    value="Amazon">
                                 <label class="form-check-label" for="edit-amazon">Amazon</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-7eleven" name="description[]" value="7-Eleven">
+                                <input class="form-check-input" type="checkbox" id="edit-7eleven" name="description[]"
+                                    value="7-Eleven">
                                 <label class="form-check-label" for="edit-7eleven">7-Eleven</label>
                             </div>
                             <!-- Add more checkboxes as needed -->
@@ -218,22 +239,27 @@
                         <div class="mb-3">
                             <label class="form-label">Payment:</label><br>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-fleetcard" name="service[]" value="Fleet card">
+                                <input class="form-check-input" type="checkbox" id="edit-fleetcard" name="service[]"
+                                    value="Fleet card">
                                 <label class="form-check-label" for="edit-fleetcard">Fleet Card</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-aba" name="service[]" value="ABA">
+                                <input class="form-check-input" type="checkbox" id="edit-aba" name="service[]"
+                                    value="ABA">
                                 <label class="form-check-label" for="edit-aba">ABA QR</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="edit-test" name="service[]" value="Cash">
+                                <input class="form-check-input" type="checkbox" id="edit-test" name="service[]"
+                                    value="Cash">
                                 <label class="form-check-label" for="edit-test">Cash</label>
                             </div>
                             <!-- Add more checkboxes as needed -->
                         </div>
                         <div class="mb-3">
-                            <label for="address" class="form-label"><Address></Address> :</label>
-                            <input type="text" class="form-control" id="address" name="address" required>
+                            <label for="address" class="form-label">
+                                <Address></Address>Address:
+                            </label>
+                            <input type="text" class="form-control" id="edit-address" name="address" required>
                         </div>
                         <div class="mb-3">
                             <label for="edit-picture" class="form-label">New Picture:</label>
@@ -251,7 +277,7 @@
 
     <script>
         // Function to update the selected file name in the form
-        document.getElementById('edit-picture').addEventListener('change', function() {
+        document.getElementById('edit-picture').addEventListener('change', function () {
             var fileName = this.value.split('\\').pop(); // Get the file name without path
             document.getElementById('edit-file-name').textContent = 'Selected File: ' + fileName;
         });
@@ -265,7 +291,7 @@
             // Array of provinces
             const provinces = [
                 "Banteay Meanchey", "Battambang", "Kampong Cham", "Kampong Chhnang", "Kampong Speu",
-                "Kampong Thom", "Kampot", "Kandal", "Koh Kong", "Kratié", "Mondulkiri", "Oddar Meanchey",
+                "Kampong Thom", "Kampot", "Kandal", "Koh Kong", "Kratié", "Mondulkiri", "Oddar Meanchey","Phnom Penh",
                 "Pailin", "Preah Sihanouk", "Preah Vihear", "Pursat", "Ratanakiri", "Siem Reap", "Prey Veng",
                 "Stung Treng", "Svay Rieng", "Takéo", "Kep", "Otdar Meanchey", "Pursat"
             ];
@@ -307,6 +333,7 @@
                             <th>Service</th>
                             <th>Payment</th>
                             <th>Province</th>
+                            <th>Address</th>
                             <th>Image</th>
                             <th>Actions</th>
                         </tr>
@@ -324,8 +351,8 @@
             if (confirm('Are you sure you want to delete this marker?')) {
                 // Perform delete operation
                 fetch(`marker-interface.php?id=${id}`, {
-                        method: 'DELETE'
-                    })
+                    method: 'DELETE'
+                })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Network response was not ok');
@@ -377,58 +404,77 @@
 
         // Function to populate edit form and show edit modal
         function editMarker(id) {
-    // Fetch marker data corresponding to the ID
-    fetch(`marker-interface.php?id=${id}`)
-        .then(response => response.json())
-        .then(data => {
-            // Check if data is not empty and has the expected structure
-            if (data && data.STATION.length > 0) {
-                // Populate the modal form fields with the marker data
-                const marker = data.STATION[0];
-                document.getElementById('edit-id').value = marker.id;
-                document.getElementById('edit-latitude').value = marker.latitude;
-                document.getElementById('edit-longitude').value = marker.longitude;
-                document.getElementById('edit-title').value = marker.title;
-                document.getElementById('edit-province').value = marker.province;
-                document.getElementById('edit-address').value = marker.address;
-                // Populate checkbox groups if the arrays are not null
-                if (marker.product !== null) {
-                    marker.product.forEach(prod => {
-                        document.querySelector(`input[name="product[]"][value="${prod}"]`).checked = true;
-                    });
-                }
-                if (marker.other_product !== null) {
-                    marker.other_product.forEach(oprod => {
-                        document.querySelector(`input[name="other_product[]"][value="${oprod}"]`).checked = true;
-                    });
-                }
-                if (marker.description !== null) {
-                    marker.description.forEach(desc => {
-                        document.querySelector(`input[name="description[]"][value="${desc}"]`).checked = true;
-                    });
-                }
-                if (marker.service !== null) {
-                    marker.service.forEach(serv => {
-                        document.querySelector(`input[name="service[]"][value="${serv}"]`).checked = true;
-                    });
-                }
+            // Fetch marker data corresponding to the ID
+            fetch(`marker-interface.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if data is not empty and has the expected structure
+                    if (data && data.STATION.length > 0) {
+                        // Populate the modal form fields with the marker data
+                        const marker = data.STATION[0];
+                        document.getElementById('edit-id').value = marker.id;
+                        document.getElementById('edit-latitude').value = marker.latitude;
+                        document.getElementById('edit-longitude').value = marker.longitude;
+                        document.getElementById('edit-title').value = marker.title;
+                        document.getElementById('edit-province').value = marker.province;
+                        document.getElementById('edit-address').value = marker.address;
 
-                // Set the old picture filename or an empty string if no picture exists
-                document.getElementById('old-picture').value = marker.picture || '';
+                        // Populate checkbox groups if the arrays are not null
+                        if (marker.product !== null) {
+                            marker.product.forEach(prod => {
+                                // Check each checkbox based on its value
+                                document.querySelectorAll(`input[name="product[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === prod) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
+                        if (marker.other_product !== null) {
+                            marker.other_product.forEach(oprod => {
+                                document.querySelectorAll(`input[name="other_product[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === oprod) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
+                        if (marker.description !== null) {
+                            marker.description.forEach(desc => {
+                                document.querySelectorAll(`input[name="description[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === desc) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
+                        if (marker.service !== null) {
+                            marker.service.forEach(serv => {
+                                document.querySelectorAll(`input[name="service[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === serv) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
 
-                // Display the filename of the existing picture, if available
-                if (marker.picture) {
-                    const fileName = marker.picture.split('/').pop(); // Extract filename from the path
-                    document.getElementById('edit-file-name').textContent = 'Selected File: ' + fileName;
-                } else {
-                    document.getElementById('edit-file-name').textContent = 'No Picture Selected';
-                }
-            } else {
-                console.error('No data found for the specified ID.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
+
+                        // Set the old picture filename or an empty string if no picture exists
+                        document.getElementById('old-picture').value = marker.picture || '';
+
+                        // Display the filename of the existing picture, if available
+                        if (marker.picture) {
+                            const fileName = marker.picture.split('/').pop(); // Extract filename from the path
+                            document.getElementById('edit-file-name').textContent = 'Selected File: ' + fileName;
+                        } else {
+                            document.getElementById('edit-file-name').textContent = 'No Picture Selected';
+                        }
+                    } else {
+                        console.error('No data found for the specified ID.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
 
     </script>
