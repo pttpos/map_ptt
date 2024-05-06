@@ -1,9 +1,9 @@
 {
     "STATION": [
         {
-            "id": "601",
-            "latitude": "11.570252777777778",
-            "longitude": "104.90491111111112",
+            "id": 601,
+            "latitude": 11.570444444444444,
+            "longitude": 104.90508333333334,
             "title": "PTT Station Neak Vorn",
             "description": [
                 "Amazon",
@@ -25,11 +25,11 @@
             ],
             "province": "Phnom Penh",
             "address": "Russian Federation Blvd (St.110), Sangkat Srah Chak, Khan Doun Penh, Cambodia",
-            "old_picture": "2.png",
+            "old_picture": "",
             "picture": "2.png"
         },
         {
-            "id": "603",
+            "id": 603,
             "latitude": 10.634594444444444,
             "longitude": 103.54430555555555,
             "title": "PTT Station Klaing Leu",
@@ -56,7 +56,7 @@
             "picture": "2.png"
         },
         {
-            "id": "604",
+            "id": 604,
             "latitude": 13.357830555555555,
             "longitude": 103.89061944444445,
             "title": "PTT Station Seang Nam",
@@ -83,7 +83,7 @@
             "picture": "2.png"
         },
         {
-            "id": "F605",
+            "id": 605,
             "latitude": 11.532950000000001,
             "longitude": 104.95410555555556,
             "title": "PTT Station Chba Ampov",
@@ -111,7 +111,7 @@
             "picture": "2.png"
         },
         {
-            "id": "606",
+            "id": 606,
             "latitude": 13.368913888888889,
             "longitude": 103.84679166666666,
             "title": "PTT Staton Siem Reap",
@@ -138,7 +138,7 @@
             "picture": "2.png"
         },
         {
-            "id": "608",
+            "id": 608,
             "latitude": 12.052297222222222,
             "longitude": 105.05008611111111,
             "title": "PTT Station Phdao Chum I",
@@ -165,7 +165,7 @@
             "picture": "2.png"
         },
         {
-            "id": "609",
+            "id": 609,
             "latitude": 11.35755,
             "longitude": 104.18873333333333,
             "title": "PTT Station Pich Nil",
@@ -192,7 +192,7 @@
             "picture": "2.png"
         },
         {
-            "id": "610",
+            "id": 610,
             "latitude": 11.487627777777776,
             "longitude": 104.81649722222222,
             "title": "PTT Station Prey Key",
@@ -219,13 +219,13 @@
             "picture": "2.png"
         },
         {
-            "id": "611",
+            "id": 611,
             "latitude": 10.990052777777777,
             "longitude": 104.782825,
             "title": "PTT Station Takeo City",
             "description": [
                 "Amazon",
-                " 7-Eleven"
+                "7-Eleven"
             ],
             "product": [
                 "ULG 95",
@@ -240,13 +240,13 @@
                 "ABA",
                 "Cash"
             ],
-            "province": "Tak\u00e9o",
+            "province": "Takeo",
             "address": "Poum 3, Sangkat Rokar Knung,Krung DounKeo, Takeo Province",
             "old_picture": "",
             "picture": "2.png"
         },
         {
-            "id": "612",
+            "id": 612,
             "latitude": 12.219722222222222,
             "longitude": 104.66816666666666,
             "title": "PTT Station Kampong Chhnang",
@@ -273,7 +273,7 @@
             "picture": "2.png"
         },
         {
-            "id": "613",
+            "id": 613,
             "latitude": 11.679722222222221,
             "longitude": 104.85052777777777,
             "title": "PTT Station Prek Phnov",
@@ -300,7 +300,7 @@
             "picture": "2.png"
         },
         {
-            "id": "614",
+            "id": 614,
             "latitude": 12.051802777777779,
             "longitude": 105.04250833333333,
             "title": "PTT Station Phdao-Chum II",
@@ -327,7 +327,7 @@
             "picture": "2.png"
         },
         {
-            "id": "617",
+            "id": 617,
             "latitude": 11.498694444444444,
             "longitude": 104.8723611111111,
             "title": "PTT Station Prey Sar",
