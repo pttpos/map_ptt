@@ -1126,13 +1126,20 @@
                     // Add event listener to close button
                     document.getElementById("close-button").addEventListener("click", function() {
                         // Remove routing control from the map
-                        map.removeControl(routingControl);
+                        if (routingControl) {
+                            map.removeControl(routingControl);
+                            routingControl = null; // Set routing control to null to indicate it's removed
+                        }
+                        // Remove the "My Location" marker
+                        if (myLocationMarker) {
+                            map.removeLayer(myLocationMarker);
+                            myLocationMarker = null; // Set myLocationMarker to null to indicate it's removed
+                        }
                     });
                 });
             });
         }
         
-
         function findMyLocation(callback) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
