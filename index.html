@@ -627,7 +627,7 @@
             <div class="popup-image-title"
                 style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
                 <img id="marker-image" src="" alt="Marker Image"
-                    style="max-width: 100px; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px;" />
+                    style="max-width: 100px; border: 0px solid #ccc; background-color: #0044ff; border-radius: 60px; margin: 5px;" />
                 <div id="vertical-line"></div> <!-- Vertical line -->
                 <div id="title-content1" style="margin-left: 20px;"></div>
             </div>
@@ -780,10 +780,9 @@
                                 "<i class='fas fa-map-marker-alt'></i>" +
                                 "<h3 style='margin-left: 5px;'>Province: " + "<button style=' font-family: Arial, sans-serif; font-size:20px;border-radius:10px;background-color:#ce3a3a;color:white; border: 0px;'>" + marker.province + "</button>" + "</h3>" +
                                 "</div>" +
-                                "<div style='display: flex; align-items: center;'>" +
-                                "<i class='fas fa-address-card'></i>" +
-                                "<h3 style='margin-left: 5px; white-space: nowrap;'>Address: " + marker.address + "</h3>" +
-                                "</div>" +
+                                "<div style='display: flex;'>" +
+                                    "<h3 style='margin-left: 5px; white-space: pre-wrap;'><i class='fas fa-address-card'></i> Address: " + marker.address + "</h3>" +
+                                "</div>"+
                                 "</div>";
 
                             // Set default tab to "Title" when marker is clicked
@@ -1103,29 +1102,36 @@
                         markerLocation,
                     ],
                     routeWhileDragging: true,
+                    lineOptions: {
+                        styles: [{color: 'red', opacity: 0.7, weight: 5}]
+                    },
+                    createMarker: function() { return null; }, // Disable default markers
                 }).addTo(map);
                 // Event listener to update popup content when route is ready
                 routingControl.on('routesfound', function (e) {
                     var route = e.routes[0]; // Assuming there's only one route
-                    var distance = route.summary.totalDistance / 1000; // Convert meters to kilometers
-                    var durationInSeconds = route.summary.totalTime; // Duration in seconds
+                    var distance = route.summary.totalDistance / 1000; // Distance in kilometers
+                    var duration = route.summary.totalTime; // Duration in seconds
                     // Convert duration from seconds to hours and minutes
-                    var hours = Math.floor(durationInSeconds / 3600);
-                    var minutes = Math.round((durationInSeconds % 3600) / 60);
+                    var hours = Math.floor(duration / 3600);
+                    var minutes = Math.round((duration % 3600) / 60);
                     // Update popup content with route information
                     var popupContent = "<div id='route-info'>";
                     popupContent +=
                         "<p><strong>Distance:</strong> <span class='distance-button' style='font-size:12px; padding: 2px 5px;'>" +
                         distance.toFixed(2) + " km</span></p>";
-                    popupContent +=
-                        "<p><strong>Duration:</strong> <span class='duration-button' style='font-size: 12px; padding: 2px 5px;'>" +
-                        hours + " hours " + minutes + " minutes</span></p>";
                     popupContent += "</div>";
                     // Update the popup content with route information
                     document.getElementById("title-content1").innerHTML = popupContent;
+                    // Add event listener to close button
+                    document.getElementById("close-button").addEventListener("click", function() {
+                        // Remove routing control from the map
+                        map.removeControl(routingControl);
+                    });
                 });
             });
         }
+        
 
         function findMyLocation(callback) {
             if (navigator.geolocation) {
