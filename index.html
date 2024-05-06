@@ -791,28 +791,29 @@
 
                             document.getElementById("title-tab1").click();
                             document.getElementById("title-content2").innerHTML =
-                                "<div id='title-and-product1' style='display: flex; flex-direction: column;'>" +
-                                    "<div style='display: flex; align-items: center;'>" +
-                                        "<i class='fas fa-gas-pump ' style='color: blue;'></i>" +
-                                        "<h3 style='margin-left: 5px; color: black; font-size: 24px; font-weight: bold;'>" +
-                                            "<button style='font-family: Prompt-Regular; font-size: 20px; border-radius: 10px; background-color: #3b79db; color: white; border: 0px;'>" + marker.title + "</button>" +
-                                        "</h3>" +
-                                    "</div>"+
+                            "<div id='title-and-product1' style='display: flex; flex-direction: column;'>"+
+                                "<div style='display: flex; align-items: center; margin-top: 0;'>"+
                                     
-                                "<div style='display: flex; align-items: center;'>" +
-                                    "<i class='fas fa-map-marker-alt' style='color: red;'></i>" +
-                                    "<h3 style='margin-left: 5px; color: black;'>" +
-                                        "<button style='font-family: Prompt-Regular; font-size: 15px; border-radius: 10px; background-color: #ce3a3a; color: white; border: 0px;'>" + marker.province + "</button>" +
-                                    "</h3>" +
+                                    "<h3 style='margin-left: 5px; color: black; font-size: 24px; font-weight: bold; margin-top: 0;'>"+
+                                        "<i class='fas fa-gas-pump ' style='color: blue; margin-top: 0;margin-right: 5px;'></i>"+
+                                        "<button style='font-family: Prompt-Regular; font-size: 20px; border-radius: 10px; background-color: #3b79db; color: white; border: 0px; margin-top: 0;'>" + marker.title + "</button>"+
+                                    "</h3>"+
                                 "</div>"+
-                                "<div style='display: flex;'>" +
-                                "<h3 style='margin-left: 5px; white-space: pre-wrap; font-family: Prompt-Regular !important; font-size: 16px;'>" +
-                                "<i class='fas fa-address-card' style='color: black;'></i>" +
-                                "<span class='black-text'> Address: </span>" + marker.address +
-                                "</h3>" +
-                                "</div>"
-                            +
-                                "</div>";
+                                "<div style='display: flex; align-items: center; margin-top: 0;'>"+
+                                  
+                                    "<h3 style='margin-left: 5px; color: black; margin-top: 0;'>"+
+                                        "<i class='fas fa-map-marker-alt' style='color: red; margin-top: 0;margin-right: 5px;'></i>" +
+                                        "<button style='font-family: Prompt-Regular; font-size: 15px; border-radius: 10px; background-color: #ce3a3a; color: white; border: 0px; margin-top: 0;'>" + marker.province + "</button>"+
+                                    "</h3>"+
+                                "</div>"+
+                                "<div style='display: flex; margin-top: 0;'>"+
+                                    "<h3 style='margin-left: 5px; white-space: pre-wrap; font-family: Prompt-Regular !important; font-size: 16px; margin-top: 0;'>"+
+                                        "<i class='fas fa-address-card' style='color: black; margin-top: 0;'></i>"+
+                                        "<span class='black-text' style='margin-top: 0;'> Address: </span>" + marker.address +
+                                    "</h3>"+
+                                "</div>"+
+                            "</div>";
+                            
 
 
                             // Set default tab to "Title" when marker is clicked
