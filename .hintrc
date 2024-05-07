@@ -38,6 +38,7 @@
           "backdrop-filter"
         ]
       }
-    ]
+    ],
+    "detect-css-reflows/composite": "off"
   }
 }
