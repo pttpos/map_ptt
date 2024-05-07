@@ -502,6 +502,18 @@
         .black-text {
             color: black;
         }
+        .popup-tab {
+            border: 2px solid transparent; /* Set initial border style */
+            
+        }
+        
+        .popup-tab.active {
+            padding: 10px;
+            border-color: red; /* Change border color to red when active */
+            border-radius: 20px; /* Apply rounded border */
+        }
+        
+        
     </style>
 
 </head>
@@ -661,11 +673,24 @@
             </div>
 
             <div class="tab112" style="text-align: center; margin-top: 20px; width: 100%;">
-                <button id="title-tab" class="popup-tab">Product</button>
-                <button id="description-tab" class="popup-tab">Service</button>
-                <button id="service-tab" class="popup-tab">Payment</button>
-                <button id="title-tab1" class="popup-tab">Information</button>
+                <button id="title-tab" class="popup-tab" onclick="toggleBorder(this)">Product</button>
+                <button id="description-tab" class="popup-tab" onclick="toggleBorder(this)">Service</button>
+                <button id="service-tab" class="popup-tab" onclick="toggleBorder(this)">Payment</button>
+                <button id="title-tab1" class="popup-tab" onclick="toggleBorder(this)">Information</button>
             </div>
+            <script>
+                function toggleBorder(button) {
+                    // Remove 'active' class from all buttons
+                    var buttons = document.querySelectorAll('.popup-tab');
+                    buttons.forEach(function(btn) {
+                        btn.classList.remove('active');
+                    });
+            
+                    // Add 'active' class to the clicked button
+                    button.classList.add('active');
+                }
+            </script>
+            
 
             <!-- Add an overlay container -->
             <div id="overlay" class="overlay">
