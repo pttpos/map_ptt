@@ -1119,10 +1119,12 @@
             filterPopup.classList.remove("show-popup");
         });
 
+        var userMarker = null; // Global variable to store user's marker
+        var routingControl = null; // Global variable to store routing control
+        
         function showRouteToMarker(markerLocation) {
             // Get the current location and add routing control to show the route
             findMyLocation(function (userLocation) {
-                var myLocation = userLocation;
                 // Remove existing routing control if it exists
                 if (routingControl) {
                     map.removeControl(routingControl);
@@ -1130,7 +1132,7 @@
                 // Add routing control to show the route
                 routingControl = L.Routing.control({
                     waypoints: [
-                        myLocation,
+                        userLocation,
                         markerLocation,
                     ],
                     routeWhileDragging: true,
@@ -1143,10 +1145,6 @@
                 routingControl.on('routesfound', function (e) {
                     var route = e.routes[0]; // Assuming there's only one route
                     var distance = route.summary.totalDistance / 1000; // Distance in kilometers
-                    var duration = route.summary.totalTime; // Duration in seconds
-                    // Convert duration from seconds to hours and minutes
-                    var hours = Math.floor(duration / 3600);
-                    var minutes = Math.round((duration % 3600) / 60);
                     // Update popup content with route information
                     var popupContent = "<div id='route-info'>";
                     popupContent +=
@@ -1155,23 +1153,10 @@
                     popupContent += "</div>";
                     // Update the popup content with route information
                     document.getElementById("title-content1").innerHTML = popupContent;
-                    // Add event listener to close button
-                    document.getElementById("close-button").addEventListener("click", function () {
-                        // Remove routing control from the map
-                        if (routingControl) {
-                            map.removeControl(routingControl);
-                            routingControl = null; // Set routing control to null to indicate it's removed
-                        }
-                        // Remove the "My Location" marker
-                        if (myLocationMarker) {
-                            map.removeLayer(myLocationMarker);
-                            myLocationMarker = null; // Set myLocationMarker to null to indicate it's removed
-                        }
-                    });
                 });
             });
         }
-
+        
         function findMyLocation(callback) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -1180,11 +1165,13 @@
                             position.coords.latitude,
                             position.coords.longitude,
                         ];
-                        // Add a new marker at the user's location
+                        // Create or update the user marker
+                        if (!userMarker) {
+                            userMarker = L.marker(latlng, { color: "red" }).addTo(map);
+                        } else {
+                            userMarker.setLatLng(latlng);
+                        }
                         var userLocation = L.latLng(latlng[0], latlng[1]);
-                        var userMarker = L.marker(latlng, {
-                            color: "red"
-                        }).addTo(map);
                         // Set map view to user's location with zoom level
                         map.setView(latlng, 15);
                         // Invoke the callback function with the user's location
@@ -1198,8 +1185,16 @@
                 console.error("Geolocation is not supported by this browser.");
             }
         }
-
-        // Load Leaflet map when the window is loaded
+        
+        // Add event listener to close button
+        document.getElementById("close-button").addEventListener("click", function () {
+            // Remove routing control from the map
+            if (routingControl) {
+                map.removeControl(routingControl);
+                routingControl = null; // Set routing control to null to indicate it's removed
+            }
+        });
+           // Load Leaflet map when the window is loaded
         window.onload = loadMapScenario;
 
         function openGoogleMaps(lat, lon) {
