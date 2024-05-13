@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>PTT Station Map</title>
-    <!-- Include Leaflet CSS and JavaScript -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <!-- Include Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" href="./pictures/logo.png" type="image/png" sizes="10x30">
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>PTT Station Map</title>
+        <!-- Include Leaflet CSS and JavaScript -->
+        <link rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <!-- Include Bootstrap CSS -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="icon" href="./pictures/logo.png" type="image/png"
+            sizes="10x30">
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet"
+            href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-    <!-- Leaflet JavaScript -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <!-- Leaflet JavaScript -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-    <!-- Leaflet Routing Machine CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+        <!-- Leaflet Routing Machine CSS -->
+        <link rel="stylesheet"
+            href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 
-    <!-- Leaflet Routing Machine JavaScript -->
-    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+        <!-- Leaflet Routing Machine JavaScript -->
+        <script
+            src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
-    <style>
+        <style>
         body {
             color: #757373;
             overflow: hidden;
@@ -207,7 +215,7 @@
         }
     </style>
 
-    <style>
+        <style>
         .popup-tab {
             padding: 5px 10px;
             /* Increased padding for larger buttons */
@@ -225,7 +233,7 @@
             /* Adjust font size for better readability */
         }
     </style>
-    <style>
+        <style>
         #description-content {
             display: flex;
             align-items: center;
@@ -243,7 +251,7 @@
             /* Add margin to separate the image and buttons */
         }
     </style>
-    <style>
+        <style>
         .btn-google-maps {
             display: inline-block;
             width: 60px;
@@ -380,8 +388,8 @@
             }
         }
     </style>
-    <!-- overly image view  -->
-    <style>
+        <!-- overly image view  -->
+        <style>
         /* Style for overlay container */
         .overlay {
             position: fixed;
@@ -412,7 +420,7 @@
             border-radius: 20px;
         }
     </style>
-    <style>
+        <style>
         /* Adjust the icon styling */
         .form-label .icon-container {
             display: inline-block;
@@ -427,7 +435,7 @@
             /* Change to your desired color */
         }
     </style>
-    <style>
+        <style>
         .service-container {
             display: inline-flex;
             /* Display as row */
@@ -446,13 +454,14 @@
         .popup-image-title {
             background-color: #f0f0f0;
             border-radius: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Add shadow effect */
         }
-        
+
         #vertical-line {
             width: 3px;
             /* Adjust width as needed */
-            height: 50px;
+            height: 70px;
             /* Adjust height as needed */
             background-color: #ccc;
             /* Change color as needed */
@@ -466,16 +475,20 @@
             justify-content: center;
             flex-wrap: wrap;
         }
+
         .popup-tab {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0); /* Initial shadow */
-            transition: box-shadow 0.3s ease; /* Add transition effect */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+            /* Initial shadow */
+            transition: box-shadow 0.3s ease;
+            /* Add transition effect */
             /* Add other styles as needed */
         }
-        
+
         .popup-tab:hover {
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* Shadow on hover */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            /* Shadow on hover */
         }
-        
+
 
         .distance-button {
             background-color: #ff0000;
@@ -502,145 +515,163 @@
         .black-text {
             color: black;
         }
+
         .popup-tab {
-            border: 2px solid transparent; /* Set initial border style */
-            
+            border: 2px solid transparent;
+            /* Set initial border style */
+
         }
-        
+
         .popup-tab.active {
             padding: 10px;
-            border-color: red; /* Change border color to red when active */
-            border-radius: 20px; /* Apply rounded border */
+            border-color: red;
+            /* Change border color to red when active */
+            border-radius: 20px;
+            /* Apply rounded border */
         }
-        
-        
     </style>
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <div id="map"></div>
+        <div id="map"></div>
 
-    <div id="button-container" class="d-flex flex-column align-items-center">
-        <button id="filter-button" class="button13">
-            <i class="fas fa-filter"></i>
-        </button>
-        <div id="filter-popup" class="footer-popup1">
-            <div class="popup-content1">
-                <button id="close-filter-popup" class="button">
-                    <i class="fas fa-times"></i>
-                    <!-- Font Awesome icon for "times" -->
-                </button>
-                <h3 class="mb-4">Filter Markers</h3>
-                <div class="col-12 col-md-6">
-                    <form id="filter-form">
-                        <div class="mb-3">
-                            <label for="province-filter" class="form-label">
-                                <span class="icon-container"><i class="fas fa-map-marker-alt"></i></span>
-                                Location
-                            </label>
+        <div id="button-container"
+            class="d-flex flex-column align-items-center">
+            <button id="filter-button" class="button13">
+                <i class="fas fa-filter"></i>
+            </button>
+            <div id="filter-popup" class="footer-popup1">
+                <div class="popup-content1">
+                    <button id="close-filter-popup" class="button">
+                        <i class="fas fa-times"></i>
+                        <!-- Font Awesome icon for "times" -->
+                    </button>
+                    <h3 class="mb-4">Filter Markers</h3>
+                    <div class="col-12 col-md-6">
+                        <form id="filter-form">
+                            <div class="mb-3">
+                                <label for="province-filter" class="form-label">
+                                    <span class="icon-container"><i
+                                            class="fas fa-map-marker-alt"></i></span>
+                                    Location
+                                </label>
 
-                            <select id="province-filter" class="form-select custom-select">
-                                <option value="all">All</option>
-                                <option value="Banteay Meanchey">Banteay
-                                    Meanchey</option>
-                                <option value="Battambang">Battambang</option>
-                                <option value="Kampong Cham">Kampong
-                                    Cham</option>
-                                <option value="Kampong Chhnang">Kampong
-                                    Chhnang</option>
-                                <option value="Kampong Speu">Kampong
-                                    Speu</option>
-                                <option value="Kampong Thom">Kampong
-                                    Thom</option>
-                                <option value="Kampot">Kampot</option>
-                                <option value="Kandal">Kandal</option>
-                                <option value="Koh Kong">Koh Kong</option>
-                                <option value="Kratie">Kratié</option>
-                                <option value="Mondulkiri">Mondulkiri</option>
-                                <option value="Oddar Meanchey">Oddar
-                                    Meanchey</option>
-                                <option value="Pailin">Pailin</option>
-                                <option value="Phnom Penh">Phnom
-                                    Penh</option>
-                                <option value="Preah Sihanouk">Preah
-                                    Sihanouk</option>
-                                <option value="Preah Vihear">Preah
-                                    Vihear</option>
-                                <option value="Pursat">Pursat</option>
-                                <option value="Ratanakiri">Ratanakiri</option>
-                                <option value="Siem Reap">Siem Reap</option>
-                                <option value="Prey Veng">Prey Veng</option>
-                                <option value="Stung Treng">Stung
-                                    Treng</option>
-                                <option value="Svay Rieng">Svay
-                                    Rieng</option>
-                                <option value="Takeo">Takéo</option>
-                                <option value="Kep">Kep</option>
-                                <option value="Otdar Meanchey">Otdar
-                                    Meanchey</option>
-                                <option value="Pursat">Pursat</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="search-input" class="form-label">
-                                <span class="icon-container"><i class="fas fa-gas-pump"></i></span>
-                                Station Available
-                            </label>
-                            <select id="search-input" class="form-select custom-select" aria-label="Search by title">
-                                <option value="" selected disabled>Select Station</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="service-filter" class="form-label" >
-                                <span class="icon-container"><i class="fas fa-money-bill-wave"></i></span>
-                                Payment
-                            </label>
-                            <select id="service-filter" class="form-select custom-select">
-                                <option value="all">All</option>
-                                <option value="ABA">ABA</option>
-                                <option value="Fleet card">Fleet
-                                    card</option>
-                                <option value="Cash">Cash</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description-filter" class="form-label">
-                                <span class="icon-container"><i class="fas fa-concierge-bell"></i></span>
-                                Service
-                            </label>
-                            <select id="description-filter" class="form-select custom-select"
-                                aria-label="Search by service">
-                                <option value selected disabled>Select
-                                    Service</option>
-                                <option value="all">All</option>
-                                <option value="Amazon">Amazon</option>
-                                <option value="7-Eleven">7 Eleven</option>
-                                <!-- Add more options as needed -->
-                            </select>
-                        </div>
-                        <button type="submit" class="button" style="background-color: #007bff;">
-                            <i class="fas fa-filter me-2"></i> Apply Filter
-                        </button>
-                    </form>
+                                <select id="province-filter"
+                                    class="form-select custom-select">
+                                    <option value="all">All</option>
+                                    <option value="Banteay Meanchey">Banteay
+                                        Meanchey</option>
+                                    <option
+                                        value="Battambang">Battambang</option>
+                                    <option value="Kampong Cham">Kampong
+                                        Cham</option>
+                                    <option value="Kampong Chhnang">Kampong
+                                        Chhnang</option>
+                                    <option value="Kampong Speu">Kampong
+                                        Speu</option>
+                                    <option value="Kampong Thom">Kampong
+                                        Thom</option>
+                                    <option value="Kampot">Kampot</option>
+                                    <option value="Kandal">Kandal</option>
+                                    <option value="Koh Kong">Koh Kong</option>
+                                    <option value="Kratie">Kratié</option>
+                                    <option
+                                        value="Mondulkiri">Mondulkiri</option>
+                                    <option value="Oddar Meanchey">Oddar
+                                        Meanchey</option>
+                                    <option value="Pailin">Pailin</option>
+                                    <option value="Phnom Penh">Phnom
+                                        Penh</option>
+                                    <option value="Preah Sihanouk">Preah
+                                        Sihanouk</option>
+                                    <option value="Preah Vihear">Preah
+                                        Vihear</option>
+                                    <option value="Pursat">Pursat</option>
+                                    <option
+                                        value="Ratanakiri">Ratanakiri</option>
+                                    <option value="Siem Reap">Siem Reap</option>
+                                    <option value="Prey Veng">Prey Veng</option>
+                                    <option value="Stung Treng">Stung
+                                        Treng</option>
+                                    <option value="Svay Rieng">Svay
+                                        Rieng</option>
+                                    <option value="Takeo">Takéo</option>
+                                    <option value="Kep">Kep</option>
+                                    <option value="Otdar Meanchey">Otdar
+                                        Meanchey</option>
+                                    <option value="Pursat">Pursat</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="search-input" class="form-label">
+                                    <span class="icon-container"><i
+                                            class="fas fa-gas-pump"></i></span>
+                                    Station Available
+                                </label>
+                                <select id="search-input"
+                                    class="form-select custom-select"
+                                    aria-label="Search by title">
+                                    <option value selected disabled>Select
+                                        Station</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="service-filter" class="form-label">
+                                    <span class="icon-container"><i
+                                            class="fas fa-money-bill-wave"></i></span>
+                                    Payment
+                                </label>
+                                <select id="service-filter"
+                                    class="form-select custom-select">
+                                    <option value="all">All</option>
+                                    <option value="ABA">ABA</option>
+                                    <option value="Fleet card">Fleet
+                                        card</option>
+                                    <option value="Cash">Cash</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description-filter"
+                                    class="form-label">
+                                    <span class="icon-container"><i
+                                            class="fas fa-concierge-bell"></i></span>
+                                    Service
+                                </label>
+                                <select id="description-filter"
+                                    class="form-select custom-select"
+                                    aria-label="Search by service">
+                                    <option value selected disabled>Select
+                                        Service</option>
+                                    <option value="all">All</option>
+                                    <option value="Amazon">Amazon</option>
+                                    <option value="7-Eleven">7 Eleven</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                            </div>
+                            <button type="submit" class="button"
+                                style="background-color: #007bff;">
+                                <i class="fas fa-filter me-2"></i> Apply Filter
+                            </button>
+                        </form>
+
+                    </div>
+                    <!-- Add more columns or content as needed -->
 
                 </div>
-                <!-- Add more columns or content as needed -->
-
             </div>
-        </div>
 
-        <button id="find-location-button" class="button13 mb-2">
-            <i class="fas fa-map-marker-alt"></i> My Location
-        </button>
-        <button id="zoom-button" class="button13 mt-2">
-            <i class="fas fa-search-plus"></i> Zoom
-        </button>
-        <div id="suggestions"></div>
-        <p id="powered-by">Powered By Oil Retail System</p>
+            <button id="find-location-button" class="button13 mb-2">
+                <i class="fas fa-map-marker-alt"></i> My Location
+            </button>
+            <button id="zoom-button" class="button13 mt-2">
+                <i class="fas fa-search-plus"></i> Zoom
+            </button>
+            <div id="suggestions"></div>
+            <p id="powered-by">Powered By Oil Retail System</p>
 
-        <script>
+            <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var poweredBy = document.getElementById('powered-by');
                 var currentYear = new Date().getFullYear();
@@ -648,115 +679,139 @@
             });
         </script>
 
-    </div>
-
-    <div id="popup" class="footer-popup">
-        <div class="popup-header" style="margin-top: 70px; margin-bottom: 10px;">
-            <div class="popup-content" style="margin-top:30px; border-radius: 10px;">
-                <a href="#" class="btn btn-primary btn-google-maps">
-                    <img src="#" alt="Image Alt Text">
-                </a>
-            </div>
-            <img src="./pictures/logo_Station.png" style="max-width: 100px" />
-            <i id="close-button" class="fa fa-times-circle"
-                style="margin-left:60%; color: red; font-size: 24px; cursor: pointer;"></i>
         </div>
 
-        <div class="popup-content" style="overflow-y: auto; height:600px; ">
-
-            <div class="popup-image-title"
-                style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
-                <img id="marker-image" src alt="Marker Image"
-                    style="max-width: 160px;max-height: auto; border: 0px solid #ccc; background-color: #0044ff; border-radius: 20px; margin: 10px; margin-right: 15px;" />
-                <div id="vertical-line"></div> <!-- Vertical line -->
-                <div id="title-content1" style="margin-left: 20px;"></div>
+        <div id="popup" class="footer-popup">
+            <div class="popup-header"
+                style="margin-top: 70px; margin-bottom: 10px;">
+                <div class="popup-content"
+                    style="margin-top:30px; border-radius: 10px;">
+                    <a href="#" class="btn btn-primary btn-google-maps">
+                        <img src="#" alt="Image Alt Text">
+                    </a>
+                </div>
+                <img src="./pictures/logo_Station.png"
+                    style="max-width: 100px" />
+                <i id="close-button" class="fa fa-times-circle"
+                    style="margin-left:60%; color: red; font-size: 24px; cursor: pointer;"></i>
             </div>
 
-            <div class="tab112" style="text-align: center; margin-top: 20px; width: 100%;">
-                <button id="title-tab" class="popup-tab" onclick="toggleBorder(this)">Product</button>
-                <button id="description-tab" class="popup-tab" onclick="toggleBorder(this)">Service</button>
-                <button id="service-tab" class="popup-tab" onclick="toggleBorder(this)">Payment</button>
-                <button id="title-tab1" class="popup-tab" onclick="toggleBorder(this)">Information</button>
-            </div>
-            <script>
+            <div class="popup-content" style="overflow-y: auto; height:600px; ">
+                <div class="popup-image-title"
+                    style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
+                    <img id="marker-image" src alt="Marker Image"
+                        style="max-width: 100px;max-height: auto; border: 0px solid #ccc; background-color: #0044ff; border-radius: 20px; margin: 10px;" />
+                    <div id="vertical-line"></div> <!-- Vertical line -->
+                    <div
+                        style="display: flex; flex-direction: column; margin-bottom: 10px;">
+                        <div id="title-content1"></div>
+                        <div id="marker-status"
+                            style="color: white; padding: 5px 5px; border-radius: 15px; display: flex; align-items: center;">
+                            <!-- Status icon and text will be inserted here dynamically -->
+                            <i id="status-icon" class="fas"
+                                style="margin-right: 5px;"></i>
+                            <span id="status-text"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="tab112"
+                    style="text-align: center; margin-top: 20px; width: 100%;">
+                    <button id="title-tab" class="popup-tab"
+                        onclick="toggleBorder(this)">Product</button>
+                    <button id="description-tab" class="popup-tab"
+                        onclick="toggleBorder(this)">Service</button>
+                    <button id="service-tab" class="popup-tab"
+                        onclick="toggleBorder(this)">Payment</button>
+                    <button id="title-tab1" class="popup-tab"
+                        onclick="toggleBorder(this)">Information</button>
+                </div>
+                <script>
                 function toggleBorder(button) {
                     // Remove 'active' class from all buttons
                     var buttons = document.querySelectorAll('.popup-tab');
-                    buttons.forEach(function(btn) {
+                    buttons.forEach(function (btn) {
                         btn.classList.remove('active');
                     });
-            
+
                     // Add 'active' class to the clicked button
                     button.classList.add('active');
                 }
             </script>
-            
 
-            <!-- Add an overlay container -->
-            <div id="overlay" class="overlay">
-                <!-- Overlay content -->
-                <div class="overlay-content">
-                    <img id="overlay-image" src alt="Marker Image">
-                    <!-- Additional content can be added here -->
+                <!-- Add an overlay container -->
+                <div id="overlay" class="overlay">
+                    <!-- Overlay content -->
+                    <div class="overlay-content">
+                        <img id="overlay-image" src alt="Marker Image">
+                        <!-- Additional content can be added here -->
+                    </div>
                 </div>
-            </div>
 
-            <hr />
-            <div id="title-content">
-                <h3>Title:</h3>
-                <div id="product-content" style="display: flex; align-items: center;">
+                <hr />
+                <div id="title-content">
+                    <h3>Title:</h3>
+                    <div id="product-content"
+                        style="display: flex; align-items: center;">
+                        <div class="popup-image-title">
+                            <!-- Display the first product image -->
+                            <img id="product-image-1" src alt="Marker Image"
+                                style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                            <!-- Display the second product image -->
+                            <img id="product-image-2" src alt="Marker Image"
+                                style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                        </div>
+                    </div>
+                    <div id="other-product-content"
+                        style="display: flex; align-items: center;">
+                        <div class="popup-image-title">
+                            <!-- Display the first other product image -->
+                            <img id="other-product-image-1" src
+                                alt="Marker Image"
+                                style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                            <!-- Display the second other product image -->
+                            <img id="other-product-image-2" src
+                                alt="Marker Image"
+                                style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                        </div>
+                    </div>
+                </div>
+
+                <div id="description-content"
+                    style="display: flex; align-items: center;">
                     <div class="popup-image-title">
-                        <!-- Display the first product image -->
-                        <img id="product-image-1" src alt="Marker Image"
+                        <!-- Display the first image -->
+                        <img id="description-image-1" src alt="Marker Image"
                             style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
-                        <!-- Display the second product image -->
-                        <img id="product-image-2" src alt="Marker Image"
+                        <!-- Display the second image -->
+                        <img id="description-image-2" src alt="Marker Image"
                             style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
                     </div>
                 </div>
-                <div id="other-product-content" style="display: flex; align-items: center;">
+
+                <div id="service-content"
+                    style="display: flex; align-items: center;">
                     <div class="popup-image-title">
-                        <!-- Display the first other product image -->
-                        <img id="other-product-image-1" src alt="Marker Image"
-                            style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
-                        <!-- Display the second other product image -->
-                        <img id="other-product-image-2" src alt="Marker Image"
-                            style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
+                        <h2
+                            style="display: inline-block; margin-left: 5px; color:#444744;">Payment</h2>
+                        <div id="service-buttons"></div>
+                    </div>
+                </div>
+
+                <div id="title-content2">
+                    <div>
+                        <h2></h2>
+                    </div>
+                    <div>
+                        <h2></h2>
                     </div>
                 </div>
             </div>
 
-            <div id="description-content" style="display: flex; align-items: center;">
-                <div class="popup-image-title">
-                    <!-- Display the first image -->
-                    <img id="description-image-1" src alt="Marker Image"
-                        style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
-                    <!-- Display the second image -->
-                    <img id="description-image-2" src alt="Marker Image"
-                        style="max-width: 60px; vertical-align: middle; margin-right: 5px;" />
-                </div>
-            </div>
-
-            <div id="service-content" style="display: flex; align-items: center;">
-                <div class="popup-image-title">
-                    <h2 style="display: inline-block; margin-left: 5px; color:#444744;">Payment</h2>
-                    <div id="service-buttons"></div>
-                </div>
-            </div>
-
-            <div id="title-content2">
-                <div>
-                    <h2></h2>
-                </div>
-                <div>
-                    <h2></h2>
-                </div>
-            </div>
         </div>
 
-    </div>
-
-    <script>
+        <script>
 
         var map;
         var popup = document.getElementById("popup");
@@ -784,7 +839,35 @@
                     markerData.STATION.forEach((marker) => {
                         var loc = [marker.latitude, marker.longitude];
                         // Define the custom icon URL for the marker
-                        var customIconUrl = "./pictures/6.png";
+
+
+                        var customIconUrl = ""; // Initialize the custom icon URL
+
+                        // Determine the custom icon URL based on the marker's status
+                        switch (marker.status) {
+                            case "under construct":
+                                customIconUrl = "./pictures/under_construction.png";
+                                break;
+                                case "16h":
+                                var currentDate = new Date(); // Get the current date and time
+                                var currentHour = currentDate.getHours(); // Extract the current hour
+                                var customIconUrl = ""; // Initialize the custom icon URL
+                            
+                                if (currentHour >=5.30 && currentHour < 20.30) {
+                                    customIconUrl = "./pictures/6.png"; // Set the icon URL for the hours between 7 AM and 12 PM
+                                } else {
+                                    customIconUrl = "./pictures/time_close.png"; // Set the icon URL for other hours (gray icon)
+                                }
+                                break;
+                            
+                            case "24h":
+                                customIconUrl = "./pictures/6.png";
+                                break;
+                            default:
+                                customIconUrl = "./pictures/6.png";
+                                break;
+                        }
+
                         // Create a custom icon
                         var customIcon = L.icon({
                             iconUrl: customIconUrl,
@@ -792,6 +875,7 @@
                             iconAnchor: [24, 75], // Adjust anchor position if needed
                             popupAnchor: [0, -1000], // Adjust popup anchor if needed
                         });
+
                         // Create a marker with custom icon
                         var customMarker = L.marker(loc, {
                             icon: customIcon,
@@ -800,8 +884,11 @@
                             province: marker.province,
                             description: marker.description,
                             address: marker.address,
+                            status: marker.status,
                         }).addTo(map);
+
                         markers.push(customMarker); // Add marker to the markers array
+
                         // Add option to select input
                         var option = document.createElement("option");
                         option.textContent = marker.title;
@@ -811,6 +898,7 @@
                         customMarker.on("click", function (e) {
                             // Show route to the clicked marker
                             showRouteToMarker(customMarker.getLatLng());
+
                             var myLocation = map
                                 .getCenter(); // Assuming your location is the center of the map
                             var markerLocation = customMarker.getLatLng();
@@ -819,34 +907,77 @@
                             // Set popup content dynamically from marker data
                             popup.querySelector(".popup-header img").src =
                                 "./pictures/Google_Maps_icon.png";
-                            document.getElementById("marker-image").src = "pictures/" + marker
-                                .picture;
+                            document.getElementById("marker-image").src = "pictures/" + marker.picture;
+
+                            // Get the marker status element and status icon element
+                            var markerStatusElement = document.getElementById("marker-status");
+                            var statusIconElement = document.getElementById("status-icon");
+                            var statusTextElement = document.getElementById("status-text");
+
+                            // Get the status icon class, text, and background color based on the marker's status
+                            var statusInfo = getStatusIconClass(marker.status);
+
+                            // Set the class of the status icon element
+                            statusIconElement.className = statusInfo.class;
+
+                            // Set the text content of the status text element
+                            statusTextElement.textContent = statusInfo.text;
+
+                            // Set the background color of the marker status element
+                            markerStatusElement.style.backgroundColor = statusInfo.color;
+
+                            function getStatusIconClass(status) {
+                                // Get the current date and time
+                                var currentTime = new Date();
+                                var currentHour = currentTime.getHours();
+                                var currentMinute = currentTime.getMinutes();
+                                var currentSecond = currentTime.getSeconds();
+
+                                switch (status) {
+                                    case "under construct":
+                                        return { class: "fa fa-tools", text: "Under Construction", color: "#FFA500" }; // Icon class, text, and background color for "under construct" status
+                                    case "16h":
+                                        // Check if the current time is within the opening hours for 16 hours
+                                        if (currentHour >= 5.30 && currentHour < 20.30) {
+                                            return { class: "fa fa-clock", text: "Open", color: "#008000" }; // Icon class, text, and background color for "16 hours" status (open)
+                                        } else {
+                                            return { class: "fa fa-clock", text: "Closed", color: "#FF0000" }; // Icon class, text, and background color for "16 hours" status (closed)
+                                        }
+                                    case "24h":
+                                        return { class: "fa fa-clock", text: "Open 24 Hours", color: "#0000FF" }; // Icon class, text, and background color for "24 hours" status
+                                    default:
+                                        return { class: "", text: "", color: "" }; // Default empty class, text, and color if status doesn't match any case
+                                }
+                            }
+
+
+
 
                             document.getElementById("title-tab1").click();
                             document.getElementById("title-content2").innerHTML =
-                            "<div id='title-and-product1' style='display: flex; flex-direction: column;'>"+
-                                "<div style='display: flex; align-items: center; margin-top: 0;'>"+
-                                    
-                                    "<h3 style='margin-left: 5px; color: black; font-size: 24px; font-weight: bold; margin-top: 0;'>"+
-                                        "<i class='fas fa-gas-pump ' style='color: blue; margin-top: 0;margin-right: 5px;'></i>"+
-                                        "<button style='font-family: Prompt-Regular; font-size: 20px; border-radius: 10px; background-color: #3b79db; color: white; border: 0px; margin-top: 0;'>" + marker.title + "</button>"+
-                                    "</h3>"+
-                                "</div>"+
-                                "<div style='display: flex; align-items: center; margin-top: 0;'>"+
-                                  
-                                    "<h3 style='margin-left: 5px; color: black; margin-top: 0;'>"+
-                                        "<i class='fas fa-map-marker-alt' style='color: red; margin-top: 0;margin-right: 5px;'></i>" +
-                                        "<button style='font-family: Prompt-Regular; font-size: 15px; border-radius: 10px; background-color: #ce3a3a; color: white; border: 0px; margin-top: 0;'>" + marker.province + "</button>"+
-                                    "</h3>"+
-                                "</div>"+
-                                "<div style='display: flex; margin-top: 0;'>"+
-                                    "<h3 style='margin-left: 5px; white-space: pre-wrap; font-family: Prompt-Regular !important; font-size: 16px; margin-top: 0;'>"+
-                                        "<i class='fas fa-address-card' style='color: black; margin-top: 0;'></i>"+
-                                        "<span class='black-text' style='margin-top: 0;'> Address: </span>" + marker.address +
-                                    "</h3>"+
-                                "</div>"+
-                            "</div>";
-                            
+                                "<div id='title-and-product1' style='display: flex; flex-direction: column;'>" +
+                                "<div style='display: flex; align-items: center; margin-top: 0;'>" +
+
+                                "<h3 style='margin-left: 5px; color: black; font-size: 24px; font-weight: bold; margin-top: 0;'>" +
+                                "<i class='fas fa-gas-pump ' style='color: blue; margin-top: 0;margin-right: 5px;'></i>" +
+                                "<button style='font-family: Prompt-Regular; font-size: 20px; border-radius: 10px; background-color: #3b79db; color: white; border: 0px; margin-top: 0;'>" + marker.title + "</button>" +
+                                "</h3>" +
+                                "</div>" +
+                                "<div style='display: flex; align-items: center; margin-top: 0;'>" +
+
+                                "<h3 style='margin-left: 5px; color: black; margin-top: 0;'>" +
+                                "<i class='fas fa-map-marker-alt' style='color: red; margin-top: 0;margin-right: 5px;'></i>" +
+                                "<button style='font-family: Prompt-Regular; font-size: 15px; border-radius: 10px; background-color: #ce3a3a; color: white; border: 0px; margin-top: 0;'>" + marker.province + "</button>" +
+                                "</h3>" +
+                                "</div>" +
+                                "<div style='display: flex; margin-top: 0;'>" +
+                                "<h3 style='margin-left: 5px; white-space: pre-wrap; font-family: Prompt-Regular !important; font-size: 16px; margin-top: 0;'>" +
+                                "<i class='fas fa-address-card' style='color: black; margin-top: 0;'></i>" +
+                                "<span class='black-text' style='margin-top: 0;'> Address: </span>" + marker.address +
+                                "</h3>" +
+                                "</div>" +
+                                "</div>";
+
 
 
                             // Set default tab to "Title" when marker is clicked
@@ -968,7 +1099,7 @@
                             // Display the popup with animation
                             popup.classList.add("show-popup");
 
-                            
+
                             // Get references to the marker image and overlay
                             var markerImage = document.getElementById("marker-image");
                             var overlay = document.getElementById("overlay");
@@ -1155,7 +1286,7 @@
 
         var userMarker = null; // Global variable to store user's marker
         var routingControl = null; // Global variable to store routing control
-        
+
         function showRouteToMarker(markerLocation) {
             // Get the current location and add routing control to show the route
             findMyLocation(function (userLocation) {
@@ -1190,7 +1321,7 @@
                 });
             });
         }
-        
+
         function findMyLocation(callback) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -1219,7 +1350,7 @@
                 console.error("Geolocation is not supported by this browser.");
             }
         }
-        
+
         // Add event listener to close button
         document.getElementById("close-button").addEventListener("click", function () {
             // Remove routing control from the map
@@ -1228,7 +1359,7 @@
                 routingControl = null; // Set routing control to null to indicate it's removed
             }
         });
-           // Load Leaflet map when the window is loaded
+        // Load Leaflet map when the window is loaded
         window.onload = loadMapScenario;
 
         function openGoogleMaps(lat, lon) {
@@ -1240,7 +1371,7 @@
             window.open(url, "_self");
         }
     </script>
-    <style>
+        <style>
         .btn-fleetcard,
         .btn-cash,
         .btn-aba,
@@ -1273,7 +1404,6 @@
             /* Grey color for other services */
         }
     </style>
-
-</body>
+    </body>
 
 </html>

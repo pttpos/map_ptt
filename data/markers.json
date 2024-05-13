@@ -1,9 +1,9 @@
 {
     "STATION": [
         {
-            "id": 601,
-            "latitude": 11.570444444444444,
-            "longitude": 104.90508333333334,
+            "id": "601",
+            "latitude": "11.570444444444444",
+            "longitude": "104.90508333333334",
             "title": "PTT Station Neak Vorn",
             "description": [
                 "Amazon",
@@ -25,13 +25,14 @@
             ],
             "province": "Phnom Penh",
             "address": "Russian Federation Blvd (St.110), Sangkat Srah Chak, Khan Doun Penh, Cambodia",
-            "old_picture": "",
+            "status": "under construct",
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
-            "id": 603,
-            "latitude": 10.634594444444444,
-            "longitude": 103.54430555555555,
+            "id": "603",
+            "latitude": "10.634594444444444",
+            "longitude": "103.54430555555555",
             "title": "PTT Station Klaing Leu",
             "description": [
                 "Amazon",
@@ -50,9 +51,10 @@
                 "ABA",
                 "Cash"
             ],
-            "province": "Preah Sihanouk",
+            "province": "Phnom Penh",
             "address": "National Road No. 4, Sangkat 1, Khan Mittapheap, Sihanouk Province, Cambodia",
-            "old_picture": "",
+            "status": "16h",
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
@@ -83,9 +85,9 @@
             "picture": "2.png"
         },
         {
-            "id": 605,
-            "latitude": 11.532950000000001,
-            "longitude": 104.95410555555556,
+            "id": "605",
+            "latitude": "11.532950000000001",
+            "longitude": "104.95410555555556",
             "title": "PTT Station Chba Ampov",
             "description": [
                 "Amazon",
@@ -107,7 +109,8 @@
             ],
             "province": "Phnom Penh",
             "address": "National Road No. 1 (Phnom Penh-Vietnam), Sangkat Niruth, Khan Chbar Ampov, Phnom Penh, Cambodia",
-            "old_picture": "",
+            "status": "16h",
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
@@ -246,9 +249,9 @@
             "picture": "2.png"
         },
         {
-            "id": 612,
-            "latitude": 12.219722222222222,
-            "longitude": 104.66816666666666,
+            "id": "612",
+            "latitude": "12.219722222222222",
+            "longitude": "104.66816666666666",
             "title": "PTT Station Kampong Chhnang",
             "description": [
                 "Amazon",
@@ -259,9 +262,7 @@
                 "ULR 91",
                 "HSD"
             ],
-            "other_product": [
-                ""
-            ],
+            "other_product": null,
             "service": [
                 "Fleet card",
                 "ABA",
@@ -269,7 +270,8 @@
             ],
             "province": "Kampong Chhnang",
             "address": "National R. 5, Phum Toul Khsach, Khum Chrey Bak, Srok Rolea Pa Ear, Kanpong Chhnang province ",
-            "old_picture": "",
+            "status": "16h",
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {

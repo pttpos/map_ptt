@@ -7,24 +7,16 @@
     <title>Admin Interface</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-
-
-
-
-
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
 </head>
 
 <body>
@@ -46,9 +38,12 @@
                             <label for="title" class="form-label">Station Name :</label>
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
-                        <select id="edit-province" class="form-select" name="province" required>
-                            <option value="" selected disabled>Select Province</option>
-                        </select>
+                        <div class="mb-3">
+                            <label for="province" class="form-label">Province Name :</label>
+                            <select id="edit1-province" class="form-select" name="province" required>
+                                <option value="" selected disabled>Select Province</option>
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="latitude" class="form-label">Latitude:</label>
                             <input type="text" class="form-control" id="latitude" name="latitude" required>
@@ -58,6 +53,17 @@
                             <input type="text" class="form-control" id="longitude" name="longitude" required>
                         </div>
                         <!-- product -->
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status:</label>
+                            <select id="status" class="form-select" name="status" required>
+                                <option value="" selected disabled>Select Status</option>
+                                <option value="16h">⏰ 16 Hours</option>
+                                <option value="24h">⏰ 24 Hours</option>
+                                <option value="under construct">🚫 Under Construct</option>
+                            </select>
+
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Product:</label><br>
                             <div class="form-check">
@@ -125,7 +131,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">
-                                <Address></Address> :
+                                Address:
                             </label>
                             <input type="text" class="form-control" id="address" name="address" required>
                         </div>
@@ -159,7 +165,7 @@
                             <input type="text" class="form-control" id="edit-title" name="title" required>
                         </div>
                         <div class="mb-3">
-                        <label for="edit-picture" class="form-label">Province:</label>
+                            <label for="edit-picture" class="form-label">Province:</label>
                             <select id="edit-province" class="form-select" name="province" required>
                                 <option value="" selected disabled>Select Province</option>
                                 <option value="Banteay Meanchey">Banteay Meanchey</option>
@@ -199,7 +205,16 @@
                             <label for="edit-longitude" class="form-label">Longitude:</label>
                             <input type="text" class="form-control" id="edit-longitude" name="longitude" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="edit-status" class="form-label">Status:</label>
+                            <select id="edit-status" class="form-select" name="status" required>
+                                <option value="" selected disabled>Select Status</option>
+                                <option value="16h">⏰ 16 Hours</option>
+                                <option value="24h">⏰ 24 Hours</option>
+                                <option value="under construct">🚫 Under Construct</option>
+                            </select>
 
+                        </div>
                         <!-- product  -->
                         <div class="mb-3">
                             <label class="form-label">Product:</label><br>
@@ -297,8 +312,6 @@
             document.getElementById('edit-file-name').textContent = 'Selected File: ' + fileName;
         });
     </script>
-
-
     <script>
         // Function to populate the province dropdown
         function populateProvinceDropdown(elementId) {
@@ -308,7 +321,7 @@
             // Array of provinces
             const provinces = [
                 "Banteay Meanchey", "Battambang", "Kampong Cham", "Kampong Chhnang", "Kampong Speu",
-                "Kampong Thom", "Kampot", "Kandal", "Koh Kong", "Kratié", "Mondulkiri", "Oddar Meanchey","Phnom Penh",
+                "Kampong Thom", "Kampot", "Kandal", "Koh Kong", "Kratié", "Mondulkiri", "Oddar Meanchey", "Phnom Penh",
                 "Pailin", "Preah Sihanouk", "Preah Vihear", "Pursat", "Ratanakiri", "Siem Reap", "Prey Veng",
                 "Stung Treng", "Svay Rieng", "Takéo", "Kep", "Otdar Meanchey", "Pursat"
             ];
@@ -323,186 +336,239 @@
         }
 
         // Call the function to populate the dropdown for the add marker modal
-        populateProvinceDropdown("edit-province");
+        populateProvinceDropdown("edit1-province");
 
         // Call the function to populate the dropdown for the edit marker modal
-        populateProvinceDropdown("edit-province");
+        populateProvinceDropdown("edit1-province");
     </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script>
-    $(document).ready(function() {
-    // Initialize DataTables
-    $('#marker-table').DataTable({
-        "order": [] // Disables initial sorting
-    });
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <!-- jQuery and DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#marker-table').DataTable({
+                "order": [], // Disables initial sorting
+                "processing": true, // Show processing indicator
+                "serverSide": false, // Enable server-side processing
+                "ajax": {
+                    "url": "marker-interface.php",
+                    "dataSrc": "STATION" // Specify the property name containing the data
+                },
+                "columns": [
+                    { "data": "id" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return `<button class="btn btn-info btn-sm" onclick="viewLocation('${row.latitude}', '${row.longitude}')">View Location</button>`;
+                        }
+                    },
+                    { "data": "title" },
+                    { "data": "product" },
+                    { "data": "other_product" },
+                    { "data": "description" },
+                    { "data": "service" },
+                    { "data": "province" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return `<button class="btn btn-primary btn-sm" onclick="viewAddress('${row.address}')">View</button>`;
+                        }
+                    },
+                    {
+                        "data": "picture",
+                        "render": function (data) {
+                            if (data) {
+                                return `<a href="#" class="marker-image-link" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="pictures/${data}"><img src="pictures/${data}" alt="Marker Image" style="max-width:40px; border-radius: 50%;"></a>`;
+                            } else {
+                                return 'No Image';
+                            }
+                        }
+                    },
 
-    // Fetch marker data and display in table
-    fetch('marker-interface.php')
-        .then(response => response.json())
-        .then(data => {
-            var tableBody = document.getElementById('marker-table-body');
-            var markers = data.STATION;
 
-            function displayMarkers(markers) {
-                tableBody.innerHTML = '';
-                markers.forEach(marker => {
-                    var row = document.createElement('tr');
-                    row.innerHTML = `<td>${marker.id}</td>
-                                <td>${marker.latitude}</td>
-                                <td>${marker.longitude}</td>
-                                <td>${marker.title}</td>
-                                <td>${marker.product}</td>
-                                <td>${marker.other_product}</td>
-                                <td>${marker.description}</td>
-                                <td>${marker.service}</td>
-                                <td>${marker.payment}</td>
-                                <td>${marker.province}</td>
-                                <td>${marker.address}</td>
-                                <td>${marker.picture ? `<img src="pictures/${marker.picture}" alt="Marker Image" style="max-width:40px; border-radius: 50%;">` : 'No Image'}</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteMarker(${marker.id})">Delete</button>
-                                    <button class="btn btn-primary btn-sm" onclick="editMarker(${marker.id})" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
-                                </td>`;
-                    tableBody.appendChild(row);
-                });
+                    { "data": "status" },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return `<button class="btn btn-danger btn-sm" onclick="deleteMarker(${data.id})"><i class="fas fa-trash-alt"></i></button>
+                                    <button class="btn btn-primary btn-sm" onclick="editMarker(${data.id})" data-bs-toggle="modal" data-bs-target="#editModal"><i class="fas fa-edit"></i></button>`;
+                        }
+                    }
+                ]
+            });
+        });
+        function viewAddress(address) {
+            alert(address); // Display the address in an alert, you can modify this to open a modal or any other preferred method
+        }
+
+        function viewLocation(latitude, longitude) {
+            // You can handle viewing the location here, such as opening a map with the coordinates
+            alert(`${latitude},${longitude}`);
+        }
+
+        // Function to delete marker
+        function deleteMarker(id) {
+            if (confirm('Are you sure you want to delete this marker?')) {
+                // Perform delete operation
+                fetch(`marker-interface.php?id=${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        // Refresh page to update marker list
+                        window.location.reload();
+                    })
+                    .catch(error => console.error('Error:', error));
             }
+        }
 
-            displayMarkers(markers);
-        })
-        .catch(error => console.error('Error:', error));
-});
+        // Function to populate edit form and show edit modal
+        function editMarker(id) {
+            // Fetch marker data corresponding to the ID
+            fetch(`marker-interface.php?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Check if data is not empty and has the expected structure
+                    if (data && data.STATION.length > 0) {
+                        // Populate the modal form fields with the marker data
+                        const marker = data.STATION[0];
+                        document.getElementById('edit-id').value = marker.id;
+                        document.getElementById('edit-latitude').value = marker.latitude;
+                        document.getElementById('edit-longitude').value = marker.longitude;
+                        document.getElementById('edit-title').value = marker.title;
+                        document.getElementById('edit-province').value = marker.province;
+                        document.getElementById('edit-address').value = marker.address;
+                        document.getElementById('edit-status').value = marker.status;
+                        // Populate checkbox groups if the arrays are not null
+                        if (marker.product !== null) {
+                            marker.product.forEach(prod => {
+                                // Check each checkbox based on its value
+                                document.querySelectorAll(`input[name="product[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === prod) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
+                        if (marker.other_product !== null) {
+                            marker.other_product.forEach(oprod => {
+                                document.querySelectorAll(`input[name="other_product[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === oprod) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
+                        if (marker.description !== null) {
+                            marker.description.forEach(desc => {
+                                document.querySelectorAll(`input[name="description[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === desc) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
+                        if (marker.service !== null) {
+                            marker.service.forEach(serv => {
+                                document.querySelectorAll(`input[name="service[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === serv) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
 
-// Function to delete marker
-function deleteMarker(id) {
-    if (confirm('Are you sure you want to delete this marker?')) {
-        // Perform delete operation
-        fetch(`marker-interface.php?id=${id}`, {
-            method: 'DELETE'
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                // Refresh page to update marker list
-                window.location.reload();
-            })
-            .catch(error => console.error('Error:', error));
-    }
-}
+                        // Set the old picture filename or an empty string if no picture exists
+                        document.getElementById('old-picture').value = marker.picture || '';
 
-// Function to populate edit form and show edit modal
-function editMarker(id) {
-    // Fetch marker data corresponding to the ID
-    fetch(`marker-interface.php?id=${id}`)
-        .then(response => response.json())
-        .then(data => {
-            // Check if data is not empty and has the expected structure
-            if (data && data.STATION.length > 0) {
-                // Populate the modal form fields with the marker data
-                const marker = data.STATION[0];
-                document.getElementById('edit-id').value = marker.id;
-                document.getElementById('edit-latitude').value = marker.latitude;
-                document.getElementById('edit-longitude').value = marker.longitude;
-                document.getElementById('edit-title').value = marker.title;
-                document.getElementById('edit-province').value = marker.province;
-                document.getElementById('edit-address').value = marker.address;
+                        // Display the filename of the existing picture, if available
+                        if (marker.picture) {
+                            const fileName = marker.picture.split('/').pop(); // Extract filename from the path
+                            document.getElementById('edit-file-name').textContent = 'Selected File: ' + fileName;
+                        } else {
+                            document.getElementById('edit-file-name').textContent = 'No Picture Selected';
+                        }
+                    } else {
+                        console.error('No data found for the specified ID.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
-                // Populate checkbox groups if the arrays are not null
-                if (marker.product !== null) {
-                    marker.product.forEach(prod => {
-                        // Check each checkbox based on its value
-                        document.querySelectorAll(`input[name="product[]"]`).forEach(checkbox => {
-                            if (checkbox.value === prod) {
-                                checkbox.checked = true;
-                            }
-                        });
-                    });
-                }
-                if (marker.other_product !== null) {
-                    marker.other_product.forEach(oprod => {
-                        document.querySelectorAll(`input[name="other_product[]"]`).forEach(checkbox => {
-                            if (checkbox.value === oprod) {
-                                checkbox.checked = true;
-                            }
-                        });
-                    });
-                }
-                if (marker.description !== null) {
-                    marker.description.forEach(desc => {
-                        document.querySelectorAll(`input[name="description[]"]`).forEach(checkbox => {
-                            if (checkbox.value === desc) {
-                                checkbox.checked = true;
-                            }
-                        });
-                    });
-                }
-                if (marker.service !== null) {
-                    marker.service.forEach(serv => {
-                        document.querySelectorAll(`input[name="service[]"]`).forEach(checkbox => {
-                            if (checkbox.value === serv) {
-                                checkbox.checked = true;
-                            }
-                        });
-                    });
-                }
 
-                // Set the old picture filename or an empty string if no picture exists
-                document.getElementById('old-picture').value = marker.picture || '';
 
-                // Display the filename of the existing picture, if available
-                if (marker.picture) {
-                    const fileName = marker.picture.split('/').pop(); // Extract filename from the path
-                    document.getElementById('edit-file-name').textContent = 'Selected File: ' + fileName;
-                } else {
-                    document.getElementById('edit-file-name').textContent = 'No Picture Selected';
-                }
-            } else {
-                console.error('No data found for the specified ID.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-}
 
-</script>
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-body">
-            <!-- Marker Data Table -->
-            <h2 class="card-title mt-5">Marker Data</h2>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Add Marker
-            </button>
-            <div class="table-responsive mt-3">
-                <table id="marker-table" class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
-                            <th>Title</th>
-                            <th>Product</th>
-                            <th>Other Product</th>
-                            <th>Description</th>
-                            <th>Service</th>
-                            <th>Payment</th>
-                            <th>Province</th>
-                            <th>Address</th>
-                            <th>Image</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="marker-table-body"></tbody>
-                </table>
+    </script>
+
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Marker Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modalImage" src="" alt="Marker Image" style="max-width: 100%; height: auto;">
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <script>
+        $(document).on('click', '.marker-image-link', function (e) {
+            e.preventDefault(); // Prevent the default behavior of the link
+            var imageUrl = $(this).data('image');
+            $('#modalImage').attr('src', imageUrl);
+            $('#imageModal').modal('show');
+        });
+    </script>
+
+
+
+
+    <div class="container-fluid mt-5">
+        <div class="card">
+            <div class="card-body">
+                <!-- Marker Data Table -->
+                <h2 class="card-title mt-5">Marker Data</h2>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Add Marker
+                </button>
+                <div class="table-responsive mt-3">
+                    <table id="marker-table" class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Lat and Long </th>
+                                <th>Station</th>
+                                <th>Product</th>
+                                <th>Other Product</th>
+                                <th>Service</th>
+                                <th>Payment</th>
+                                <th>Province</th>
+                                <th>Address</th>
+                                <th>Image</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="marker-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </body>
