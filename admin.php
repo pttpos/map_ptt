@@ -98,6 +98,41 @@
                             <!-- Add more checkboxes as needed -->
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Promotions:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="promotion1" name="promotion[]"
+                                    value="promotion1">
+                                <label class="form-check-label" for="promotion1">Promotion 1</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="promotion2" name="promotion[]"
+                                    value="promotion2">
+                                <label class="form-check-label" for="promotion2">Promotion 2</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="promotion3" name="promotion[]"
+                                    value="promotion3">
+                                <label class="form-check-label" for="promotion3">Promotion 3</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="promotion-opening1"
+                                    name="promotion[]" value="promotion-opening1">
+                                <label class="form-check-label" for="promotion-opening1">Promotion Opening 1</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="promotion-opening2"
+                                    name="promotion[]" value="promotion-opening2">
+                                <label class="form-check-label" for="promotion-opening2">Promotion Opening 2</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="promotion-opening3"
+                                    name="promotion[]" value="promotion-opening3">
+                                <label class="form-check-label" for="promotion-opening3">Promotion Opening 3</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Service:</label><br>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="amazon" name="description[]"
@@ -251,6 +286,44 @@
                             </div>
                             <!-- Add more checkboxes as needed -->
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Promotions:</label><br>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="edit-promotion1" name="promotion[]"
+                                    value="promotion1">
+                                <label class="form-check-label" for="edit-promotion1">Promotion 1</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="edit-promotion2" name="promotion[]"
+                                    value="promotion2">
+                                <label class="form-check-label" for="edit-promotion2">Promotion 2</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="edit-promotion3" name="promotion[]"
+                                    value="promotion3">
+                                <label class="form-check-label" for="edit-promotion3">Promotion 3</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="edit-promotion-opening1"
+                                    name="promotion[]" value="promotion-opening1">
+                                <label class="form-check-label" for="edit-promotion-opening1">Promotion Opening
+                                    1</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="edit-promotion-opening2"
+                                    name="promotion[]" value="promotion-opening2">
+                                <label class="form-check-label" for="edit-promotion-opening2">Promotion Opening
+                                    2</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="edit-promotion-opening3"
+                                    name="promotion[]" value="promotion-opening3">
+                                <label class="form-check-label" for="edit-promotion-opening3">Promotion Opening
+                                    3</label>
+                            </div>
+                            <!-- Add more checkboxes as needed -->
+                        </div>
+
                         <!-- service  -->
                         <div class="mb-3">
                             <label class="form-label">Service:</label><br>
@@ -392,6 +465,7 @@
 
 
                     { "data": "status" },
+                    { "data": "promotion" },
                     {
                         "data": null,
                         "render": function (data, type, row) {
@@ -488,7 +562,15 @@
                                 });
                             });
                         }
-
+                        if (marker.promotion !== null) {
+                            marker.promotion.forEach(promo => {
+                                document.querySelectorAll(`input[name="promotion[]"]`).forEach(checkbox => {
+                                    if (checkbox.value === promo) {
+                                        checkbox.checked = true;
+                                    }
+                                });
+                            });
+                        }
                         // Set the old picture filename or an empty string if no picture exists
                         document.getElementById('old-picture').value = marker.picture || '';
 
@@ -555,6 +637,7 @@
                                 <th>Address</th>
                                 <th>Image</th>
                                 <th>Status</th>
+                                <th>promotion</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>

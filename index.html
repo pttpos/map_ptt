@@ -1114,13 +1114,19 @@
                             marker.promotion.forEach(function (promotion) {
                                 var imgSrc = ''; // Default empty image source
                                 // Adjust this part based on your promotion types and image sources
-                                if (promotion === "pro_opening1") {
+                                if (promotion === "promotion1") {
                                     imgSrc = "pictures/opening1.jpg"; // Set image source for Fleet card
-                                } else if (promotion === "pro_opening2") {
+                                } else if (promotion === "promotion2") {
                                     imgSrc = "pictures/aba.png"; // Set image source for ABA
-                                } else if (promotion === "pro_opening3") {
+                                } else if (promotion === "promotion3") {
                                     imgSrc = "pictures/cash.png"; // Set image source for Cash
-                                } else {
+                                } else if (promotion === "promotion-opening1") {
+                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                }else if (promotion === "promotion-opening2") {
+                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                }else if (promotion === "promotion-opening3") {
+                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                }else {
                                     imgSrc = "default-image.png"; // Default image if promotion is not recognized
                                 }
                                 // Append image tag with the corresponding source and promotion name to the promotionImages string
