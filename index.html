@@ -457,7 +457,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             /* Add shadow effect */
         }
-        
+
         /* Media Query for screens smaller than 768px (typical smartphones) */
         @media only screen and (max-width: 767px) {
             .popup-image-title {
@@ -466,7 +466,7 @@
                 box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
             }
         }
-        
+
         /* Media Query for screens larger than 768px (typical tablets and desktops) */
         @media only screen and (min-width: 768px) {
             .popup-image-title {
@@ -475,7 +475,7 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
         }
-        
+
         #vertical-line {
             width: 3px;
             /* Adjust width as needed */
@@ -865,18 +865,18 @@
                             case "under construct":
                                 customIconUrl = "./pictures/under_construction.png";
                                 break;
-                                case "16h":
+                            case "16h":
                                 var currentDate = new Date(); // Get the current date and time
                                 var currentHour = currentDate.getHours(); // Extract the current hour
                                 var customIconUrl = ""; // Initialize the custom icon URL
-                            
-                                if (currentHour >=5.30 && currentHour < 20.30) {
+
+                                if (currentHour >= 5.30 && currentHour < 20.30) {
                                     customIconUrl = "./pictures/6.png"; // Set the icon URL for the hours between 7 AM and 12 PM
                                 } else {
                                     customIconUrl = "./pictures/time_close.png"; // Set the icon URL for other hours (gray icon)
                                 }
                                 break;
-                            
+
                             case "24h":
                                 customIconUrl = "./pictures/6.png";
                                 break;
@@ -1367,7 +1367,7 @@
                 console.error("Geolocation is not supported by this browser.");
             }
         }
-        
+
         // Define the red icon
         var redIcon = L.icon({
             iconUrl: './pictures/mylocal.png',
@@ -1376,8 +1376,8 @@
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
-        
-             // Add event listener to close button
+
+        // Add event listener to close button
         document.getElementById("close-button").addEventListener("click", function () {
             // Remove routing control from the map
             if (routingControl) {
@@ -1396,7 +1396,7 @@
                 lon;
             window.open(url, "_self");
         }
-    </script>
+        </script>
         <style>
         .btn-fleetcard,
         .btn-cash,
