@@ -25,6 +25,10 @@
             "province": "Phnom Penh",
             "address": "Russian Federation Blvd (St.110), Sangkat Srah Chak, Khan Doun Penh, Cambodia",
             "status": "under construct",
+            "promotion": [
+                "pro_opening1",
+                "pro_opening2"
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -53,6 +57,9 @@
             "province": "Preah Sihanouk",
             "address": "National Road No. 4, Sangkat 1, Khan Mittapheap, Sihanouk Province, Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -81,6 +88,9 @@
             "province": "Siem Reap",
             "address": "National Road No. 6, Sangkat Chreav, Khan Siem Reap, Siem Reap Province, Kingdom of Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -110,6 +120,9 @@
             "province": "Phnom Penh",
             "address": "National Road No. 1 (Phnom Penh-Vietnam), Sangkat Niruth, Khan Chbar Ampov, Phnom Penh, Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -138,6 +151,9 @@
             "province": "Siem Reap",
             "address": "National road No. 6, Phum Sala Kanseng, Sangkat No.2, Siem Reap Province, Kingdom of Cambodia ",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -166,6 +182,9 @@
             "province": "Kampong Cham",
             "address": "National Road No. 6 Phum Chheur Teal, Khum Phdao Chum, Srok Cherng Prey, Kampong Cham Province, Kingdom of Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -194,6 +213,9 @@
             "province": "Kampong Speu",
             "address": "National Road No4, Phumi 6, Khom Traeng Troyeung, Srok Phnom Srouch, Kampong Speu Province, Cambodia.",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -222,6 +244,9 @@
             "province": "Phnom Penh",
             "address": "National road No.3, Phum Prey Key, Sangkat Pleung Chhess Rotes, Khan Posen Chey, Phnom Penh, Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -250,6 +275,9 @@
             "province": "Takeo",
             "address": "Poum 3, Sangkat Rokar Knung,Krung DounKeo, Takeo Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -278,6 +306,9 @@
             "province": "Kampong Chhnang",
             "address": "National R. 5, Phum Toul Khsach, Khum Chrey Bak, Srok Rolea Pa Ear, Kanpong Chhnang province ",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -306,6 +337,9 @@
             "province": "Phnom Penh",
             "address": "National Road 5, Doung Village, Sangkat Por Nhea Leu, Khan Prek Phnov, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -334,6 +368,9 @@
             "province": "Kampong Cham",
             "address": "National Road No. 6 Phum Chheur Teal, Khum Phdao Chum, Srok Cherng Prey, Kampong Cham Province, Kingdom of Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -362,6 +399,9 @@
             "province": "Phnom Penh",
             "address": "#811 Rd.PreySor, Sangkat PreySor,Khan Dongkor Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -388,6 +428,9 @@
             "province": "Phnom Penh",
             "address": "#4818, St 1003, Bonla Swet Village, Sangkat Khmough, Khan Sen Sok, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -414,6 +457,9 @@
             "province": "Kandal",
             "address": "Phum Arey Ksat, Khum Arey Ksat, Srok Lave Am, Kandal Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -441,6 +487,9 @@
             "province": "Phnom Penh",
             "address": "Street 307, Lor Kambor Village, Sangkat Svay Pak, Khan Russey Keo, PP",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -467,6 +516,9 @@
             "province": "Phnom Penh",
             "address": "#Land B KeanKlang Vilage, Sangkat Chroy ChangVa, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -494,6 +546,9 @@
             "province": "Kandal",
             "address": "National R. 8, Anlong Village, Prek Tamak Commune, Kandal District, Kandal",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -520,6 +575,9 @@
             "province": "Phnom Penh",
             "address": "#F56, St. Fortune, Chong Thnol Khang Kert Village, Sangkat Tuek Thla, Khan Sen Sok, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -546,6 +604,9 @@
             "province": "Phnom Penh",
             "address": " St. Toul Pong Ror, Phum Morl, Sangkat Dongkar, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -572,6 +633,9 @@
             "province": "Phnom Penh",
             "address": "#620, street: 58P, Dey Thmey Village, Sangkat: Koukleang, Khan: Sen Sok, Phnom Penh. ",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -598,6 +662,9 @@
             "province": "Phnom Penh",
             "address": "National Road No.2, Phum krang Svay,Sangkat Prek Kampeus,Khan Dongkor",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -623,6 +690,9 @@
             "province": "Kampong Cham",
             "address": "St.  61, Sangkerb Village, Sambour Commune, \nBatheay District, Kampong Cham Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -650,6 +720,9 @@
             "province": "Kampong Chhnang",
             "address": "No. 0136, Road No. 5, Chhunleak Dei Village, Svay Commune, Samaki Meanchey District, Kompongchhnang Province.",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -675,6 +748,9 @@
             "province": "Phnom Penh",
             "address": " #201, St 1701, Kroul Kour Village, Sangkat Kilomet lerk 6, Khan Russey Keo, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -701,6 +777,9 @@
             "province": "Siem Reap",
             "address": "National Road No. 6, Khum Dam Dek, Srok Sonikum, Siem Reap Province, Kingdom of Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -729,6 +808,9 @@
             "province": "Kampong Thom",
             "address": "National Road 6, Phum Thnal Bek, Kum Trapang Rassey, Srok Kompong Svay, Kompongthom",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -755,6 +837,9 @@
             "province": "Battambang",
             "address": "#St,Phum Svaykong,Khum Anlongvel,SANGKE DISTRICT,Battambang Provinc",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -781,6 +866,9 @@
             "province": "Battambang",
             "address": "National Road 57, Andong Preng Village, Omal Commune, Battambang District, Battambang province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -807,6 +895,9 @@
             "province": "Kampot",
             "address": "National Road 3, Kompongbay Khang Cherng village, Kompongbay commune, Kampot",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -833,6 +924,9 @@
             "province": "Kandal",
             "address": "National Road 21, Phum Prek Somrong,Sangkat Takhmao,Krung Takhmao",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -858,6 +952,9 @@
             "province": "Takeo",
             "address": "House No. N\/A, Road No. 02, Phum Khseung,Sangkat Rokar Khnong,Daun Keo",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -884,6 +981,9 @@
             "province": "Phnom Penh",
             "address": " #120, St. Pastor, village 4, Sangkat Chaktoumouk, Khan Doun Penh           Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -911,6 +1011,9 @@
             "province": "Phnom Penh",
             "address": "Land No .5, Road 6A, Phum Prek Taben, Khum Prekanh Chanh, Srok Mokkam Pol, Khet Kandal, Cambodia.",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -937,6 +1040,9 @@
             "province": "Battambang",
             "address": "National Road 5, Kaksekam Village, Tapoung Commune, Thma koul district, battambang province.",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -962,6 +1068,9 @@
             "province": "Phnom Penh",
             "address": "Street 217, Phum Taley, Sangkat Dangkor, Khan Dangkor, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -988,6 +1097,9 @@
             "province": "Phnom Penh",
             "address": "St. Tomnob 7 Makara, Road 60m, Phum Baku, Sangkat Dangkor, Khan Dangkor, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1015,6 +1127,9 @@
             "province": "Phnom Penh",
             "address": "#12 Street Betong, Sangkat Chom Chao, Khan Porsenchey, Phnom Penh (Infront of JS Corp factory)",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1041,6 +1156,9 @@
             "province": "Phnom Penh",
             "address": "Prey Sor Street, Thmey Village, Sangkat Dongkor, Khan Dongkor, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1068,6 +1186,9 @@
             "province": "Kandal",
             "address": "National Road 3, Taleuk village, Tropeang Veng commune, Kandal Steung district, Kandal province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1095,6 +1216,9 @@
             "province": "Phnom Penh",
             "address": "located at plot land no. 600 and 601, Street 72 P, Roung Chak Village, Sangkat Khork Khleang, Khan Sen Sok, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1121,6 +1245,9 @@
             "province": "Phnom Penh",
             "address": "No. 230, Russian Federation Blvd,Sangkat Kakab,Khan Porsenchey",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1147,6 +1274,9 @@
             "province": "Phnom Penh",
             "address": "at street No. 103, 4 Village, Sangkat Phsar Daeum Thkov, Khan Chamkarmon, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1173,6 +1303,9 @@
             "province": "Phnom Penh",
             "address": "#2004 (Maida), Trapang Lvea village, Sangkat Kakab,Khan Posenchey, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1198,6 +1331,9 @@
             "province": "Phnom Penh",
             "address": "St.217 &St.67,Sangkat Psar Thmey II,Khan Teuk Chhoo",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1224,6 +1360,9 @@
             "province": "Phnom Penh",
             "address": "Street 371, Tnut Chrum Village,Sangkat Boeung Tumpun, Khan Meanchey",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1249,6 +1388,9 @@
             "province": "Phnom Penh",
             "address": "Street 430 corner of street 450,Sangkat Toul Tompong 2,Khan Chamkarmon",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1274,6 +1416,9 @@
             "province": "Phnom Penh",
             "address": "No. 3+4, St. Oknha Tep Phan, Sangkat Boeng Keng Kang 1, Khan Chamkar Morn, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1300,6 +1445,9 @@
             "province": "Phnom Penh",
             "address": "National road 2, Sangkat Prek Kompes, Khan Dongkou, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1325,6 +1473,9 @@
             "province": "Phnom Penh",
             "address": "#760C, National Road No.2, Prektalong Village,Sangkat Chak Angre Krom,Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1351,6 +1502,9 @@
             "province": "Phnom Penh",
             "address": "#235, National Road No.4,Pray Pring Khang Cheung Village Sangkat Chom Chao KHAN POR SENCHEY Phnom Penh Cambodia.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1377,6 +1531,9 @@
             "province": "Phnom Penh",
             "address": "#St. 2011, Phum Domnak,Sangkat Phnom Penh Thmey,Khan SenSok,Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1403,6 +1560,9 @@
             "province": "Phnom Penh",
             "address": "#House no. N\/A, Steet no. 6, Phum Keankleang,Sangkat Chroychangva,Khan Chroy Channgva",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1429,6 +1589,9 @@
             "province": "Phnom Penh",
             "address": "# 007377, Road Tiger factory, Phum Bos Angkunh, Sangkat Prek Eng, Khan Chba Ampov ",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1454,6 +1617,9 @@
             "province": "Phnom Penh",
             "address": "on plot land No. 565, Tuol Pongro Street, Brakar Village, Sangkat Prey Sor, Khan Sen Sok, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1481,6 +1647,9 @@
             "province": "Phnom Penh",
             "address": "#0601, street 1019, Anlong Kngan Village, Sangkat Khmuonh, Khan Sen Sok, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1507,6 +1676,9 @@
             "province": "Phnom Penh",
             "address": "land plot No. 175 corner street 478, I Village, Sangkat Toul Tom I, Khan Chamkarmorn, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1534,6 +1706,9 @@
             "province": "Kandal",
             "address": "located at plot land no.687,\u200b Battachi Village, Sangkat Prek Ho, Ta Khmau Municipal,Kandal Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1560,6 +1735,9 @@
             "province": "Phnom Penh",
             "address": "located at plot land no. 986, Tuol Svay Village, Sangkat Boeung Thom, Khan Kamboul, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1586,6 +1764,9 @@
             "province": "Phnom Penh",
             "address": "At #04458, Concrete road, Toul Songkae village, Sangkat Toul Songkae, Russey Keo district, Phnom",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1613,6 +1794,9 @@
             "province": "Phnom Penh",
             "address": "#19, St Betong, Lor Kambour Village, Sangkat Svay Pak, Khan Russey Keo, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1638,6 +1822,9 @@
             "province": "Phnom Penh",
             "address": "#311 Street 93 corner with street 41, Sangkat Tonle Basak,           Khan Chomkar Mon, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1663,6 +1850,9 @@
             "province": "Phnom Penh",
             "address": "St, Maeda 2004 corner with st.371, Phum Trapeang Chhok, Sangkat Toeuk Thla, Khan Sen Sok, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1688,6 +1878,9 @@
             "province": "Phnom Penh",
             "address": "at #735, St. 93 corner St. 245, village 9, Sangkat Boeng Keng Korng 3,          Khan Chomkar Mon, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1714,6 +1907,9 @@
             "province": "Kampong Cham",
             "address": "National road 6, Skun village, Choktep commune, Cheung Prey district, Kompong Cham province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1739,6 +1935,9 @@
             "province": "Kandal",
             "address": "National road 2, Takmao village, Sangkat Takmao, Kandal province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1765,6 +1964,9 @@
             "province": "Kampong Cham",
             "address": "National road 7, village Chas, Sangkat Val Vong, Kompong Cham town, Kompong Cham province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1790,6 +1992,9 @@
             "province": "Battambang",
             "address": "National road 5, O\u2019char village, Sangkat O\u2019char, Khan Battombong, Battombong province",
             "status": "under construct",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1815,6 +2020,9 @@
             "province": "Siem Reap",
             "address": "National road 6A, Krus village, Svay Dongkom commune,            Siem Reap district, Siem Reap province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1841,6 +2049,9 @@
             "province": "Siem Reap",
             "address": "Street 6A, Bonteay Chas village, Sangkat Slor Kram, Siem Reap town Siem Reap province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1866,6 +2077,9 @@
             "province": "Battambang",
             "address": "National road 5, Bek Chan village, Sangkat Preh Sdach, \nKhan Battombong, Battombong province\n",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1892,6 +2106,9 @@
             "province": "Phnom Penh",
             "address": "#42, St 598, Sangkat Toul Sangke,Khan Russey Keo, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1918,6 +2135,9 @@
             "province": "Phnom Penh",
             "address": "#81, St. Veng Sreng, Tro Pang Tleong village, Sangkat Chom Chav, Phnom Penh",
             "status": "under construct",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1943,6 +2163,9 @@
             "province": "Phnom Penh",
             "address": "#1657, St 1019, Banla la it commune, Sangkat Khmouy,Khan Sensok, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1969,6 +2192,9 @@
             "province": "Kratie",
             "address": "#009\/0217, Ou Ressey village, Kratie district, Kratie province.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -1994,6 +2220,9 @@
             "province": "Phnom Penh",
             "address": "#552, Street Northbridge, Sangakat Obek Kaorm, Khan Sensok, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2020,6 +2249,9 @@
             "province": "Banteay Meanchey",
             "address": "Paliley 1 village, Sangkat Poi Pet, Poi Pet town,  \nBonteay Meanchey province\n",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2045,6 +2277,9 @@
             "province": "Phnom Penh",
             "address": "129, St 592, Corner St.317, Phum 5, Sangkat Boeungkok 2, Khan Toul Kork, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2070,6 +2305,9 @@
             "province": "Phnom Penh",
             "address": "#120,St Pastor,Phum 4, Sangkat Chaktoumouk, Khan Doun Penh, Phnom Penh.",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2095,6 +2333,9 @@
             "province": "Phnom Penh",
             "address": "#73 St. 474, Sangkat Boeng Trabek, Khan Chomkar Mon, Phnom Penh.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2120,6 +2361,9 @@
             "province": "Kampong Thom",
             "address": "National Road No. 06, Phum Kdey,Sangkat Prey Taho,Krung Steung Sen,KompongThom Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2146,6 +2390,9 @@
             "province": "Phnom Penh",
             "address": "#1452, Street Monireth (217) DomakThom Village,Sangkat Steung Mean Chey,Khan MeanChey",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2173,6 +2420,9 @@
             "province": "Phnom Penh",
             "address": "#867, St. 1986, Tumnup Village,Sangkat Phnom Penh Thmey,Khan Sen Sok",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2199,6 +2449,9 @@
             "province": "Kampong Speu",
             "address": "Road 4, Phum Rolang Sangkae,Sangkat Sopor Tep,Krung Chbar Morn",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2224,6 +2477,9 @@
             "province": "Phnom Penh",
             "address": "#4458, St.1928, Payab Village,Sangkat Phnom Penh Thmey,Khan Sen Sok",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2249,6 +2505,9 @@
             "province": "Preah Sihanouk",
             "address": "Phum 4,Sangkat 4,Khan Phreah Sihanuk",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2275,6 +2534,9 @@
             "province": "Kampong Speu",
             "address": "#Road Phum AngSokunthea,Khum MohaRussei,Srok Kong Pisey",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2301,6 +2563,9 @@
             "province": "Phnom Penh",
             "address": "#508, St. 271,Sangkat Beung Tompon,Khan Meanchey,Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2327,6 +2592,9 @@
             "province": "Phnom Penh",
             "address": "# 120 St. Pasteur, Phum 4,Sangkat Chaktomok,Khan Daun Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2353,6 +2621,9 @@
             "province": "Kampong Cham",
             "address": "Old National Road No. 7, Phum No.06 Sangkat Vel Vong",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2380,6 +2651,9 @@
             "province": "Phnom Penh",
             "address": "#1-3, St. 598 Conner St 1800,Sangkat Toul Sangke,Khan Roussey Keo",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2407,6 +2681,9 @@
             "province": "Kandal",
             "address": "National Road 4, Phum Trapaing Krasaing, Bek Chan Commune, Ang Snoul District, Kandal Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2432,6 +2709,9 @@
             "province": "Prey Veng",
             "address": "Stoeng Slout Village, Neaklerng Commence, Pearmror District, Preyveng Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2457,6 +2737,9 @@
             "province": "Phnom Penh",
             "address": "# 19971 Corner Raod 199, Sangkat Olympic, Khan Chamka Morn, Phnom Penh City",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2483,6 +2766,9 @@
             "province": "Phnom Penh",
             "address": "# 153 Road Samdach Chear Sim, Phum Chress, Sangkat Phnom Penh Thmey, Khan Sen Sok, Phnom Penh.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2508,6 +2794,9 @@
             "province": "Phnom Penh",
             "address": "No. N\/A, National Road No.3, Phum Preypring KhangTboung, Sangkat Chomchao Khan Posenchey, Phnom Penh, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2533,6 +2822,9 @@
             "province": "Preah Sihanouk",
             "address": "Village 3, Sangkat 2, Sihanoukville, Preah Sihanouk Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2559,6 +2851,9 @@
             "province": "Ratanakiri",
             "address": "No. 22, National Road No. 78, Phum. Phnom Svay, Sangkat Boeng Kansaeng, Khan, Banlong, Ratanakiri Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2585,6 +2880,9 @@
             "province": "Kampong Speu",
             "address": "A Phum Krang Pol Tep, Sangkat Rokar Thom, Khan Chbar  Morn,   Kampong Speu  Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2611,6 +2909,9 @@
             "province": "Phnom Penh",
             "address": "Phum Kien Khlang, Sangkat Chroychangva, Khan Chroychangva   Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2636,6 +2937,9 @@
             "province": "Phnom Penh",
             "address": "# VII0053, Road 271, Trapeang Chhouk Village, Sangkat Teuk Thla, Khan Sen Sok, Phnom Penh, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2662,6 +2966,9 @@
             "province": "Stung Treng",
             "address": "Phum Prek, Sangkat Stung Treng,Krung Stung Treng, Stung Treng Province, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2689,6 +2996,9 @@
             "province": "Banteay Meanchey",
             "address": "Stueng Bat Village, Sangkat Kondal, Krung Poi Pet,Banteay Mean Chey ,Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2714,6 +3024,9 @@
             "province": "Phnom Penh",
             "address": "National Road 1, Ta Prohm Village, Sangkat Prek Eng, Khan Chbar Ampov, Phnom Penh, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2739,6 +3052,9 @@
             "province": "Phnom Penh",
             "address": "Land No 313, St. 173 corner of Street 358, Phum 4, Sangkat Toul Svay Prey I, Khan Chamkamorn, Phnom Penh, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2766,6 +3082,9 @@
             "province": "Kampong Speu",
             "address": "Phum Tro Pang Ampel, Khum Tro Pang Korng, Srok Samrong Tong, Kampong Speu Province ",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2791,6 +3110,9 @@
             "province": "Phnom Penh",
             "address": "St. 151, Phum Prey Pongror, Sangkat Por Nhea Poun, Khan Prek Pnov, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2817,6 +3139,9 @@
             "province": "Phnom Penh",
             "address": "Trapeang Pou Village, Sangkat Chaom Chau, Khan Pou Senchey, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2843,6 +3168,9 @@
             "province": "Phnom Penh",
             "address": "Prek Ta Roth Village, Sangkat Prek Ta Sek, Khan Chrouy Chongva, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2868,6 +3196,9 @@
             "province": "Phnom Penh",
             "address": "St. 1962, Krang Angkrong Village, Sangkat Krang Thnoung, Khan Sen Sok, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2894,6 +3225,9 @@
             "province": "Siem Reap",
             "address": "Wat Bo Village, Sangkat Sala Kamrerk, Siem Reap city, Siem Reap ",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2920,6 +3254,9 @@
             "province": "Kampot",
             "address": "#100, National Road 3, Kampongbay Khangcheung Village, Sangkat Kampongbay, Kampot City, Kampot province. ",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2946,6 +3283,9 @@
             "province": "Phnom Penh",
             "address": "Lkamboar Village, Sangkat Svay Beak, Khan Russei Keo, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2972,6 +3312,9 @@
             "province": "Phnom Penh",
             "address": "Near Caf\u00e9 Amazon shop, Street 105K, Sangkat Kakab I, Khan Por Senchey, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -2998,6 +3341,9 @@
             "province": "Banteay Meanchey",
             "address": "Road No. 6, 1 Village, Preah Punlear District, Sereysophorn City, Banteay Meanchey Province ",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3023,6 +3369,9 @@
             "province": "Svay Rieng",
             "address": "Svay Village,Sangkat Chek,SVAY RIENG CITY,Svay Rieng",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3049,6 +3398,9 @@
             "province": "Phnom Penh",
             "address": "St. Monireth (217), Damnak 5 Village, Sangkat Steung Meanchey 3, Khan Meanchey, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3076,6 +3428,9 @@
             "province": "Pursat",
             "address": "#181, National Road 5, Morn Jae Village, Prey Nhi Commune, Pursat City",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3102,6 +3457,9 @@
             "province": "Phnom Penh",
             "address": "Street 5, Sangkat Svay Pak, Khan Reusey Keo, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3128,6 +3486,9 @@
             "province": "Kratie",
             "address": "National Road 7, Ou Kreang Village, Ou Kreang Commune, Sombo District, Kratie",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3153,6 +3514,9 @@
             "province": "Phnom Penh",
             "address": "Sangkat Beung Prolit, Khan 7 Makara, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3178,6 +3542,9 @@
             "province": "Preah Sihanouk",
             "address": "National Road 45, Ork village, Ream commune, Preynub district, Sihanoukville, near Ream roundabout",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3204,6 +3571,9 @@
             "province": "Takeo",
             "address": "National Road 3, Taleu village, Udomsorya commune, Tramkok district, Takeo province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3230,6 +3600,9 @@
             "province": "Preah Sihanouk",
             "address": "Phum 5, Sangkat lek 4, Sihanouk Ville City, Sihanouk Ville",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3255,6 +3628,9 @@
             "province": "Battambang",
             "address": "St. Anndong Chenh Village, Sangkat Au Char, Battambang",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3280,6 +3656,9 @@
             "province": "Phnom Penh",
             "address": "#1998, Street Betong, Group 7, Kakab Village, Sangkat Kakab 2, Khan Por Senchey, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3306,6 +3685,9 @@
             "province": "Kampong Speu",
             "address": "Road 41, Preah Mlub Village, Pheary Meanchey Commune, Bor Seth District, Kompong Spue Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3332,6 +3714,9 @@
             "province": "Takeo",
             "address": "National Road 2, Roleang Krerl Village, Trapeang Sap Commune, Bati District, Takeo Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3358,6 +3743,9 @@
             "province": "Kandal",
             "address": "National Road 51, Doumnak Ampil Village, Doumnak Ampil Commune, Ang Snoul District, Kandal Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3383,6 +3771,9 @@
             "province": "Svay Rieng",
             "address": "Trapeang Phlong Village, Sangkat Bati, Bavet City, Svay Rieng Province, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3409,6 +3800,9 @@
             "province": "Kandal",
             "address": "St.381,Phum Preakta Kung,Khom Preakta Mak, Srok Khsach Kandal, Kandal Provice.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3436,6 +3830,9 @@
             "province": "Tboung Khmum",
             "address": "National Road 7, Phum ChhreiBitMeas, Sangkat Soung, Krung Soung, Tboung Khmom Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3462,6 +3859,9 @@
             "province": "Phnom Penh",
             "address": "Champous Kaek Village, Sangkat Prek Thmey, Khan Chhba Ampov, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3488,6 +3888,9 @@
             "province": "Siem Reap",
             "address": "National Road No. 6, Khchas Village, Khchas Commune, Srok Sonikum, Siem Reap Province, Kingdom of Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3514,6 +3917,9 @@
             "province": "Preah Sihanouk",
             "address": "#No. National Road Number 4, Phum Bantheay Prey, Khum Andong thmor, Srok Prey Nop, Sihanouk ville.",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3539,6 +3945,9 @@
             "province": "Kampong Speu",
             "address": "National Road 51, Wat Phnom Village, Phnom Toch Commune, Oudong District, Kampong Spue Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3565,6 +3974,9 @@
             "province": "Phnom Penh",
             "address": "Land Plot 1074, Batong Street, Sanrong Teav Village, Sangkat Krang Thnong, Khan Sen Sok, PP",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3592,6 +4004,9 @@
             "province": "Phnom Penh",
             "address": "NR 6 A, Bak Kheng Leu Village, Sangkat Bak Kheng, Khan Chroy Changvor, PP",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3618,6 +4033,9 @@
             "province": "Takeo",
             "address": "Street 41, Toul Khlong Vilage, O'saray Communce, Tram Kak District, Tekeo",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3644,6 +4062,9 @@
             "province": "Koh Kong",
             "address": "located road 48, Chi Meal Village, Andoung Tuek Commune, Botum Sakor District, Koh Kong Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3670,6 +4091,9 @@
             "province": "Kandal",
             "address": "Located at national road No. 1, Slab Ta Aon Village, Kokir Commune, \nKien Svay District, Kandal Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3697,6 +4121,9 @@
             "province": "Pursat",
             "address": "Located at national road No. 5, Kbal Domrei Village, Ansa Chambak Commune, \nKrakor District, Pursat Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3722,6 +4149,9 @@
             "province": "Phnom Penh",
             "address": "located at street 351 (Trong Morn),\u200b Ta Ngov Village, Sangkat Nirouth, \nKhan Chbar Ampov, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3749,6 +4179,9 @@
             "province": "Kampot",
             "address": "located at National Road 3, Kep Thmey Village, Sangkat Boeung Touk, Bokor Municipal, \nKampot Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3774,6 +4207,9 @@
             "province": "Kep",
             "address": "located at Plot land 1149, National Road 33, Damnak Chang\u2019Auer Village, Sangkat \nPrey Thom, Kep Municipal, Kep Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3800,6 +4236,9 @@
             "province": "Battambang",
             "address": "Located at Ou Ta Nob Village, Sangkat Kdol Doun Teav, Krong Battambang, \nBattambang Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3826,6 +4265,9 @@
             "province": "Kratie",
             "address": "Located at Kbal Snuol Village, Snuol Commune, Snuol District, Kratie Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3852,6 +4294,9 @@
             "province": "Kampot",
             "address": "located at National Road 3, Kep Thmey Village, Sangkat Boeung Touk, Bokor Municipal, \nKampot Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3878,6 +4323,9 @@
             "province": "Banteay Meanchey",
             "address": "Located at Chumteav Village, Russey Kraok Commune, Mongkol Borei District, Banteay Meanchey Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3904,6 +4352,9 @@
             "province": "Kampong Thom",
             "address": "Trapeang Svay Village, Balang Commune, Baray District, Kampong Thom Province,",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3930,6 +4381,9 @@
             "province": "Prey Veng",
             "address": "National Road 11, Ekream Village, Sangkat Cheung Teok, Prey Veng Municipal, Prey Veng Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3955,6 +4409,9 @@
             "province": "Phnom Penh",
             "address": "land plot No. 287 Street 205 corner Street 364 Village 5 Sangkat Toul SvayPrey 2, Khan Boeung Keng Kang, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -3981,6 +4438,9 @@
             "province": "Kampot",
             "address": "land plot 274 National Road No. 3, Chhue Teal Village, Chhouk Commune, Chhouk District, Kampot Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4007,6 +4467,9 @@
             "province": "Phnom Penh",
             "address": "#484 Street 105K Troung Morn Village, Sangkat Krang Thnong, Khan Sen Sok, Phnom Penh",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4033,6 +4496,9 @@
             "province": "Battambang",
             "address": "plot land No. 12, Kaksekam Village, Tapuung Commune, Thmor Kol District, Battambang Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4059,6 +4525,9 @@
             "province": "Prey Veng",
             "address": "plot land No. 14101001-0599 and 14101001-0600, National Road No. 8, Svay Antor 1 Village, Svay Antor Commune, Svay Antor District, Prey Veng Province",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4084,6 +4553,9 @@
             "province": "Phnom Penh",
             "address": "Plot Land No. 305, Prey Sor Street, Brakar Village, Sangkat Prey Sor, Khan Dangkor, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4109,6 +4581,9 @@
             "province": "Preah Sihanouk",
             "address": "Chom Noat Ream village, Bet Trang commune, Prey Nob distrct, Sihanouk Ville, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4135,6 +4610,9 @@
             "province": "Svay Rieng",
             "address": "Road # 1, Chrey Thom Village, Prey Angkunh District, Bavet City, Svay Rieng Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4162,6 +4640,9 @@
             "province": "Battambang",
             "address": "Road #02 Kompong Krobey Village Sangkat Svay Por, Battambang City.Battambang Provinice",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4189,6 +4670,9 @@
             "province": "Banteay Meanchey",
             "address": "National Road 5, Tarang Ball Village, Sangkat Kampong Svay, Serie Saophoan Municipal, Banteay Meanchey Province",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4215,6 +4699,9 @@
             "province": "Battambang",
             "address": "#527 National Road No.5, Kai 3 Village, Kai Commune, Moung Russey District, Battambong Province.",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4241,6 +4728,9 @@
             "province": "Phnom Penh",
             "address": "National Road No.20A, Thei Village, Sangkat Tean, Khan Dangkor, Phnom Penh, Cambodia.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4266,6 +4756,9 @@
             "province": "Phnom Penh",
             "address": "at # 15, Chamkar Doung Street (217),\u200b Mol Village, Sangkat Dangkor, Khan Dangkor, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4292,6 +4785,9 @@
             "province": "Phnom Penh",
             "address": "#330, St. Be Tong, Kakap village, Sangkat Kakap Ti 2, Khan Pou Senchey, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4319,6 +4815,9 @@
             "province": "Kandal",
             "address": "# National Road 4, Trapeang Reang Village, Prey Puoch Commune, Angk Snoul District, Kandal Province, Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4344,6 +4843,9 @@
             "province": "Kampong Chhnang",
             "address": "#Land no 417, Street no, Toub Tbeng village, Pongro commune, Rolea Baear District, Kampong Chhnang province. ",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4369,6 +4871,9 @@
             "province": "Phnom Penh",
             "address": "#F56, Street Fortune,  Chong Thnol Khang Kert Village, Sangkat Tuek Thla, Khan Sen Sok, Phnom Penh.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4396,6 +4901,9 @@
             "province": "Phnom Penh",
             "address": "Borey Peng Huoth Boeung Snor, Street Claster, Boeung Chhouk Village, Sangkat Niroth, Khan Chbar Ampov, Phnom Penh.",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4422,6 +4930,9 @@
             "province": "Tboung Khmum",
             "address": "Kranhung Village, Veal Mlu Commune, Ponhea Krek District, Tboung Khmum Province, Cambodia.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4447,6 +4958,9 @@
             "province": "Preah Sihanouk",
             "address": "# National Road 4, Kirivon Village, Stoeng Chhay Commune, Kampong Seila District, Sihanouk Ville, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4472,6 +4986,9 @@
             "province": "Prey Veng",
             "address": "Thnoul Keng Village, Smong Khang Cherng Commune, Kamchay Mea District, Prey Veng Province, Cambodia.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4497,6 +5014,9 @@
             "province": "Phnom Penh",
             "address": "At Koh Norea, Phum Russey Sros, Sangkat Niroth, Khan Chbar Ampov, Phnom Penh. ",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4522,6 +5042,9 @@
             "province": "Phnom Penh",
             "address": "# 150 E0, St. 130, Phoum 1, Sangkat Phsar Kandal 2, Khan Daun Penh, Phnom Penh, Cambodia",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4547,6 +5070,9 @@
             "province": "Phnom Penh",
             "address": "Plot land No 379, Street Win Win Blvd, Trapeang Por Village, Sangkat Korkrokar, Khan Prek Pnov, Phnom Penh",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4572,6 +5098,9 @@
             "province": "Phnom Penh",
             "address": "#Land 449, Ring Road 2, Phum Prek Thleng, Sangkat Choeung Ek, Khan Dangkor, Phnom Penh.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4597,6 +5126,9 @@
             "province": "Pursat",
             "address": "# Plot land No.42, National Road No.05, Krapeu Rou Village, Snam Preah Commune, Bakan District , Pursat Province, Cambodia.",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4623,6 +5155,9 @@
             "province": "Phnom Penh",
             "address": "Veng Sreng Street, Trea 3 village, Sangkat Stueng Meanchey 1, Khan Meanchey, Phnom Penh, Cambodia",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4648,6 +5183,9 @@
             "province": "Banteay Meanchey",
             "address": "#, Phum Sameakki Mean Chey, Sangkat Ou Chrov, Krong Paoy Paet,  ",
             "status": "24h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         },
@@ -4673,6 +5211,9 @@
             "province": "Kandal",
             "address": "Land and Building# 59, National Road 21, Phum Toul Krasang, Sangkat Roka Khpos, Krong Ta Khmao, Kandal Province.\n",
             "status": "16h",
+            "promotion": [
+                ""
+            ],
             "old_picture": "",
             "picture": "2.png"
         }
