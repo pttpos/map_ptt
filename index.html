@@ -735,14 +735,15 @@
 
                 <div class="tab112"
                     style="text-align: center; margin-top: 20px; width: 100%;">
+                    <button id="title-tab1" class="popup-tab"
+                        onclick="toggleBorder(this)">Information</button>
                     <button id="title-tab" class="popup-tab"
                         onclick="toggleBorder(this)">Product</button>
                     <button id="description-tab" class="popup-tab"
                         onclick="toggleBorder(this)">Service</button>
                     <button id="service-tab" class="popup-tab"
                         onclick="toggleBorder(this)">Payment</button>
-                    <button id="title-tab1" class="popup-tab"
-                        onclick="toggleBorder(this)">Information</button>
+                    
                 </div>
                 <script>
                 function toggleBorder(button) {
@@ -998,7 +999,7 @@
 
 
                             // Set default tab to "Title" when marker is clicked
-                            document.getElementById("title-tab").click();
+                            document.getElementById("title-tab1").click();
                             document.getElementById("title-content").innerHTML =
                                 "<div id='title-and-product' style='display: flex; align-items: center;'>";
 
