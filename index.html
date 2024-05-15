@@ -457,7 +457,25 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             /* Add shadow effect */
         }
-
+        
+        /* Media Query for screens smaller than 768px (typical smartphones) */
+        @media only screen and (max-width: 767px) {
+            .popup-image-title {
+                /* Adjust styles for smaller screens */
+                border-radius: 10px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        /* Media Query for screens larger than 768px (typical tablets and desktops) */
+        @media only screen and (min-width: 768px) {
+            .popup-image-title {
+                /* Adjust styles for larger screens */
+                border-radius: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+        }
+        
         #vertical-line {
             width: 3px;
             /* Adjust width as needed */
@@ -700,7 +718,7 @@
                 <div class="popup-image-title"
                     style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap;">
                     <img id="marker-image" src alt="Marker Image"
-                        style="max-width: 100px;max-height: auto; border: 0px solid #ccc; background-color: #0044ff; border-radius: 20px; margin: 10px;" />
+                        style="max-width: 150px;max-height: auto; border: 0px solid #ccc; background-color: #0044ff; border-radius: 20px; margin: 10px;" />
                     <div id="vertical-line"></div> <!-- Vertical line -->
                     <div
                         style="display: flex; flex-direction: column; margin-bottom: 10px;">
@@ -712,7 +730,6 @@
                                 style="margin-right: 5px;"></i>
                             <span id="status-text"></span>
                         </div>
-
                     </div>
                 </div>
 

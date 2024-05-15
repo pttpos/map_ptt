@@ -505,10 +505,6 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
-
-
-
-
     </script>
 
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
@@ -524,7 +520,6 @@
             </div>
         </div>
     </div>
-
     <script>
         $(document).on('click', '.marker-image-link', function (e) {
             e.preventDefault(); // Prevent the default behavior of the link
