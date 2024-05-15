@@ -1304,44 +1304,10 @@
         var userMarker = null; // Global variable to store user's marker
         var routingControl = null; // Global variable to store routing control
 
-        function showRouteToMarker(markerLocation) {
-            // Get the current location and add routing control to show the route
-            findMyLocation(function (userLocation) {
-                // Remove existing routing control if it exists
-                if (routingControl) {
-                    map.removeControl(routingControl);
-                }
-                // Add routing control to show the route
-                routingControl = L.Routing.control({
-                    waypoints: [
-                        userLocation,
-                        markerLocation,
-                    ],
-                    routeWhileDragging: true,
-                    lineOptions: {
-                        styles: [{ color: 'red', opacity: 0.7, weight: 5 }]
-                    },
-                    createMarker: function () { return null; }, // Disable default markers
-                }).addTo(map);
-                // Event listener to update popup content when route is ready
-                routingControl.on('routesfound', function (e) {
-                    var route = e.routes[0]; // Assuming there's only one route
-                    var distance = route.summary.totalDistance / 1000; // Distance in kilometers
-                    // Update popup content with route information
-                    var popupContent = "<div id='route-info'>";
-                    popupContent +=
-                        "<p><strong>Distance:</strong> <span class='distance-button' style='font-size:12px; padding: 2px 5px;'>" +
-                        distance.toFixed(2) + " km</span></p>";
-                    popupContent += "</div>";
-                    // Update the popup content with route information
-                    document.getElementById("title-content1").innerHTML = popupContent;
-                });
-            });
-        }
-
         function findMyLocation(callback) {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
+                // Watch user's position continuously
+                var watchId = navigator.geolocation.watchPosition(
                     function (position) {
                         var latlng = [
                             position.coords.latitude,
@@ -1349,7 +1315,7 @@
                         ];
                         // Create or update the user marker
                         if (!userMarker) {
-                            userMarker = L.marker(latlng, { icon: redIcon, bounceOnAdd: true }).addTo(map);
+                            userMarker = L.marker(latlng, { icon: redIcon }).addTo(map);
                         } else {
                             userMarker.setLatLng(latlng);
                         }
@@ -1376,6 +1342,7 @@
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
+        
         
              // Add event listener to close button
         document.getElementById("close-button").addEventListener("click", function () {
