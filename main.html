@@ -543,62 +543,78 @@
 
 
 
-/* Base styles */
-.navbar {
-    border-radius: 15px; /* Increase border-radius for a bigger appearance */
-    margin-top: 10px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: center;
-    background-color: #4503fc; /* Dark background */
-    padding: 3px 0; /* Increase vertical padding for a bigger appearance */
-}
+        /* Base styles */
+        .navbar {
+            border-radius: 15px;
+            /* Increase border-radius for a bigger appearance */
+            margin-top: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            background-color: #4503fc;
+            /* Dark background */
+            padding: 3px 0;
+            /* Increase vertical padding for a bigger appearance */
+        }
 
-.navbar-item {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 8px 12px; /* Increase padding for a bigger appearance */
-    margin: 0 5px; /* Increase margin for a bigger appearance */
-    font-size: 10px; /* Increase font size for a bigger appearance */
-    color: #fff; /* Text color */
-    transition: background-color 0.3s ease;
-}
+        .navbar-item {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 8px 12px;
+            /* Increase padding for a bigger appearance */
+            margin: 0 5px;
+            /* Increase margin for a bigger appearance */
+            font-size: 10px;
+            /* Increase font size for a bigger appearance */
+            color: #fff;
+            /* Text color */
+            transition: background-color 0.3s ease;
+        }
 
-.navbar-item:hover {
-    border-radius: 15px;
-    background-color: #555; /* Hover background color */
-}
+        .navbar-item:hover {
+            border-radius: 15px;
+            background-color: #555;
+            /* Hover background color */
+        }
 
-.navbar-item.active {
-    border-radius: 15px;
-    background-color: #777; /* Active background color */
-    transition: background-color 0.3s ease;
-}
+        .navbar-item.active {
+            border-radius: 15px;
+            background-color: #777;
+            /* Active background color */
+            transition: background-color 0.3s ease;
+        }
 
-/* Animation */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
 
-.navbar-item {
-    animation: fadeIn 0.5s ease; /* Apply animation */
-}
+            to {
+                opacity: 1;
+            }
+        }
 
-/* Responsive styles */
-@media only screen and (max-width: 768px) {
-    .navbar {
-        padding: 10px 0; /* Adjust padding for smaller screens */
-    }
+        .navbar-item {
+            animation: fadeIn 0.5s ease;
+            /* Apply animation */
+        }
 
-    .navbar-item {
-        padding: 5px 8px; /* Adjust padding for smaller screens */
-        font-size: 12px; /* Reduce font size for smaller screens */
-    }
-}
+        /* Responsive styles */
+        @media only screen and (max-width: 768px) {
+            .navbar {
+                padding: 10px 0;
+                /* Adjust padding for smaller screens */
+            }
 
-
+            .navbar-item {
+                padding: 5px 8px;
+                /* Adjust padding for smaller screens */
+                font-size: 12px;
+                /* Reduce font size for smaller screens */
+            }
+        }
     </style>
 
 </head>
@@ -764,24 +780,91 @@
                     </div>
                 </div>
             </div>
-            <nav class="navbar">
-                <button id="title-tab1" class="navbar-item" onclick="toggleBorder(this)">Information</button>
-                <button id="title-tab" class="navbar-item" onclick="toggleBorder(this)">Product</button>
-                <button id="description-tab" class="navbar-item" onclick="toggleBorder(this)">Service</button>
-                <button id="service-tab" class="navbar-item" onclick="toggleBorder(this)">Payment</button>
-                <button id="promotion-tab" class="navbar-item" onclick="toggleBorder(this)">Promotion</button>
-            </nav>
-
+            <div class="wrapper">
+                <nav class="tabs">
+                    <div class="selector"></div>
+                    <a href="#" id="title-tab1" class="active"
+                        onclick="toggleTab(this, 'title-content')">Information</a>
+                    <a href="#" id="title-tab" onclick="toggleTab(this, 'description-content')">Product</a>
+                    <a href="#" id="description-tab" onclick="toggleTab(this, 'service-content')">Service</a>
+                    <a href="#" id="service-tab" onclick="toggleTab(this, 'title-content2')">Payment</a>
+                    <a href="#" id="promotion-tab" onclick="toggleTab(this, 'promotion-content')">Promotion</a>
+                </nav>
+            </div>
             <script>
-                function toggleBorder(element) {
-                    var items = document.getElementsByClassName("navbar-item");
-                    for (var i = 0; i < items.length; i++) {
-                        items[i].classList.remove("active");
-                    }
-                    element.classList.add("active");
+                // Add click event listeners for each tab
+                document.querySelectorAll(".tabs a").forEach(function (tab) {
+                    tab.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        document.querySelectorAll('.tabs a').forEach(function (tab) {
+                            tab.classList.remove("active");
+                        });
+                        this.classList.add('active');
+                        var activeWidth = this.offsetWidth;
+                        var itemPos = this.offsetLeft;
+                        document.querySelector(".selector").style.width = activeWidth + "px";
+                        document.querySelector(".selector").style.left = itemPos + "px";
+                    });
+                });
+            </script>
+            <style>
+                @import url('https://fonts.googleapis.com/css?family=Roboto');
+                h2,
+                h6 {
+                    margin: 0;
+                }
+                .wrapper {
+                    text-align: center;
+                    margin: 50px auto; /* Adjusted margin */
+                }
+                
+
+                .tabs {
+                    font-size: 11px;
+                    font-weight: bold; /* Set the font weight to bold */
+                    padding: 0;
+                    list-style: none;
+                    background: #fff;
+                    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.274);
+                    display: inline-block;
+                    border-radius: 50px;
+                    position: relative;
+                }
+                
+
+                .tabs a {
+                    text-decoration: none;
+                    color: #777;
+                    text-transform: uppercase;
+                    padding: 10px 6px; /* Adjusted padding */
+                    display: inline-block;
+                    position: relative;
+                    z-index: 1;
+                    transition: color 0.6s;
+                }
+                
+
+                .tabs a.active {
+                    color: #fff;
                 }
 
-            </script>
+                .tabs a i {
+                    margin-right: 5px;
+                }
+
+                .tabs .selector {
+                    height: 100%;
+                    display: inline-block;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    z-index: 1;
+                    border-radius: 50px;
+                    transition: left 0.6s, width 0.6s;
+                    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                    background: linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+                }
+            </style>
             <!-- Add medium-zoom CSS -->
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/0.8.4/medium-zoom.min.css">
 
@@ -793,13 +876,11 @@
                     <!-- Additional content can be added here -->
                 </div>
             </div>
-
-            <!-- Add medium-zoom JavaScript -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/0.8.4/medium-zoom.min.js"></script>
-            <script>document.addEventListener("DOMContentLoaded", function () {
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
                     const overlayImage = document.getElementById("overlay-image");
                     const zoom = mediumZoom(overlayImage, {
-                        background: "rgba(0,0,0,0.8)", // Customize the background color
+                        background: "rgba(1,0,0,0.8)", // Customize the background color
                     });
 
                     // Add event listener to close the overlay when clicking outside the image
@@ -1187,7 +1268,7 @@
                                 }
                                 // Append image tag with the corresponding source and promotion name to the promotionImages string
                                 promotionImages += '<img src="' + imgSrc + '" alt="' + promotion +
-                                    '" style="max-width: 180px; padding: 10px; vertical-align: middle; margin-right: 5px; cursor: pointer;" />';
+                                    '" style="max-width: 150px; padding: 10px; vertical-align: middle; margin-right: 5px; cursor: pointer;" />';
                             });
 
                             // Set the HTML content of the promotion content div
