@@ -992,17 +992,19 @@
                             case "under construct":
                                 customIconUrl = "./pictures/under_construction.png";
                                 break;
-                            case "16h":
+                                case "16h":
                                 var currentDate = new Date(); // Get the current date and time
-                                var currentHour = currentDate.getHours(); // Extract the current hour
+                                var currentHour = currentDate.getUTCHours() + 7; // Extract the current hour adjusted for Cambodia's time zone
+                            
                                 var customIconUrl = ""; // Initialize the custom icon URL
-
-                                if (currentHour >= 5.30 && currentHour < 20.30) {
-                                    customIconUrl = "./pictures/6.png"; // Set the icon URL for the hours between 7 AM and 12 PM
+                            
+                                if (currentHour >= 5.5 && currentHour < 20.5) { // Adjusted for Cambodia's time zone
+                                    customIconUrl = "./pictures/6.png"; // Set the icon URL for the hours between 5:30 AM and 8:30 PM
                                 } else {
                                     customIconUrl = "./pictures/time_close.png"; // Set the icon URL for other hours (gray icon)
                                 }
                                 break;
+                            
 
                             case "24h":
                                 customIconUrl = "./pictures/6.png";
