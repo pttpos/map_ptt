@@ -33,6 +33,11 @@ function addOrUpdateMarker($markerData) {
         $markerData['picture'] = '';
     }
 
+    // Convert null values to empty arrays for description and other_product fields
+    $markerData['description'] = $markerData['description'] ?? [];
+    $markerData['other_product'] = $markerData['other_product'] ?? [];
+    $markerData['promotion'] = $markerData['promotion'] ?? [];
+
     $markers = loadMarkerData();
     $existingMarker = getMarkerById($markerData['id']);
     if ($existingMarker) {
@@ -49,6 +54,7 @@ function addOrUpdateMarker($markerData) {
     }
     saveMarkerData($markers['STATION']);
 }
+
 
 // Function to delete a marker
 function deleteMarker($id) {
