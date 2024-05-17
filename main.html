@@ -1036,15 +1036,17 @@
                             case "16h":
                                 var currentDate = new Date(); // Get the current date and time
                                 var currentHour = currentDate.getUTCHours() + 7; // Extract the current hour adjusted for Cambodia's time zone
+                                var currentMinute = currentDate.getUTCMinutes(); // Extract the current minute
                             
                                 var customIconUrl = ""; // Initialize the custom icon URL
                             
-                                if ((currentHour === 5 && currentDate.getUTCMinutes() >= 30) || (currentHour === 20 && currentDate.getUTCMinutes() <= 30)) {
-                                    customIconUrl = "./pictures/6.png"; // Set the icon URL for 5:30 AM and 8:30 PM
+                                if ((currentHour === 5 && currentMinute >= 30) || (currentHour > 5 && currentHour < 20) || (currentHour === 20 && currentMinute <= 30)) {
+                                    customIconUrl = "./pictures/6.png"; // Set the icon URL for the hours between 5:30 AM and 8:30 PM
                                 } else {
                                     customIconUrl = "./pictures/time_close.png"; // Set the icon URL for other hours (gray icon)
                                 }
                                 break;
+                            
 
                             case "24h":
                                 customIconUrl = "./pictures/6.png";
