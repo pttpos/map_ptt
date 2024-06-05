@@ -1162,18 +1162,20 @@
                             markerStatusElement.style.backgroundColor = statusInfo.color;
 
                             function getStatusIconClass(status) {
-                                // Get the current date and time
+                                // Get the current date and time in UTC
                                 var currentTime = new Date();
-                                var currentHour = currentTime.getHours();
-                                var currentMinute = currentTime.getMinutes();
-                                var currentSecond = currentTime.getSeconds();
-
+                                // Convert UTC time to Cambodia time (UTC+7)
+                                var cambodiaTime = new Date(currentTime.getTime() + (7 * 60 * 60 * 1000));
+                                var currentHour = cambodiaTime.getHours();
+                                var currentMinute = cambodiaTime.getMinutes();
+                                var currentSecond = cambodiaTime.getSeconds();
+                            
                                 switch (status) {
                                     case "under construct":
                                         return { class: "fa fa-tools", text: "Under Construction", color: "#FFA500" }; // Icon class, text, and background color for "under construct" status
                                     case "16h":
-                                        // Check if the current time is within the opening hours for 16 hours
-                                        if (currentHour >= 5.30 && currentHour < 20.30) {
+                                        // Check if the current time is within the opening hours for 16 hours (5:30 AM to 8:30 PM)
+                                        if (currentHour >= 5.5 && currentHour < 20.5) {
                                             return { class: "fa fa-clock", text: "Open", color: "#008000" }; // Icon class, text, and background color for "16 hours" status (open)
                                         } else {
                                             return { class: "fa fa-clock", text: "Closed", color: "#FF0000" }; // Icon class, text, and background color for "16 hours" status (closed)
@@ -1184,9 +1186,7 @@
                                         return { class: "", text: "", color: "" }; // Default empty class, text, and color if status doesn't match any case
                                 }
                             }
-
-
-
+                            
 
                             document.getElementById("title-tab1").click();
                             document.getElementById("title-content2").innerHTML =
