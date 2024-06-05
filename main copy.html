@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>PTT Station Map</title>
+    <!-- Include Leaflet CSS and JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Include Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      href="./pictures/logo.png"
+      type="image/png"
+      sizes="10x30"
+    />
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Leaflet Routing Machine CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css"
+    />
+
+    <!-- Leaflet Routing Machine JavaScript -->
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <style>
+      body {
+        color: #757373;
+        overflow: hidden;
+        font-family: "Prompt-Regular";
+        /* Font stack */
+        /* Locks the entire screen from scrolling */
+      }
+
+      #map {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 90vh;
+        /* Set height to 100% of the viewport height */
+        z-index: 0;
+      }
+
+      #button-container {
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        z-index: 1000;
+      }
+
+      .button {
+        padding: 10px 20px;
+        background-color: #bebebe;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      /* Adjust footer popup styles for responsiveness */
+      .footer-popup,
+      .footer-popup1 {
+        border-radius: 10px;
+        /* Simplify border radius */
+        position: fixed;
+        bottom: -200%;
+        left: 0;
+        right: 0;
+        width: calc(100% - 40px);
+        /* Take full width with some padding */
+        max-width: 400px;
+        /* Limit maximum width for better readability */
+        margin: 0 auto;
+        /* Center horizontally */
+        background-color: rgb(255, 255, 255);
+        padding: 20px;
+        border-top: 1px solid #ccc;
+        transition: bottom 0.5s ease;
+        z-index: 1000;
+        overflow-y: auto;
+        /* Enable vertical scrolling if content exceeds height */
+      }
+
+      .popup-header {
+        margin-top: 40px;
+        margin-bottom: 10px;
+      }
+
+      /* Adjust height of footer popup1 for better visibility on smaller screens */
+      .footer-popup1 {
+        height: auto;
+        /* Auto height to fit content */
+      }
+
+      .footer-popup {
+        height: 750px;
+        /* Auto height to fit content */
+      }
+
+      /* Responsive adjustments for medium screens */
+      @media screen and (max-width: 768px) {
+        .popup-header {
+          margin-top: 80px;
+        }
+
+        .footer-popup,
+        .footer-popup1 {
+          max-width: 100%;
+          /* Adjust maximum width for smaller screens */
+          border-radius: 0;
+          /* Remove border radius for smaller screens */
+          border-top-left-radius: 10px;
+          /* Add border radius to top-left corner for better appearance */
+          border-top-right-radius: 10px;
+          /* Add border radius to top-right corner for better appearance */
+        }
+
+        .footer-popup {
+          height: 100%;
+        }
+
+        .footer-popup1 {
+          height: auto;
+          /* Auto height to fit content on smaller screens */
+        }
+      }
+
+      /* Media query for iPhone X and iPhone 11 in portrait mode */
+      @media only screen and (min-device-width: 375px) and (max-device-width: 375px) and (min-device-height: 812px) and (max-device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+        .popup-header {
+          margin-top: 500px;
+        }
+
+        .footer-popup,
+        .footer-popup1 {
+          width: calc(100% - 20px);
+          max-width: 100%;
+          border-radius: 0;
+          padding: 10px;
+        }
+      }
+
+      /* Media query for iPhone 14 Pro Max in portrait mode */
+      @media (min-width: 376px) and (max-width: 430px) and (max-height: 932px) {
+        .popup-header {
+          margin-top: 70px;
+          /* Adjust this value as needed */
+        }
+
+        .footer-popup,
+        .footer-popup1 {
+          width: calc(100% - 20px);
+          max-width: 100%;
+          border-radius: 0;
+          padding: 15px;
+          /* Adjust this value as needed */
+        }
+      }
+
+      .show-popup {
+        bottom: 0;
+      }
+
+      .popup-content {
+        position: relative;
+        padding-bottom: 40px;
+      }
+
+      .popup-content1 {
+        position: relative;
+        padding-bottom: 40px;
+      }
+
+      .btn-google-maps {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .suggestion {
+        cursor: pointer;
+        padding: 5px;
+        background-color: #f0f0f0;
+        /* Background color for suggestions */
+        border-radius: 5px;
+        /* Rounded corners for suggestions */
+        margin-bottom: 5px;
+        /* Add margin between suggestions */
+      }
+
+      .suggestion:hover {
+        background-color: #e0e0e0;
+        /* Background color for suggestions on hover */
+      }
+    </style>
+
+    <style>
+      .popup-tab {
+        margin: 5px;
+        padding: 5px 10px;
+        /* Increased padding for larger buttons */
+        background-color: #007bff;
+        /* Blue color for buttons */
+        color: white;
+        border: none;
+        /* Remove border */
+        border-radius: 25px;
+        /* Rounded corners */
+        cursor: pointer;
+        margin-right: 10px;
+        /* Add margin between buttons */
+        font-size: 15px;
+        /* Adjust font size for better readability */
+      }
+    </style>
+    <style>
+      #description-content {
+        display: flex;
+        align-items: center;
+      }
+
+      #description-content .popup-image-title {
+        display: flex;
+        align-items: center;
+      }
+
+      #description-content .popup-image-title img {
+        max-width: 60px;
+        vertical-align: middle;
+        margin-right: 5px;
+        /* Add margin to separate the image and buttons */
+      }
+    </style>
+    <style>
+      .btn-google-maps {
+        display: inline-block;
+        width: 60px;
+        /* Set the width */
+        height: 60px;
+        /* Set the height */
+        background-color: #ffffff;
+        /* Background color */
+        color: #007bff;
+        /* Text color */
+        border: 2px solid #007bff;
+        /* Border */
+        border-radius: 50%;
+        /* Make it round */
+        text-decoration: none;
+        text-align: center;
+        line-height: 60px;
+        /* Center the content vertically */
+      }
+
+      .btn-google-maps img {
+        width: 23px;
+        /* Adjust image width */
+        height: 30px;
+        /* Adjust image height */
+        vertical-align: middle;
+      }
+
+      .btn-google-maps:hover {
+        background-color: #3b79db;
+        /* Darker shade of Google blue on hover */
+      }
+
+      .btn-google-maps:focus {
+        outline: none;
+        /* Remove outline on focus */
+      }
+
+      #filter-popup1 .popup-content1 {
+        position: relative;
+        /* Ensure relative positioning for absolute positioning */
+      }
+
+      #filter-popup .popup-content {
+        position: relative;
+        /* Ensure relative positioning for absolute positioning */
+      }
+
+      #close-filter-popup {
+        background-color: red;
+        position: absolute;
+        right: 10px;
+        /* Adjust as needed */
+      }
+
+      #close-filter-popup12 {
+        background-color: red;
+        position: absolute;
+        top: 200px;
+        /* Adjust as needed */
+        left: 0px;
+        /* Adjust as needed */
+      }
+
+      .custom-select {
+        font-size: 16px;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        width: 100%;
+        margin: 5px;
+        padding: 10px;
+        /* Add padding for better spacing */
+      }
+
+      .button13 {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        /* Adjust the border-radius to make it rounded */
+        background-color: rgb(17, 0, 255);
+        /* Adjust the alpha value (0.5) for the desired level of transparency */
+        backdrop-filter: blur(10px);
+        /* Adjust the blur radius as needed */
+        color: white;
+        /* Text color */
+      }
+
+      .button13:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+        /* Darker background color on hover */
+      }
+
+      /* Adjust icon size and color */
+      .button13 i {
+        margin-right: 5px;
+        /* Spacing between icon and text */
+        font-size: 20px;
+        /* Adjust icon size as needed */
+      }
+
+      #powered-by {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        /* Adjusted to align with the left edge */
+        font-family: "Prompt-Regular";
+        /* Change the font-family as needed */
+        font-size: 14px;
+        /* Adjust font size as needed */
+        font-weight: bold;
+        transform: translateX(0%);
+        z-index: -999;
+        /* Ensure it appears behind the pop-up */
+      }
+
+      @media (max-width: 768px) {
+        #powered-by {
+          font-weight: bold;
+          font-size: 12px;
+          /* Adjust font size for smaller screens */
+          bottom: 5px;
+          /* Adjust bottom spacing for smaller screens */
+        }
+      }
+
+      @media (max-width: 576px) {
+        #powered-by {
+          font-weight: bold;
+          font-size: 10px;
+          /* Adjust font size for even smaller screens */
+          bottom: 2px;
+          /* Further adjust bottom spacing for smaller screens */
+        }
+      }
+    </style>
+    <!-- overly image view  -->
+    <style>
+      /* Style for overlay container */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        /* Semi-transparent black background */
+        display: none;
+        /* Initially hidden */
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        /* Ensure it appears above other content */
+      }
+
+      /* Style for overlay content */
+      .overlay-content {
+        max-width: 80%;
+        max-height: 80%;
+      }
+
+      /* Style for overlay image */
+      .overlay-content img {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 20px;
+      }
+    </style>
+    <style>
+      /* Adjust the icon styling */
+      .form-label .icon-container {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 5px;
+        /* Adjust spacing between icon and text */
+      }
+
+      /* Optionally, you can adjust the color of the icon */
+      .form-label .icon-container i {
+        color: #007bff;
+        /* Change to your desired color */
+      }
+    </style>
+    <style>
+      .service-container {
+        display: inline-flex;
+        /* Display as row */
+        align-items: center;
+        /* Align items vertically */
+        margin-right: 10px;
+        /* Add some spacing between service buttons */
+      }
+
+      .leaflet-top.leaflet-right {
+        margin-top: 70px;
+        display: none;
+        /* Adjust the margin value as needed */
+      }
+
+      .popup-image-title {
+        background-color: #f0f0f0;
+        border-radius: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* Add shadow effect */
+      }
+
+      /* Media Query for screens smaller than 768px (typical smartphones) */
+      @media only screen and (max-width: 767px) {
+        .popup-image-title {
+          /* Adjust styles for smaller screens */
+          border-radius: 10px;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+      }
+
+      /* Media Query for screens larger than 768px (typical tablets and desktops) */
+      @media only screen and (min-width: 768px) {
+        .popup-image-title {
+          /* Adjust styles for larger screens */
+          border-radius: 20px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+      }
+
+      #vertical-line {
+        width: 3px;
+        /* Adjust width as needed */
+        height: 70px;
+        /* Adjust height as needed */
+        background-color: #ccc;
+        /* Change color as needed */
+        margin: 0 20px;
+        /* Adjust margin as needed */
+      }
+
+      .tab112 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .popup-tab {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+        /* Initial shadow */
+        transition: box-shadow 0.3s ease;
+        /* Add transition effect */
+        /* Add other styles as needed */
+      }
+
+      .popup-tab:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        /* Shadow on hover */
+      }
+
+      .distance-button {
+        background-color: #ff0000;
+        /* Red color */
+        color: #fff;
+        /* White text color */
+        padding: 5px 10px;
+        /* Adjust padding as needed */
+        border-radius: 5px;
+        /* Rounded corners */
+      }
+
+      .duration-button {
+        background-color: #119911;
+        /* Green color */
+        color: #fff;
+        /* White text color */
+        padding: 5px 10px;
+        /* Adjust padding as needed */
+        border-radius: 5px;
+        /* Rounded corners */
+      }
+
+      .black-text {
+        color: black;
+      }
+
+      .popup-tab {
+        border: 2px solid transparent;
+        /* Set initial border style */
+      }
+
+      .popup-tab.active {
+        padding: 10px;
+        border-color: red;
+        /* Change border color to red when active */
+        border-radius: 20px;
+        /* Apply rounded border */
+      }
+
+      /* Base styles */
+      .navbar {
+        border-radius: 15px;
+        /* Increase border-radius for a bigger appearance */
+        margin-top: 10px;
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: center;
+        background-color: #4503fc;
+        /* Dark background */
+        padding: 3px 0;
+        /* Increase vertical padding for a bigger appearance */
+      }
+
+      .navbar-item {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 8px 12px;
+        /* Increase padding for a bigger appearance */
+        margin: 0 5px;
+        /* Increase margin for a bigger appearance */
+        font-size: 10px;
+        /* Increase font size for a bigger appearance */
+        color: #fff;
+        /* Text color */
+        transition: background-color 0.3s ease;
+      }
+
+      .navbar-item:hover {
+        border-radius: 15px;
+        background-color: #555;
+        /* Hover background color */
+      }
+
+      .navbar-item.active {
+        border-radius: 15px;
+        background-color: #777;
+        /* Active background color */
+        transition: background-color 0.3s ease;
+      }
+
+      /* Animation */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      .navbar-item {
+        animation: fadeIn 0.5s ease;
+        /* Apply animation */
+      }
+
+      /* Responsive styles */
+      @media only screen and (max-width: 768px) {
+        .navbar {
+          padding: 10px 0;
+          /* Adjust padding for smaller screens */
+        }
+
+        .navbar-item {
+          padding: 5px 8px;
+          /* Adjust padding for smaller screens */
+          font-size: 12px;
+          /* Reduce font size for smaller screens */
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+
+    <div id="button-container" class="d-flex flex-column align-items-center">
+      <button id="filter-button" class="button13">
+        <i class="fas fa-filter"></i>
+      </button>
+      <div id="filter-popup" class="footer-popup1">
+        <div class="popup-content1">
+          <button id="close-filter-popup" class="button">
+            <i class="fas fa-times"></i>
+            <!-- Font Awesome icon for "times" -->
+          </button>
+          <h3 class="mb-4">Filter Markers</h3>
+          <div class="col-12 col-md-6">
+            <form id="filter-form">
+              <div class="mb-3">
+                <label for="province-filter" class="form-label">
+                  <span class="icon-container"
+                    ><i class="fas fa-map-marker-alt"></i
+                  ></span>
+                  Location
+                </label>
+
+                <select id="province-filter" class="form-select custom-select">
+                  <option value="all">All</option>
+                  <option value="Banteay Meanchey">Banteay Meanchey</option>
+                  <option value="Battambang">Battambang</option>
+                  <option value="Kampong Cham">Kampong Cham</option>
+                  <option value="Kampong Chhnang">Kampong Chhnang</option>
+                  <option value="Kampong Speu">Kampong Speu</option>
+                  <option value="Kampong Thom">Kampong Thom</option>
+                  <option value="Kampot">Kampot</option>
+                  <option value="Kandal">Kandal</option>
+                  <option value="Koh Kong">Koh Kong</option>
+                  <option value="Kratie">Kratié</option>
+                  <option value="Mondulkiri">Mondulkiri</option>
+                  <option value="Oddar Meanchey">Oddar Meanchey</option>
+                  <option value="Pailin">Pailin</option>
+                  <option value="Phnom Penh">Phnom Penh</option>
+                  <option value="Preah Sihanouk">Preah Sihanouk</option>
+                  <option value="Preah Vihear">Preah Vihear</option>
+                  <option value="Pursat">Pursat</option>
+                  <option value="Ratanakiri">Ratanakiri</option>
+                  <option value="Siem Reap">Siem Reap</option>
+                  <option value="Prey Veng">Prey Veng</option>
+                  <option value="Stung Treng">Stung Treng</option>
+                  <option value="Svay Rieng">Svay Rieng</option>
+                  <option value="Takeo">Takéo</option>
+                  <option value="Kep">Kep</option>
+                  <option value="Otdar Meanchey">Otdar Meanchey</option>
+                  <option value="Pursat">Pursat</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="search-input" class="form-label">
+                  <span class="icon-container"
+                    ><i class="fas fa-gas-pump"></i
+                  ></span>
+                  Station Available
+                </label>
+                <select
+                  id="search-input"
+                  class="form-select custom-select"
+                  aria-label="Search by title"
+                >
+                  <option value selected disabled>Select Station</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="service-filter" class="form-label">
+                  <span class="icon-container"
+                    ><i class="fas fa-money-bill-wave"></i
+                  ></span>
+                  Payment
+                </label>
+                <select id="service-filter" class="form-select custom-select">
+                  <option value="all">All</option>
+                  <option value="ABA">ABA</option>
+                  <option value="Fleet card">Fleet card</option>
+                  <option value="Cash">Cash</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="description-filter" class="form-label">
+                  <span class="icon-container"
+                    ><i class="fas fa-concierge-bell"></i
+                  ></span>
+                  Service
+                </label>
+                <select
+                  id="description-filter"
+                  class="form-select custom-select"
+                  aria-label="Search by service"
+                >
+                  <option value selected disabled>Select Service</option>
+                  <option value="all">All</option>
+                  <option value="Amazon">Amazon</option>
+                  <option value="7-Eleven">7 Eleven</option>
+                  <!-- Add more options as needed -->
+                </select>
+              </div>
+              <button
+                type="submit"
+                class="button"
+                style="background-color: #007bff"
+              >
+                <i class="fas fa-filter me-2"></i> Apply Filter
+              </button>
+            </form>
+          </div>
+          <!-- Add more columns or content as needed -->
+        </div>
+      </div>
+
+      <button id="find-location-button" class="button13 mb-2">
+        <i class="fas fa-map-marker-alt"></i> My Location
+      </button>
+      <button id="zoom-button" class="button13 mt-2">
+        <i class="fas fa-search-plus"></i> Zoom
+      </button>
+      <div id="suggestions"></div>
+      <p id="powered-by">Powered By Oil Retail System</p>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var poweredBy = document.getElementById("powered-by");
+          var currentYear = new Date().getFullYear();
+          poweredBy.textContent += " @" + currentYear;
+        });
+      </script>
+    </div>
+
+    <div id="popup" class="footer-popup">
+      <div class="popup-header" style>
+        <div
+          class="popup-content"
+          style="margin-top: 30px; border-radius: 10px"
+        >
+          <a href="#" class="btn btn-primary btn-google-maps">
+            <img src="#" alt="Image Alt Text" />
+          </a>
+        </div>
+        <img src="./pictures/logo_Station.png" style="max-width: 100px" />
+        <i
+          id="close-button"
+          class="fa fa-times-circle"
+          style="margin-left: 60%; color: red; font-size: 24px; cursor: pointer"
+        ></i>
+      </div>
+
+      <div class="popup-content" style="overflow-y: auto; height: 600px">
+        <div
+          class="popup-image-title"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <img
+            id="marker-image"
+            src
+            alt="Marker Image"
+            style="
+              max-width: 130px;
+              max-height: auto;
+              border: 0px solid #ccc;
+              background-color: #0044ff;
+              border-radius: 20px;
+              margin: 10px;
+            "
+          />
+          <div id="vertical-line"></div>
+          <!-- Vertical line -->
+          <div
+            style="display: flex; flex-direction: column; margin-bottom: 10px"
+          >
+            <div id="title-content1"></div>
+            <div
+              id="marker-status"
+              style="
+                color: white;
+                padding: 5px 5px;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+              "
+            >
+              <!-- Status icon and text will be inserted here dynamically -->
+              <i id="status-icon" class="fas" style="margin-right: 5px"></i>
+              <span id="status-text"></span>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <nav class="tabs">
+            <div class="selector"></div>
+            <a
+              href="#"
+              id="title-tab1"
+              class="active"
+              onclick="toggleTab(this, 'title-content')"
+              >Information</a
+            >
+            <a
+              href="#"
+              id="title-tab"
+              onclick="toggleTab(this, 'description-content')"
+              >Product</a
+            >
+            <a
+              href="#"
+              id="description-tab"
+              onclick="toggleTab(this, 'service-content')"
+              >Service</a
+            >
+            <a
+              href="#"
+              id="service-tab"
+              onclick="toggleTab(this, 'title-content2')"
+              >Payment</a
+            >
+            <a
+              href="#"
+              id="promotion-tab"
+              onclick="toggleTab(this, 'promotion-content')"
+              >Promotion</a
+            >
+          </nav>
+        </div>
+        <script>
+          // Add click event listeners for each tab
+          document.querySelectorAll(".tabs a").forEach(function (tab) {
+            tab.addEventListener("click", function (e) {
+              e.preventDefault();
+              document.querySelectorAll(".tabs a").forEach(function (tab) {
+                tab.classList.remove("active");
+              });
+              this.classList.add("active");
+              var activeWidth = this.offsetWidth;
+              var itemPos = this.offsetLeft;
+              document.querySelector(".selector").style.width =
+                activeWidth + "px";
+              document.querySelector(".selector").style.left = itemPos + "px";
+            });
+          });
+        </script>
+        <style>
+          @import url("https://fonts.googleapis.com/css?family=Roboto");
+
+          h2,
+          h6 {
+            margin: 0;
+          }
+
+          .wrapper {
+            text-align: center;
+            margin: 20px auto;
+            /* Adjusted margin for better responsiveness */
+          }
+
+          /* Tabs container */
+          .tabs {
+            font-size: 11px;
+            font-weight: bold;
+            /* Set the font weight to bold */
+            padding: 0;
+            list-style: none;
+            background: #fff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.274);
+            display: inline-block;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            max-width: 100%;
+            /* Ensure tabs container is responsive */
+          }
+
+          /* Tabs links */
+          .tabs a {
+            text-decoration: none;
+            color: #777;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            /* Adjusted padding for better touch targets */
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            transition: color 0.6s;
+            white-space: nowrap;
+            /* Prevent text wrapping */
+          }
+
+          /* Active tab link */
+          .tabs a.active {
+            color: #fff;
+          }
+
+          /* Icon in tab link */
+          .tabs a i {
+            margin-right: 5px;
+          }
+
+          /* Selector indicator */
+          .tabs .selector {
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 0;
+            border-radius: 50px;
+            transition: left 0.6s, width 0.6s;
+            transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            background: linear-gradient(45deg, #05abe0 0%, #8200f4 100%);
+          }
+
+          /* Media query for larger screens */
+          @media (min-width: 769px) {
+            .tabs a {
+              padding: 10px 20px;
+              /* Larger padding for larger screens */
+            }
+          }
+
+          /* Media query for medium screens */
+          @media (max-width: 768px) {
+            .tabs {
+              font-size: 11px;
+              max-width: 100%;
+              overflow-x: auto;
+              /* Enable horizontal scrolling if needed */
+              white-space: nowrap;
+              /* Prevent text wrapping */
+            }
+
+            .tabs a {
+              padding: 10px 15px;
+              /* Slightly reduced padding for medium screens */
+            }
+          }
+
+          /* Media query for small screens */
+          @media (max-width: 576px) {
+            .tabs {
+              font-size: 11px;
+            }
+
+            .wrapper {
+              margin: 35px auto;
+              /* Reduced margin for small screens */
+            }
+
+            .tabs a {
+              padding: 10px 7px;
+              /* Reduced padding for small screens */
+            }
+          }
+
+          /* Media query for small screens */
+          @media (max-width: 360px) {
+            .wrapper {
+              margin: 35px auto;
+              /* Reduced margin for small screens */
+            }
+
+            .tabs {
+              font-size: 7px;
+            }
+
+            .tabs a {
+              padding: 10px 10px;
+              /* Reduced padding for small screens */
+            }
+          }
+
+          /* Media query for small screens */
+          @media (max-width: 375px) {
+            .wrapper {
+              margin: 35px auto;
+              /* Reduced margin for small screens */
+            }
+
+            .tabs {
+              font-size: 7.8px;
+            }
+
+            .tabs a {
+              padding: 10px 10px;
+              /* Reduced padding for small screens */
+            }
+          }
+        </style>
+        <!-- Add medium-zoom CSS -->
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/0.8.4/medium-zoom.min.css"
+        />
+
+        <!-- Add an overlay container -->
+        <div id="overlay" class="overlay">
+          <!-- Overlay content -->
+          <div class="overlay-content">
+            <img id="overlay-image" src alt="Marker Image" />
+            <!-- Additional content can be added here -->
+          </div>
+        </div>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const overlayImage = document.getElementById("overlay-image");
+            const zoom = mediumZoom(overlayImage, {
+              background: "rgba(1,0,0,0.8)", // Customize the background color
+            });
+
+            // Add event listener to close the overlay when clicking outside the image
+            const overlay = document.getElementById("overlay");
+            overlay.addEventListener("click", function (event) {
+              if (event.target === overlay) {
+                overlay.style.display = "none";
+              }
+            });
+          });
+        </script>
+
+        <!-- <hr /> -->
+        <div id="title-content">
+          <h3>Title:</h3>
+          <div id="product-content" style="display: flex; align-items: center">
+            <div class="popup-image-title">
+              <!-- Display the first product image -->
+              <img
+                id="product-image-1"
+                src
+                alt="Marker Image"
+                style="
+                  max-width: 60px;
+                  vertical-align: middle;
+                  margin-right: 5px;
+                "
+              />
+              <!-- Display the second product image -->
+              <img
+                id="product-image-2"
+                src
+                alt="Marker Image"
+                style="
+                  max-width: 60px;
+                  vertical-align: middle;
+                  margin-right: 5px;
+                "
+              />
+            </div>
+          </div>
+          <div
+            id="other-product-content"
+            style="display: flex; align-items: center"
+          >
+            <div class="popup-image-title">
+              <!-- Display the first other product image -->
+              <img
+                id="other-product-image-1"
+                src
+                alt="Marker Image"
+                style="
+                  max-width: 60px;
+                  vertical-align: middle;
+                  margin-right: 5px;
+                "
+              />
+              <!-- Display the second other product image -->
+              <img
+                id="other-product-image-2"
+                src
+                alt="Marker Image"
+                style="
+                  max-width: 60px;
+                  vertical-align: middle;
+                  margin-right: 5px;
+                "
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          id="description-content"
+          style="display: flex; align-items: center"
+        >
+          <div class="popup-image-title">
+            <!-- Display the first image -->
+            <img
+              id="description-image-1"
+              src
+              alt="Marker Image"
+              style="max-width: 60px; vertical-align: middle; margin-right: 5px"
+            />
+            <!-- Display the second image -->
+            <img
+              id="description-image-2"
+              src
+              alt="Marker Image"
+              style="max-width: 60px; vertical-align: middle; margin-right: 5px"
+            />
+          </div>
+        </div>
+
+        <div id="service-content" style="display: flex; align-items: center">
+          <div class="popup-image-title">
+            <h2 style="display: inline-block; margin-left: 5px; color: #444744">
+              Payment
+            </h2>
+            <div id="service-buttons"></div>
+          </div>
+        </div>
+
+        <div id="title-content2">
+          <div>
+            <h2></h2>
+          </div>
+          <div>
+            <h2></h2>
+          </div>
+        </div>
+        <!-- Promotion content -->
+        <div id="promotion-content" style="display: none">
+          <!-- Container to display promotion images -->
+          <div class="popup-image-title" style="display: flex; flex-wrap: wrap">
+            <!-- Promotion images will be dynamically added here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      var map;
+      var popup = document.getElementById("popup");
+      var markers = []; // Array to store all markers
+      var suggestionsContainer = document.getElementById("suggestions");
+      var selectInput = document.getElementById("search-input");
+      var routingControl = null;
+
+      function loadMapScenario() {
+        // Initialize Leaflet map
+        map = L.map("map", {
+          zoomControl: false, // Disable default zoom control
+        }).setView([12.5657, 104.991], 7);
+        // Add OpenStreetMap tile layer to the map
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+        // Automatically find user's location
+        findMyLocation();
+        // Fetch marker data from JSON file
+        fetch("data/markers.json")
+          .then((response) => response.json())
+          .then((markerData) => {
+            markerData.STATION.forEach((marker) => {
+              var loc = [marker.latitude, marker.longitude];
+              // Define the custom icon URL for the marker
+
+              var customIconUrl = ""; // Initialize the custom icon URL
+
+              // Determine the custom icon URL based on the marker's status
+              switch (marker.status) {
+                case "under construct":
+                  customIconUrl = "./pictures/under_construction.png";
+                  break;
+                case "16h":
+                  var currentDate = new Date(); // Get the current date and time
+                  var currentHour = currentDate.getUTCHours() + 7; // Extract the current hour adjusted for Cambodia's time zone
+                  var currentMinute = currentDate.getUTCMinutes(); // Extract the current minute
+
+                  var customIconUrl = ""; // Initialize the custom icon URL
+
+                  if (
+                    (currentHour === 5 && currentMinute >= 30) ||
+                    (currentHour > 5 && currentHour < 20) ||
+                    (currentHour === 20 && currentMinute <= 30)
+                  ) {
+                    customIconUrl = "./pictures/6.png"; // Set the icon URL for the hours between 5:30 AM and 8:30 PM
+                  } else {
+                    customIconUrl = "./pictures/time_close.png"; // Set the icon URL for other hours (gray icon)
+                  }
+                  break;
+
+                case "24h":
+                  customIconUrl = "./pictures/6.png";
+                  break;
+                default:
+                  customIconUrl = "./pictures/6.png";
+                  break;
+              }
+
+              // Create a custom icon
+              var customIcon = L.icon({
+                iconUrl: customIconUrl,
+                iconSize: [50, 75], // Adjust icon size as needed
+                iconAnchor: [24, 75], // Adjust anchor position if needed
+                popupAnchor: [0, -1000], // Adjust popup anchor if needed
+              });
+
+              // Create a marker with custom icon
+              var customMarker = L.marker(loc, {
+                icon: customIcon,
+                title: marker.title,
+                service: marker.service,
+                province: marker.province,
+                description: marker.description,
+                address: marker.address,
+                status: marker.status,
+                promotion: marker.promotion,
+              }).addTo(map);
+
+              markers.push(customMarker); // Add marker to the markers array
+
+              // Add option to select input
+              var option = document.createElement("option");
+              option.textContent = marker.title;
+              option.value = marker.title;
+              selectInput.appendChild(option);
+              // Inside the click event listener for the marker
+              customMarker.on("click", function (e) {
+                // Show route to the clicked marker
+                showRouteToMarker(customMarker.getLatLng());
+
+                var myLocation = map.getCenter(); // Assuming your location is the center of the map
+                var markerLocation = customMarker.getLatLng();
+                var distance = calculateDistance(
+                  myLocation.lat,
+                  myLocation.lng,
+                  markerLocation.lat,
+                  markerLocation.lng
+                );
+                // Set popup content dynamically from marker data
+                popup.querySelector(".popup-header img").src =
+                  "./pictures/Google_Maps_icon.png";
+                document.getElementById("marker-image").src =
+                  "pictures/" + marker.picture;
+
+                // Get the marker status element and status icon element
+                var markerStatusElement =
+                  document.getElementById("marker-status");
+                var statusIconElement = document.getElementById("status-icon");
+                var statusTextElement = document.getElementById("status-text");
+
+                // Get the status icon class, text, and background color based on the marker's status
+                var statusInfo = getStatusIconClass(marker.status);
+
+                // Set the class of the status icon element
+                statusIconElement.className = statusInfo.class;
+
+                // Set the text content of the status text element
+                statusTextElement.textContent = statusInfo.text;
+
+                // Set the background color of the marker status element
+                markerStatusElement.style.backgroundColor = statusInfo.color;
+
+                function getStatusIconClass(status) {
+                  // Get the current date and time
+                  var currentTime = new Date();
+                  var currentHour = currentTime.getHours();
+                  var currentMinute = currentTime.getMinutes();
+                  var currentSecond = currentTime.getSeconds();
+
+                  switch (status) {
+                    case "under construct":
+                      return {
+                        class: "fa fa-tools",
+                        text: "Under Construction",
+                        color: "#FFA500",
+                      }; // Icon class, text, and background color for "under construct" status
+                    case "16h":
+                      // Check if the current time is within the opening hours for 16 hours
+                      if (currentHour >= 5.3 && currentHour < 20.3) {
+                        return {
+                          class: "fa fa-clock",
+                          text: "Open",
+                          color: "#008000",
+                        }; // Icon class, text, and background color for "16 hours" status (open)
+                      } else {
+                        return {
+                          class: "fa fa-clock",
+                          text: "Closed",
+                          color: "#FF0000",
+                        }; // Icon class, text, and background color for "16 hours" status (closed)
+                      }
+                    case "24h":
+                      return {
+                        class: "fa fa-clock",
+                        text: "Open 24 Hours",
+                        color: "#008000",
+                      }; // Icon class, text, and background color for "24 hours" status
+                    default:
+                      return { class: "", text: "", color: "" }; // Default empty class, text, and color if status doesn't match any case
+                  }
+                }
+
+                document.getElementById("title-tab1").click();
+                document.getElementById("title-content2").innerHTML =
+                  "<div id='title-and-product1' style='display: flex; flex-direction: column;'>" +
+                  "<div style='display: flex; align-items: center; margin-top: 0;'>" +
+                  "<h3 style='margin-left: 5px; color: black; font-size: 24px; font-weight: bold; margin-top: 0;'>" +
+                  "<i class='fas fa-gas-pump ' style='color: blue; margin-top: 0;margin-right: 5px;'></i>" +
+                  "<button style='font-family: Prompt-Regular; font-size: 20px; border-radius: 10px; background-color: #3b79db; color: white; border: 0px; margin-top: 0;'>" +
+                  marker.title +
+                  "</button>" +
+                  "</h3>" +
+                  "</div>" +
+                  "<div style='display: flex; align-items: center; margin-top: 0;'>" +
+                  "<h3 style='margin-left: 5px; color: black; margin-top: 0;'>" +
+                  "<i class='fas fa-map-marker-alt' style='color: red; margin-top: 0;margin-right: 5px;'></i>" +
+                  "<button style='font-family: Prompt-Regular; font-size: 15px; border-radius: 10px; background-color: #ce3a3a; color: white; border: 0px; margin-top: 0;'>" +
+                  marker.province +
+                  "</button>" +
+                  "</h3>" +
+                  "</div>" +
+                  "<div style='display: flex; margin-top: 0;'>" +
+                  "<h3 style='margin-left: 5px; white-space: pre-wrap; font-family: Prompt-Regular !important; font-size: 16px; margin-top: 0;'>" +
+                  "<i class='fas fa-address-card' style='color: black; margin-top: 0;'></i>" +
+                  "<span class='black-text' style='margin-top: 0;'> Address: </span>" +
+                  marker.address +
+                  "</h3>" +
+                  "</div>" +
+                  "</div>";
+
+                // Set default tab to "Title" when marker is clicked
+                document.getElementById("title-tab1").click();
+                document.getElementById("title-content").innerHTML =
+                  "<div id='title-and-product' style='display: flex; align-items: center;'>";
+
+                var titleContent = document.createElement("div");
+                titleContent.innerHTML =
+                  "<h3 style='color: black;'>Product</h3>";
+                document
+                  .getElementById("title-content")
+                  .appendChild(titleContent);
+                var productContent = document.createElement("div");
+                productContent.style.display = "flex";
+                productContent.style.alignItems = "center";
+                marker.product.forEach(function (product) {
+                  var imgSrc = ""; // Default empty image source
+                  if (product === "HSD") {
+                    imgSrc = "pictures/HSD.png"; // Set image source for HSD
+                  } else if (product === "ULG 95") {
+                    imgSrc = "pictures/ULG95.png"; // Set image source for ULG 95
+                  } else if (product === "ULR 91") {
+                    imgSrc = "pictures/ULR91.png"; // Set image source for ULR 91
+                  }
+                  // Append image tag with the corresponding source
+                  productContent.innerHTML +=
+                    '<img src="' +
+                    imgSrc +
+                    '" alt="' +
+                    product +
+                    '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;border-radius: 50%;" />';
+                });
+                document
+                  .getElementById("title-content")
+                  .appendChild(productContent);
+                document.getElementById("title-content").innerHTML += "</div>";
+
+                // Add other product content
+                var otherProductContent = document.createElement("div");
+                otherProductContent.innerHTML =
+                  "<h3 style='color: black;'>Other Product</h3>";
+                document
+                  .getElementById("title-content")
+                  .appendChild(otherProductContent);
+                var otherProductImages = document.createElement("div");
+                otherProductImages.style.display = "flex";
+                otherProductImages.style.alignItems = "center";
+                marker.other_product.forEach(function (otherProduct) {
+                  var imgSrc = ""; // Default empty image source
+                  if (otherProduct === "EV") {
+                    imgSrc = "pictures/ev.png"; // Set image source for EV
+                  } else if (otherProduct === "Onion") {
+                    imgSrc = "pictures/onion.png"; // Set image source for ULG 98
+                  }
+                  // Append image tag with the corresponding source
+                  otherProductImages.innerHTML +=
+                    '<img src="' +
+                    imgSrc +
+                    '" alt="' +
+                    otherProduct +
+                    '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;"  />';
+                });
+
+                document
+                  .getElementById("title-content")
+                  .appendChild(otherProductImages);
+                document.getElementById("title-content").innerHTML += "</div>";
+
+                document.getElementById("description-content").innerHTML =
+                  "<p>Description: " + marker.description.join(", ") + "</p>";
+                var directionsButton = popup.querySelector(".popup-content a");
+                directionsButton.setAttribute(
+                  "onclick",
+                  `openGoogleMaps(${marker.latitude}, ${marker.longitude})`
+                );
+
+                // Display service buttons dynamically
+                var serviceButtons = document.getElementById("service-buttons");
+                var serviceImages = ""; // Initialize an empty string to store the HTML for service images
+                marker.service.forEach(function (service) {
+                  var imgSrc = ""; // Default empty image source
+                  // Set different images based on the service
+                  if (service === "Fleet card") {
+                    imgSrc = "pictures/fleet.png"; // Set image source for Fleet card
+                  } else if (service === "ABA") {
+                    imgSrc = "pictures/aba.png"; // Set image source for ABA
+                  } else if (service === "Cash") {
+                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                  } else {
+                    imgSrc = "default-image.png"; // Default image if service is not recognized
+                  }
+                  // Append image tag with the corresponding source and service name to the serviceImages string
+                  serviceImages +=
+                    '<div class="service-container"><img src="' +
+                    imgSrc +
+                    '" alt="' +
+                    service +
+                    '" style="max-width: 100px; max-height:auto; padding: 10px; vertical-align: middle; margin-right: 5px;" /><span>' +
+                    service +
+                    "</span></div>";
+                });
+                // Set the HTML content of the service buttons container
+                serviceButtons.innerHTML = serviceImages;
+
+                // Display description images dynamically
+                var descriptionContent = document.getElementById(
+                  "description-content"
+                );
+                var descriptionImages =
+                  '<h3 style="color: black;">Service</h3>'; // Add text "Service" before displaying images
+                marker.description.forEach(function (description) {
+                  var imgSrc = ""; // Default empty image source
+                  if (description === "7-Eleven") {
+                    imgSrc = "pictures/7eleven.png"; // Set image source for 7-Eleven
+                    // Append image tag with the corresponding source
+                    descriptionImages +=
+                      '<img src="' +
+                      imgSrc +
+                      '" alt="' +
+                      description +
+                      '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;" />';
+                  } else if (description === "Amazon") {
+                    imgSrc = "pictures/amazon.png"; // Set image source for Amazon
+                    // Append image tag with the corresponding source
+                    descriptionImages +=
+                      '<img src="' +
+                      imgSrc +
+                      '" alt="' +
+                      description +
+                      '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
+                  }
+                });
+                // Set the HTML content of the description content div
+                descriptionContent.innerHTML = descriptionImages;
+
+                // Display promotion images dynamically
+                // Display promotion images dynamically
+                var promotionContent =
+                  document.getElementById("promotion-content");
+                var promotionImages = "";
+
+                marker.promotion.forEach(function (promotion) {
+                  var imgSrc = ""; // Default empty image source
+                  // Adjust this part based on your promotion types and image sources
+                  if (promotion === "promotion1") {
+                    imgSrc = "pictures/opening1.jpg"; // Set image source for Fleet card
+                  } else if (promotion === "promotion2") {
+                    imgSrc = "pictures/aba.png"; // Set image source for ABA
+                  } else if (promotion === "promotion3") {
+                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                  } else if (promotion === "promotion-opening1") {
+                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                  } else if (promotion === "promotion-opening2") {
+                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                  } else if (promotion === "promotion-opening3") {
+                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                  } else {
+                    imgSrc = "default-image.png"; // Default image if promotion is not recognized
+                  }
+                  // Append image tag with the corresponding source and promotion name to the promotionImages string
+                  promotionImages +=
+                    '<img src="' +
+                    imgSrc +
+                    '" alt="' +
+                    promotion +
+                    '" style="max-width: 150px; padding: 10px; vertical-align: middle; margin-right: 5px; cursor: pointer;" />';
+                });
+
+                // Set the HTML content of the promotion content div
+                promotionContent.innerHTML = promotionImages;
+
+                // Attach event listeners to the promotion images
+                var promotionImgs = promotionContent.querySelectorAll("img");
+                promotionImgs.forEach(function (img) {
+                  img.addEventListener("click", function () {
+                    previewImage(img.src);
+                  });
+                });
+
+                // Function to preview image on click
+                function previewImage(imgSrc) {
+                  var overlay = document.getElementById("overlay");
+                  var overlayImage = document.getElementById("overlay-image");
+                  // Set the source of the overlay image to the clicked image source
+                  overlayImage.src = imgSrc;
+                  // Show the overlay
+                  overlay.style.display = "flex"; // Show the overlay as flex container
+                }
+
+                // Display the popup with animation
+                popup.classList.add("show-popup");
+
+                // Get references to the marker image and overlay
+                var markerImage = document.getElementById("marker-image");
+                var overlay = document.getElementById("overlay");
+                var overlayImage = document.getElementById("overlay-image");
+                // Add a click event listener to the marker image
+                markerImage.addEventListener("click", function () {
+                  // Set the source of the overlay image to the marker image source
+                  overlayImage.src = markerImage.src;
+                  // Show the overlay
+                  overlay.style.display = "flex"; // Show the overlay as flex container
+                });
+                // Add a click event listener to the overlay to close it when clicked
+                overlay.addEventListener("click", function () {
+                  // Hide the overlay
+                  overlay.style.display = "none";
+                });
+
+                function calculateDistance(lat1, lon1, lat2, lon2) {
+                  const R = 6371; // Radius of the Earth in kilometers
+                  const dLat = deg2rad(lat2 - lat1); // Difference in latitude, converted to radians
+                  const dLon = deg2rad(lon2 - lon1); // Difference in longitude, converted to radians
+                  const a =
+                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(deg2rad(lat1)) *
+                      Math.cos(deg2rad(lat2)) *
+                      Math.sin(dLon / 2) *
+                      Math.sin(dLon / 2);
+                  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                  const distance = R * c; // Distance in kilometers
+                  return distance;
+                }
+                // Function to convert degrees to radians
+                function deg2rad(deg) {
+                  return deg * (Math.PI / 180);
+                }
+              });
+              // Add click event listeners for each tab
+              document
+                .getElementById("title-tab")
+                .addEventListener("click", function () {
+                  document.getElementById("title-content").style.display =
+                    "block";
+                  document.getElementById("description-content").style.display =
+                    "none";
+                  document.getElementById("service-content").style.display =
+                    "none";
+                  document.getElementById("title-content2").style.display =
+                    "none";
+                  document.getElementById("promotion-content").style.display =
+                    "none";
+                });
+              document
+                .getElementById("description-tab")
+                .addEventListener("click", function () {
+                  document.getElementById("title-content").style.display =
+                    "none";
+                  document.getElementById("description-content").style.display =
+                    "block";
+                  document.getElementById("service-content").style.display =
+                    "none";
+                  document.getElementById("title-content2").style.display =
+                    "none";
+                  document.getElementById("promotion-content").style.display =
+                    "none";
+                });
+              document
+                .getElementById("service-tab")
+                .addEventListener("click", function () {
+                  document.getElementById("title-content").style.display =
+                    "none";
+                  document.getElementById("description-content").style.display =
+                    "none";
+                  document.getElementById("service-content").style.display =
+                    "block";
+                  document.getElementById("title-content2").style.display =
+                    "none";
+                  document.getElementById("promotion-content").style.display =
+                    "none";
+                });
+              document
+                .getElementById("title-tab1")
+                .addEventListener("click", function () {
+                  document.getElementById("title-content2").style.display =
+                    "block";
+                  document.getElementById("description-content").style.display =
+                    "none";
+                  document.getElementById("service-content").style.display =
+                    "none";
+                  document.getElementById("title-content").style.display =
+                    "none";
+                  document.getElementById("promotion-content").style.display =
+                    "none";
+                });
+              document
+                .getElementById("promotion-tab")
+                .addEventListener("click", function () {
+                  document.getElementById("title-content2").style.display =
+                    "none";
+                  document.getElementById("description-content").style.display =
+                    "none";
+                  document.getElementById("service-content").style.display =
+                    "none";
+                  document.getElementById("title-content").style.display =
+                    "none";
+                  document.getElementById("promotion-content").style.display =
+                    "block";
+                });
+            });
+          })
+          .catch((error) => console.error("Error loading marker data:", error));
+        // Add click event listener to close button
+        document
+          .getElementById("close-button")
+          .addEventListener("click", function (event) {
+            event.stopPropagation(); // Prevent click event from propagating to popup
+            popup.classList.remove("show-popup");
+          });
+        // Add change event listener to select input
+        selectInput.addEventListener("change", function (event) {
+          var selectedTitle = event.target.value;
+          if (selectedTitle) {
+            var targetMarker = markers.find(
+              (marker) => marker.options.title === selectedTitle
+            );
+            if (targetMarker) {
+              map.setView(targetMarker.getLatLng(), 15); // Zoom to the marker if found
+            }
+          }
+        });
+        // Add click event listener to find location button
+        document
+          .getElementById("find-location-button")
+          .addEventListener("click", function () {
+            findMyLocation();
+          });
+        // Add click event listener to zoom button
+        document
+          .getElementById("zoom-button")
+          .addEventListener("click", function () {
+            var selectedTitle = selectInput.value;
+            if (selectedTitle) {
+              var targetMarker = markers.find(
+                (marker) => marker.options.title === selectedTitle
+              );
+              if (targetMarker) {
+                map.setView(targetMarker.getLatLng(), 15); // Zoom to the marker if found
+              }
+            }
+          });
+        // Add change event listener to province selection dropdown
+        document
+          .getElementById("province-filter")
+          .addEventListener("change", function (event) {
+            var selectedProvince = event.target.value;
+            updateTitleOptions(selectedProvince);
+          });
+        // Function to update the options in the title dropdown based on selected province
+        function updateTitleOptions(selectedProvince) {
+          var titleDropdown = document.getElementById("search-input");
+          titleDropdown.innerHTML = ""; // Clear existing options
+          // Add a default option
+          var defaultOption = document.createElement("option");
+          defaultOption.value = "";
+          defaultOption.textContent = "Select Title";
+          defaultOption.disabled = true;
+          defaultOption.selected = true;
+          titleDropdown.appendChild(defaultOption);
+          // Filter markers based on selected province and add titles to dropdown
+          var provinceMarkers = [];
+          markers.forEach(function (marker) {
+            if (
+              selectedProvince === "" ||
+              selectedProvince === "all" ||
+              marker.options.province.includes(selectedProvince)
+            ) {
+              provinceMarkers.push(marker); // Add marker to provinceMarkers array
+              var option = document.createElement("option");
+              option.value = marker.options.title;
+              option.textContent = marker.options.title;
+              titleDropdown.appendChild(option);
+            }
+          });
+          // If there are markers in the selected province, set map view to their bounds
+          if (provinceMarkers.length > 0) {
+            var group = new L.featureGroup(provinceMarkers);
+            map.fitBounds(group.getBounds());
+          }
+        }
+
+        L.control
+          .zoom({
+            position: "bottomright",
+          })
+          .addTo(map);
+      }
+      // Get a reference to the filter popup close button
+      var closeFilterPopupButton =
+        document.getElementById("close-filter-popup");
+      // When the user clicks on the close button, hide the filter popup
+      closeFilterPopupButton.onclick = function () {
+        filterPopup.classList.remove("show-popup");
+      };
+      // Get a reference to the filter popup
+      var filterPopup = document.getElementById("filter-popup");
+      // Get a reference to the filter button
+      var filterButton = document.getElementById("filter-button");
+      // When the user clicks on the filter button, open the filter popup
+      filterButton.onclick = function () {
+        filterPopup.classList.add("show-popup");
+      };
+      /// Add event listener to the filter form
+      document
+        .getElementById("filter-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission behavior
+          // Retrieve selected filter criteria
+          var selectedService = document.getElementById("service-filter").value;
+          var selectedDescription =
+            document.getElementById("description-filter").value;
+          var selectedProvince =
+            document.getElementById("province-filter").value;
+          // Filter markers based on selected criteria
+          markers.forEach(function (marker) {
+            var serviceMatch =
+              selectedService === "" ||
+              marker.options.service.includes(selectedService);
+            var descriptionMatch =
+              selectedDescription === "" ||
+              marker.options.description.includes(selectedDescription);
+            var provinceMatch =
+              selectedProvince === "" ||
+              marker.options.province.includes(selectedProvince);
+            // Check if both service and description match the selected criteria, or if "Show all" is selected
+            if (
+              (selectedService === "all" || serviceMatch) &&
+              (selectedDescription === "all" || descriptionMatch) &&
+              (selectedProvince === "all" || provinceMatch)
+            ) {
+              marker.addTo(map); // Add marker to the map
+            } else {
+              map.removeLayer(marker); // Remove marker from the map
+            }
+          });
+          // Close the filter popup
+          filterPopup.classList.remove("show-popup");
+        });
+
+      var userMarker = null; // Global variable to store user's marker
+      var routingControl = null; // Global variable to store routing control
+
+      function showRouteToMarker(markerLocation) {
+        // Get the current location and add routing control to show the route
+        findMyLocation(function (userLocation) {
+          // Remove existing routing control if it exists
+          if (routingControl) {
+            map.removeControl(routingControl);
+          }
+          // Add routing control to show the route
+          routingControl = L.Routing.control({
+            waypoints: [userLocation, markerLocation],
+            routeWhileDragging: true,
+            lineOptions: {
+              styles: [{ color: "red", opacity: 0.7, weight: 5 }],
+            },
+            createMarker: function () {
+              return null;
+            }, // Disable default markers
+          }).addTo(map);
+          // Event listener to update popup content when route is ready
+          routingControl.on("routesfound", function (e) {
+            var route = e.routes[0]; // Assuming there's only one route
+            var distance = route.summary.totalDistance / 1000; // Distance in kilometers
+            // Update popup content with route information
+            var popupContent = "<div id='route-info'>";
+            popupContent +=
+              "<p><strong>Distance:</strong> <span class='distance-button' style='font-size:12px; padding: 2px 5px;'>" +
+              distance.toFixed(2) +
+              " km</span></p>";
+            popupContent += "</div>";
+            // Update the popup content with route information
+            document.getElementById("title-content1").innerHTML = popupContent;
+          });
+        });
+      }
+
+      function findMyLocation(callback) {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              var latlng = [
+                position.coords.latitude,
+                position.coords.longitude,
+              ];
+              // Create or update the user marker
+              if (!userMarker) {
+                userMarker = L.marker(latlng, {
+                  icon: redIcon,
+                  bounceOnAdd: true,
+                }).addTo(map);
+              } else {
+                userMarker.setLatLng(latlng);
+              }
+              var userLocation = L.latLng(latlng[0], latlng[1]);
+              // Set map view to user's location with zoom level
+              map.setView(latlng, 16);
+              // Invoke the callback function with the user's location
+              callback(userLocation);
+            },
+            function (error) {
+              console.error("Error getting the user location:", error);
+            }
+          );
+        } else {
+          console.error("Geolocation is not supported by this browser.");
+        }
+      }
+
+      // Define the red icon
+      var redIcon = L.icon({
+        iconUrl: "./pictures/mylocal.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      });
+
+      // Add event listener to close button
+      document
+        .getElementById("close-button")
+        .addEventListener("click", function () {
+          // Remove routing control from the map
+          if (routingControl) {
+            map.removeControl(routingControl);
+            routingControl = null; // Set routing control to null to indicate it's removed
+          }
+        });
+      // Load Leaflet map when the window is loaded
+      window.onload = loadMapScenario;
+
+      function openGoogleMaps(lat, lon) {
+        var url =
+          "https://www.google.com/maps/dir/?api=1&destination=" +
+          lat +
+          "," +
+          lon;
+        window.open(url, "_self");
+      }
+    </script>
+    <style>
+      .btn-fleetcard,
+      .btn-cash,
+      .btn-aba,
+      .btn-default {
+        background-color: #444744;
+        /* Blue color for fleetcard */
+        color: white;
+        border-radius: 20px;
+        /* Increased border-radius for rounder buttons */
+        padding: 12px 24px;
+        /* Increased padding for larger buttons */
+        font-size: 16px;
+        /* Adjust font size for better readability */
+        border: none;
+        /* Remove border for cleaner appearance */
+        cursor: pointer;
+        margin-right: 10px;
+        /* Add margin between buttons */
+        margin-bottom: 10px;
+        /* Add margin between buttons and other elements */
+      }
+
+      .btn-aba {
+        background-color: #1d3a8a;
+        /* Green color for ABA */
+      }
+
+      .btn-fleetcard {
+        background-color: #62db11;
+        /* Grey color for other services */
+      }
+    </style>
+  </body>
+</html>

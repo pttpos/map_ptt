@@ -339,10 +339,50 @@
     <!-- Bootstrap 5 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script>
-        // After 3 seconds, redirect to the main page
+        // Function to detect device type
+        function detectDevice() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // Detect Android device
+            if (/android/i.test(userAgent)) {
+                return "Android";
+            }
+
+            // Detect iOS device
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return "iOS";
+            }
+
+            // Detect Windows phone
+            if (/windows phone/i.test(userAgent)) {
+                return "Windows Phone";
+            }
+
+            // Detect laptop or desktop (assuming they run Windows or Mac)
+            if (/Windows|Macintosh|Linux/.test(userAgent)) {
+                return "Desktop";
+            }
+
+            return "Unknown";
+        }
+
+        // Function to block non-Android devices
+        function blockNonAndroidDevices() {
+            const device = detectDevice();
+            if (device !== "Android") {
+                document.body.innerHTML = "<h1>Access Denied</h1><p>This website is only accessible on Android devices.</p>";
+            }
+        }
+
+        // Call the function to block non-Android devices
+        blockNonAndroidDevices();
+
+        // After 3 seconds, redirect to the main page if the device is allowed
         setTimeout(function () {
-            window.location.href = 'main.html'; // Redirect to main page
-        }, 5000); // 3000 milliseconds = 3 seconds
+            if (detectDevice() === "Android") {
+                window.location.href = 'main.html'; // Redirect to main page
+            }
+        }, 5000); // 5000 milliseconds = 5 seconds
     </script>
 </body>
 </html>
