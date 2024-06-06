@@ -125,7 +125,7 @@
             }
 
             .footer-popup {
-                height: 100% ;
+                height: 100%;
             }
 
             .footer-popup1 {
@@ -351,16 +351,18 @@
         #powered-by {
             position: fixed;
             bottom: 10px;
-            left: 10px; /* Adjusted to align with the left edge */
+            left: 10px;
+            /* Adjusted to align with the left edge */
             font-family: 'Prompt-Regular';
             /* Change the font-family as needed */
             font-size: 14px;
             /* Adjust font size as needed */
             font-weight: bold;
             transform: translateX(0%);
-            z-index: -999; /* Ensure it appears behind the pop-up */
+            z-index: -999;
+            /* Ensure it appears behind the pop-up */
         }
-        
+
 
         @media (max-width: 768px) {
             #powered-by {
@@ -908,6 +910,7 @@
                     .tabs {
                         font-size: 11px;
                     }
+
                     .wrapper {
                         margin: 35px auto;
                         /* Reduced margin for small screens */
@@ -927,7 +930,7 @@
                     }
 
                     .tabs {
-                        font-size:7px;
+                        font-size: 7px;
                     }
 
                     .tabs a {
@@ -935,6 +938,7 @@
                         /* Reduced padding for small screens */
                     }
                 }
+
                 /* Media query for small screens */
                 @media (max-width: 375px) {
                     .wrapper {
@@ -943,7 +947,7 @@
                     }
 
                     .tabs {
-                        font-size:7.8px;
+                        font-size: 7.8px;
                     }
 
                     .tabs a {
@@ -1083,30 +1087,30 @@
                                 // Get the current date and time in UTC
                                 var currentDate = new Date();
                                 console.log(`Current UTC Time: ${currentDate.toISOString().substr(11, 5)}`);
-                        
+
                                 // Convert UTC time to Cambodia time (UTC+7)
                                 var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000));
                                 var currentHour = cambodiaTime.getUTCHours(); // Extract the current hour in Cambodia time
                                 var currentMinute = cambodiaTime.getUTCMinutes(); // Extract the current minute in Cambodia time
-                        
+
                                 console.log(`Current Cambodia Time: ${currentHour}:${currentMinute}`);
-                        
+
                                 // Define opening and closing hours in minutes since midnight
                                 var openTimeMinutes = 5 * 60; // 5:00 AM = 5 * 60 minutes
                                 var closeTimeMinutes = 20 * 60 + 30; // 8:30 PM = 20 * 60 + 30 minutes
-                        
+
                                 // Calculate the current time in minutes since midnight
                                 var currentTimeMinutes = currentHour * 60 + currentMinute;
-                        
+
                                 console.log(`Opening Time in Minutes: ${openTimeMinutes}`);
                                 console.log(`Closing Time in Minutes: ${closeTimeMinutes}`);
                                 console.log(`Current Time in Minutes: ${currentTimeMinutes}`);
-                        
+
                                 // Check if the current time is within operating hours
                                 var isOpen = currentTimeMinutes >= openTimeMinutes && currentTimeMinutes < closeTimeMinutes;
-                        
+
                                 console.log(`Is Open: ${isOpen}`);
-                        
+
                                 // Set the custom icon URL based on the operating hours
                                 if (isOpen) {
                                     customIconUrl = "./pictures/61.png"; // Open icon
@@ -1121,8 +1125,8 @@
                                 customIconUrl = "./pictures/61.png"; // Default open icon
                                 break;
                         }
-                        
-                                             // Create a custom icon
+
+                        // Create a custom icon
                         var customIcon = L.icon({
                             iconUrl: customIconUrl,
                             iconSize: [50, 75], // Adjust icon size as needed
@@ -1184,21 +1188,40 @@
                             function getStatusIconClass(status) {
                                 // Get the current date and time in UTC
                                 var currentTime = new Date();
+
                                 // Convert UTC time to Cambodia time (UTC+7)
                                 var cambodiaTime = new Date(currentTime.getTime() + (7 * 60 * 60 * 1000));
-                                var currentHour = cambodiaTime.getHours();
-                                var currentMinute = cambodiaTime.getMinutes();
-                                var currentSecond = cambodiaTime.getSeconds();
-                            
+                                var currentHour = cambodiaTime.getUTCHours(); // Get the current hour in Cambodia time
+                                var currentMinute = cambodiaTime.getUTCMinutes(); // Get the current minute in Cambodia time
+
+                                console.log(`Current Cambodia Time: ${currentHour}:${currentMinute}`);
+
                                 switch (status) {
                                     case "under construct":
                                         return { class: "fa fa-tools", text: "Under Construction", color: "#FFA500" }; // Icon class, text, and background color for "under construct" status
                                     case "16h":
-                                        // Check if the current time is within the opening hours for 16 hours (5:30 AM to 8:30 PM)
-                                        if (currentHour >= 5.5 && currentHour < 20.5) {
-                                            return { class: "fa fa-clock", text: "Open", color: "#008000" }; // Icon class, text, and background color for "16 hours" status (open)
+                                        // Opening and closing times
+                                        var openHour = 5; // 5:00 AM
+                                        var openMinute = 30; // 30 minutes
+                                        var closeHour = 20; // 8:00 PM
+                                        var closeMinute = 30; // 30 minutes
+
+                                        // Calculate current time in minutes since midnight
+                                        var currentTimeInMinutes = currentHour * 60 + currentMinute;
+                                        // Calculate opening time in minutes since midnight
+                                        var openingTimeInMinutes = openHour * 60 + openMinute;
+                                        // Calculate closing time in minutes since midnight
+                                        var closingTimeInMinutes = closeHour * 60 + closeMinute;
+
+                                        console.log(`Opening Time in Minutes: ${openingTimeInMinutes}`);
+                                        console.log(`Closing Time in Minutes: ${closingTimeInMinutes}`);
+                                        console.log(`Current Time in Minutes: ${currentTimeInMinutes}`);
+
+                                        // Check if the current time is within operating hours
+                                        if (currentTimeInMinutes >= openingTimeInMinutes && currentTimeInMinutes < closingTimeInMinutes) {
+                                            return { class: "fa fa-clock", text: "Open", color: "#008000" }; // Open
                                         } else {
-                                            return { class: "fa fa-clock", text: "Closed", color: "#FF0000" }; // Icon class, text, and background color for "16 hours" status (closed)
+                                            return { class: "fa fa-clock", text: "Closed", color: "#FF0000" }; // Closed
                                         }
                                     case "24h":
                                         return { class: "fa fa-clock", text: "Open 24 Hours", color: "#008000" }; // Icon class, text, and background color for "24 hours" status
@@ -1206,7 +1229,7 @@
                                         return { class: "", text: "", color: "" }; // Default empty class, text, and color if status doesn't match any case
                                 }
                             }
-                            
+
 
                             document.getElementById("title-tab1").click();
                             document.getElementById("title-content2").innerHTML =
@@ -1563,49 +1586,49 @@
             }).addTo(map);
         }
 
-               // Function to refresh the marker icons
-               function refreshMarkerIcons() {
-                markers.forEach(function (marker) {
-                    var currentDate = new Date(); // Get the current date and time in UTC
-                    var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000)); // Convert UTC time to Cambodia time (UTC+7)
-                    var currentHour = cambodiaTime.getHours(); // Extract the current hour in Cambodia time
-                    var currentMinute = cambodiaTime.getMinutes(); // Extract the current minute in Cambodia time
-    
-                    var customIconUrl = ""; // Initialize the custom icon URL
-    
-                    switch (marker.options.status) {
-                        case "under construct":
-                            customIconUrl = "./pictures/under_construction.png";
-                            break;
-                        case "16h":
-                            if ((currentHour === 5 && currentMinute >= 0) || (currentHour > 5 && currentHour < 20)) {
-                                customIconUrl = "./pictures/61.png"; // Set the icon URL for the hours between 5:00 AM and 8:00 PM
-                            } else {
-                                customIconUrl = "./pictures/time_close1.png"; // Set the icon URL for other hours (gray icon)
-                            }
-                            break;
-                        case "24h":
-                            customIconUrl = "./pictures/61.png";
-                            break;
-                        default:
-                            customIconUrl = "./pictures/61.png";
-                            break;
-                    }
-    
-                    // Update the marker icon
-                    var customIcon = L.icon({
-                        iconUrl: customIconUrl,
-                        iconSize: [50, 75], // Adjust icon size as needed
-                        iconAnchor: [24, 75], // Adjust anchor position if needed
-                        popupAnchor: [0, -1000], // Adjust popup anchor if needed
-                    });
-    
-                    marker.setIcon(customIcon); // Set the new icon for the marker
+        // Function to refresh the marker icons
+        function refreshMarkerIcons() {
+            markers.forEach(function (marker) {
+                var currentDate = new Date(); // Get the current date and time in UTC
+                var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000)); // Convert UTC time to Cambodia time (UTC+7)
+                var currentHour = cambodiaTime.getHours(); // Extract the current hour in Cambodia time
+                var currentMinute = cambodiaTime.getMinutes(); // Extract the current minute in Cambodia time
+
+                var customIconUrl = ""; // Initialize the custom icon URL
+
+                switch (marker.options.status) {
+                    case "under construct":
+                        customIconUrl = "./pictures/under_construction.png";
+                        break;
+                    case "16h":
+                        if ((currentHour === 5 && currentMinute >= 0) || (currentHour > 5 && currentHour < 20)) {
+                            customIconUrl = "./pictures/61.png"; // Set the icon URL for the hours between 5:00 AM and 8:00 PM
+                        } else {
+                            customIconUrl = "./pictures/time_close1.png"; // Set the icon URL for other hours (gray icon)
+                        }
+                        break;
+                    case "24h":
+                        customIconUrl = "./pictures/61.png";
+                        break;
+                    default:
+                        customIconUrl = "./pictures/61.png";
+                        break;
+                }
+
+                // Update the marker icon
+                var customIcon = L.icon({
+                    iconUrl: customIconUrl,
+                    iconSize: [50, 75], // Adjust icon size as needed
+                    iconAnchor: [24, 75], // Adjust anchor position if needed
+                    popupAnchor: [0, -1000], // Adjust popup anchor if needed
                 });
-            }
-    
-            // Set an interval to refresh marker icons every 30 minutes (1800000 milliseconds)
-            setInterval(refreshMarkerIcons, 180000);
+
+                marker.setIcon(customIcon); // Set the new icon for the marker
+            });
+        }
+
+        // Set an interval to refresh marker icons every 30 minutes (1800000 milliseconds)
+        setInterval(refreshMarkerIcons, 180000);
         // Get a reference to the filter popup close button
         var closeFilterPopupButton = document.getElementById("close-filter-popup");
         // When the user clicks on the close button, hide the filter popup
