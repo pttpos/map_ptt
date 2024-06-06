@@ -1540,6 +1540,50 @@
                 position: "bottomright"
             }).addTo(map);
         }
+
+               // Function to refresh the marker icons
+               function refreshMarkerIcons() {
+                markers.forEach(function (marker) {
+                    var currentDate = new Date(); // Get the current date and time in UTC
+                    var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000)); // Convert UTC time to Cambodia time (UTC+7)
+                    var currentHour = cambodiaTime.getHours(); // Extract the current hour in Cambodia time
+                    var currentMinute = cambodiaTime.getMinutes(); // Extract the current minute in Cambodia time
+    
+                    var customIconUrl = ""; // Initialize the custom icon URL
+    
+                    switch (marker.options.status) {
+                        case "under construct":
+                            customIconUrl = "./pictures/under_construction.png";
+                            break;
+                        case "16h":
+                            if ((currentHour === 5 && currentMinute >= 0) || (currentHour > 5 && currentHour < 20)) {
+                                customIconUrl = "./pictures/61.png"; // Set the icon URL for the hours between 5:00 AM and 8:00 PM
+                            } else {
+                                customIconUrl = "./pictures/time_close1.png"; // Set the icon URL for other hours (gray icon)
+                            }
+                            break;
+                        case "24h":
+                            customIconUrl = "./pictures/61.png";
+                            break;
+                        default:
+                            customIconUrl = "./pictures/61.png";
+                            break;
+                    }
+    
+                    // Update the marker icon
+                    var customIcon = L.icon({
+                        iconUrl: customIconUrl,
+                        iconSize: [50, 75], // Adjust icon size as needed
+                        iconAnchor: [24, 75], // Adjust anchor position if needed
+                        popupAnchor: [0, -1000], // Adjust popup anchor if needed
+                    });
+    
+                    marker.setIcon(customIcon); // Set the new icon for the marker
+                });
+            }
+    
+            // Set an interval to refresh marker icons every 30 minutes (1800000 milliseconds)
+            setInterval(refreshMarkerIcons, 180000);
         // Get a reference to the filter popup close button
         var closeFilterPopupButton = document.getElementById("close-filter-popup");
         // When the user clicks on the close button, hide the filter popup
