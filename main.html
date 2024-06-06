@@ -1080,26 +1080,48 @@
                                 customIconUrl = "./pictures/under_construction.png";
                                 break;
                             case "16h":
-                                var currentDate = new Date(); // Get the current date and time in UTC
-                                var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000)); // Convert UTC time to Cambodia time (UTC+7)
-                                var currentHour = cambodiaTime.getHours(); // Extract the current hour in Cambodia time
-                                var currentMinute = cambodiaTime.getMinutes(); // Extract the current minute in Cambodia time
+                                // Get the current date and time in UTC
+                                var currentDate = new Date();
+                                console.log(`Current UTC Time: ${currentDate.toISOString().substr(11, 5)}`);
                         
-                                var customIconUrl = ""; // Initialize the custom icon URL
+                                // Convert UTC time to Cambodia time (UTC+7)
+                                var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000));
+                                var currentHour = cambodiaTime.getUTCHours(); // Extract the current hour in Cambodia time
+                                var currentMinute = cambodiaTime.getUTCMinutes(); // Extract the current minute in Cambodia time
                         
-                                if ((currentHour === 5 && currentMinute >= 0) || (currentHour > 5 && currentHour < 20)) {
-                                    customIconUrl = "./pictures/61.png"; // Set the icon URL for the hours between 5:00 AM and 8:00 PM
+                                console.log(`Current Cambodia Time: ${currentHour}:${currentMinute}`);
+                        
+                                // Define opening and closing hours in minutes since midnight
+                                var openTimeMinutes = 5 * 60; // 5:00 AM = 5 * 60 minutes
+                                var closeTimeMinutes = 20 * 60 + 30; // 8:30 PM = 20 * 60 + 30 minutes
+                        
+                                // Calculate the current time in minutes since midnight
+                                var currentTimeMinutes = currentHour * 60 + currentMinute;
+                        
+                                console.log(`Opening Time in Minutes: ${openTimeMinutes}`);
+                                console.log(`Closing Time in Minutes: ${closeTimeMinutes}`);
+                                console.log(`Current Time in Minutes: ${currentTimeMinutes}`);
+                        
+                                // Check if the current time is within operating hours
+                                var isOpen = currentTimeMinutes >= openTimeMinutes && currentTimeMinutes < closeTimeMinutes;
+                        
+                                console.log(`Is Open: ${isOpen}`);
+                        
+                                // Set the custom icon URL based on the operating hours
+                                if (isOpen) {
+                                    customIconUrl = "./pictures/61.png"; // Open icon
                                 } else {
-                                    customIconUrl = "./pictures/time_close1.png"; // Set the icon URL for other hours (gray icon)
+                                    customIconUrl = "./pictures/time_close1.png"; // Closed icon
                                 }
                                 break;
                             case "24h":
-                                customIconUrl = "./pictures/61.png";
+                                customIconUrl = "./pictures/61.png"; // Always open icon
                                 break;
                             default:
-                                customIconUrl = "./pictures/61.png";
+                                customIconUrl = "./pictures/61.png"; // Default open icon
                                 break;
                         }
+                        
                                              // Create a custom icon
                         var customIcon = L.icon({
                             iconUrl: customIconUrl,
