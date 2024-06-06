@@ -1080,20 +1080,19 @@
                                 customIconUrl = "./pictures/under_construction.png";
                                 break;
                             case "16h":
-                                var currentDate = new Date(); // Get the current date and time
-                                var currentHour = currentDate.getUTCHours() + 7; // Extract the current hour adjusted for Cambodia's time zone
-                                var currentMinute = currentDate.getUTCMinutes(); // Extract the current minute
-
+                                var currentDate = new Date(); // Get the current date and time in UTC
+                                var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000)); // Convert UTC time to Cambodia time (UTC+7)
+                                var currentHour = cambodiaTime.getHours(); // Extract the current hour in Cambodia time
+                                var currentMinute = cambodiaTime.getMinutes(); // Extract the current minute in Cambodia time
+                        
                                 var customIconUrl = ""; // Initialize the custom icon URL
-
-                                if ((currentHour === 5 && currentMinute >= 30) || (currentHour > 5 && currentHour < 20) || (currentHour === 20 && currentMinute <= 30)) {
-                                    customIconUrl = "./pictures/61.png"; // Set the icon URL for the hours between 5:30 AM and 8:30 PM
+                        
+                                if ((currentHour === 5 && currentMinute >= 0) || (currentHour > 5 && currentHour < 20)) {
+                                    customIconUrl = "./pictures/61.png"; // Set the icon URL for the hours between 5:00 AM and 8:00 PM
                                 } else {
                                     customIconUrl = "./pictures/time_close1.png"; // Set the icon URL for other hours (gray icon)
                                 }
                                 break;
-
-
                             case "24h":
                                 customIconUrl = "./pictures/61.png";
                                 break;
@@ -1101,8 +1100,7 @@
                                 customIconUrl = "./pictures/61.png";
                                 break;
                         }
-
-                        // Create a custom icon
+                                             // Create a custom icon
                         var customIcon = L.icon({
                             iconUrl: customIconUrl,
                             iconSize: [50, 75], // Adjust icon size as needed
