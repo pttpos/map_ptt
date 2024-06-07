@@ -1045,554 +1045,669 @@
         </div>
 
     </div>
-<script>var map;
-    var popup = document.getElementById("popup");
-    var markers = []; // Array to store all markers
-    var suggestionsContainer = document.getElementById("suggestions");
-    var selectInput = document.getElementById("search-input");
-    var routingControl = null;
-    var userMarker = null; // Global variable to store user's marker
-    var routingControl = null; // Global variable to store routing control
+    <script>
+
+        var map;
+        var popup = document.getElementById("popup");
+        var markers = []; // Array to store all markers
+        var suggestionsContainer = document.getElementById("suggestions");
+        var selectInput = document.getElementById("search-input");
+        var routingControl = null;
     
-    function loadMapScenario() {
-        // Initialize Leaflet map
-        map = L.map("map", {
-            zoomControl: false, // Disable default zoom control
-        }).setView([12.5657, 104.991], 7);
-        // Add OpenStreetMap tile layer to the map
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(map);
-        // Automatically find user's location
-        findMyLocation();
-        // Fetch marker data from JSON file
-        fetch("data/markers.json")
-            .then((response) => response.json())
-            .then((markerData) => {
-                markerData.STATION.forEach((marker) => {
-                    var loc = [marker.latitude, marker.longitude];
-                    var customIconUrl = ""; // Initialize the custom icon URL
+        function loadMapScenario() {
+            // Initialize Leaflet map
+            map = L.map("map", {
+                zoomControl: false, // Disable default zoom control
+            }).setView([12.5657, 104.991], 7);
+            // Add OpenStreetMap tile layer to the map
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            }).addTo(map);
     
-                    // Determine the custom icon URL based on the marker's status
-                    switch (marker.status) {
-                        case "under construct":
-                            customIconUrl = "./pictures/under_construction.png";
-                            break;
-                        case "16h":
-                            var currentDate = new Date();
-                            var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000));
-                            var currentHour = cambodiaTime.getUTCHours();
-                            var currentMinute = cambodiaTime.getUTCMinutes();
-                            var openTimeMinutes = 5 * 60;
-                            var closeTimeMinutes = 20 * 60 + 30;
-                            var currentTimeMinutes = currentHour * 60 + currentMinute;
-                            var isOpen = currentTimeMinutes >= openTimeMinutes && currentTimeMinutes < closeTimeMinutes;
-                            customIconUrl = isOpen ? "./pictures/61.png" : "./pictures/time_close1.png";
-                            break;
-                        case "24h":
-                            customIconUrl = "./pictures/61.png";
-                            break;
-                        default:
-                            customIconUrl = "./pictures/61.png";
-                            break;
-                    }
+            // Automatically find user's location when the page is first loaded
+            findMyLocation();
     
-                    // Create a custom icon
-                    var customIcon = L.icon({
-                        iconUrl: customIconUrl,
-                        iconSize: [50, 75],
-                        iconAnchor: [24, 75],
-                        popupAnchor: [0, -1000],
-                    });
+            // Fetch marker data from JSON file
+            fetch("data/markers.json")
+                .then((response) => response.json())
+                .then((markerData) => {
+                    markerData.STATION.forEach((marker) => {
+                        var loc = [marker.latitude, marker.longitude];
+                        var customIconUrl = ""; // Initialize the custom icon URL
     
-                    // Create a marker with custom icon
-                    var customMarker = L.marker(loc, {
-                        icon: customIcon,
-                        title: marker.title,
-                        service: marker.service,
-                        province: marker.province,
-                        description: marker.description,
-                        address: marker.address,
-                        status: marker.status,
-                        promotion: marker.promotion,
-                    }).addTo(map);
+                        // Determine the custom icon URL based on the marker's status
+                        switch (marker.status) {
+                            case "under construct":
+                                customIconUrl = "./pictures/under_construction.png";
+                                break;
+                            case "16h":
+                                // Get the current date and time in UTC
+                                var currentDate = new Date();
+                                console.log(`Current UTC Time: ${currentDate.toISOString().substr(11, 5)}`);
     
-                    markers.push(customMarker); // Add marker to the markers array
+                                // Convert UTC time to Cambodia time (UTC+7)
+                                var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000));
+                                var currentHour = cambodiaTime.getUTCHours(); // Extract the current hour in Cambodia time
+                                var currentMinute = cambodiaTime.getUTCMinutes(); // Extract the current minute in Cambodia time
     
-                    // Add option to select input
-                    var option = document.createElement("option");
-                    option.textContent = marker.title;
-                    option.value = marker.title;
-                    selectInput.appendChild(option);
+                                console.log(`Current Cambodia Time: ${currentHour}:${currentMinute}`);
     
-                    customMarker.on("click", function (e) {
-                        showRouteToMarker(customMarker.getLatLng());
-                        var myLocation = map.getCenter(); // Assuming your location is the center of the map
-                        var markerLocation = customMarker.getLatLng();
-                        var distance = calculateDistance(myLocation.lat, myLocation.lng, markerLocation.lat, markerLocation.lng);
-                        popup.querySelector(".popup-header img").src = "./pictures/Google_Maps_icon.png";
-                        document.getElementById("marker-image").src = "pictures/" + marker.picture;
+                                // Define opening and closing hours in minutes since midnight
+                                var openTimeMinutes = 5 * 60; // 5:00 AM = 5 * 60 minutes
+                                var closeTimeMinutes = 20 * 60 + 30; // 8:30 PM = 20 * 60 + 30 minutes
     
-                        var markerStatusElement = document.getElementById("marker-status");
-                        var statusIconElement = document.getElementById("status-icon");
-                        var statusTextElement = document.getElementById("status-text");
-                        var statusInfo = getStatusIconClass(marker.status);
-                        statusIconElement.className = statusInfo.class;
-                        statusTextElement.textContent = statusInfo.text;
-                        markerStatusElement.style.backgroundColor = statusInfo.color;
+                                // Calculate the current time in minutes since midnight
+                                var currentTimeMinutes = currentHour * 60 + currentMinute;
     
-                        function getStatusIconClass(status) {
-                            var currentTime = new Date();
-                            var cambodiaTime = new Date(currentTime.getTime() + (7 * 60 * 60 * 1000));
-                            var currentHour = cambodiaTime.getUTCHours();
-                            var currentMinute = cambodiaTime.getUTCMinutes();
+                                console.log(`Opening Time in Minutes: ${openTimeMinutes}`);
+                                console.log(`Closing Time in Minutes: ${closeTimeMinutes}`);
+                                console.log(`Current Time in Minutes: ${currentTimeMinutes}`);
     
-                            switch (status) {
-                                case "under construct":
-                                    return { class: "fa fa-tools", text: "Under Construction", color: "#FFA500" };
-                                case "16h":
-                                    var openHour = 5;
-                                    var openMinute = 30;
-                                    var closeHour = 20;
-                                    var closeMinute = 30;
-                                    var currentTimeInMinutes = currentHour * 60 + currentMinute;
-                                    var openingTimeInMinutes = openHour * 60 + openMinute;
-                                    var closingTimeInMinutes = closeHour * 60 + closeMinute;
-                                    if (currentTimeInMinutes >= openingTimeInMinutes && currentTimeInMinutes < closingTimeInMinutes) {
-                                        return { class: "fa fa-clock", text: "Open", color: "#008000" };
-                                    } else {
-                                        return { class: "fa fa-clock", text: "Closed", color: "#FF0000" };
-                                    }
-                                case "24h":
-                                    return { class: "fa fa-clock", text: "Open 24 Hours", color: "#008000" };
-                                default:
-                                    return { class: "", text: "", color: "" };
-                            }
+                                // Check if the current time is within operating hours
+                                var isOpen = currentTimeMinutes >= openTimeMinutes && currentTimeMinutes < closeTimeMinutes;
+    
+                                console.log(`Is Open: ${isOpen}`);
+    
+                                // Set the custom icon URL based on the operating hours
+                                if (isOpen) {
+                                    customIconUrl = "./pictures/61.png"; // Open icon
+                                } else {
+                                    customIconUrl = "./pictures/time_close1.png"; // Closed icon
+                                }
+                                break;
+                            case "24h":
+                                customIconUrl = "./pictures/61.png"; // Always open icon
+                                break;
+                            default:
+                                customIconUrl = "./pictures/61.png"; // Default open icon
+                                break;
                         }
     
-                        document.getElementById("title-tab1").click();
-                        document.getElementById("title-content2").innerHTML =
-                            "<div id='title-and-product1' style='display: flex; flex-direction: column;'>" +
-                            "<div style='display: flex; align-items: center; margin-top: 0;'>" +
-                            "<h3 style='margin-left: 5px; color: black; font-size: 24px; font-weight: bold; margin-top: 0;'>" +
-                            "<i class='fas fa-gas-pump ' style='color: blue; margin-top: 0;margin-right: 5px;'></i>" +
-                            "<button style='font-family: Prompt-Regular; font-size: 20px; border-radius: 10px; background-color: #3b79db; color: white; border: 0px; margin-top: 0;'>" + marker.title + "</button>" +
-                            "</h3>" +
-                            "</div>" +
-                            "<div style='display: flex; align-items: center; margin-top: 0;'>" +
-                            "<h3 style='margin-left: 5px; color: black; margin-top: 0;'>" +
-                            "<i class='fas fa-map-marker-alt' style='color: red; margin-top: 0;margin-right: 5px;'></i>" +
-                            "<button style='font-family: Prompt-Regular; font-size: 15px; border-radius: 10px; background-color: #ce3a3a; color: white; border: 0px; margin-top: 0;'>" + marker.province + "</button>" +
-                            "</h3>" +
-                            "</div>" +
-                            "<div style='display: flex; margin-top: 0;'>" +
-                            "<h3 style='margin-left: 5px; white-space: pre-wrap; font-family: Prompt-Regular !important; font-size: 16px; margin-top: 0;'>" +
-                            "<i class='fas fa-address-card' style='color: black; margin-top: 0;'></i>" +
-                            "<span class='black-text' style='margin-top: 0;'> Address: </span>" + marker.address +
-                            "</h3>" +
-                            "</div>" +
-                            "</div>";
-    
-                        document.getElementById("title-tab1").click();
-                        document.getElementById("title-content").innerHTML =
-                            "<div id='title-and-product' style='display: flex; align-items: center;'></div>";
-    
-                        var titleContent = document.createElement("div");
-                        titleContent.innerHTML = "<h3 style='color: black;'>Product</h3>";
-                        document.getElementById("title-content").appendChild(titleContent);
-                        var productContent = document.createElement("div");
-                        productContent.style.display = "flex";
-                        productContent.style.alignItems = "center";
-                        marker.product.forEach(function (product) {
-                            var imgSrc = '';
-                            if (product === "HSD") {
-                                imgSrc = "pictures/HSD.png";
-                            } else if (product === "ULG 95") {
-                                imgSrc = "pictures/ULG95.png";
-                            } else if (product === "ULR 91") {
-                                imgSrc = "pictures/ULR91.png";
-                            }
-                            productContent.innerHTML += '<img src="' + imgSrc + '" alt="' + product + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;border-radius: 50%;" />';
-                        });
-                        document.getElementById("title-content").appendChild(productContent);
-                        document.getElementById("title-content").innerHTML += "</div>";
-    
-                        var otherProductContent = document.createElement("div");
-                        otherProductContent.innerHTML = "<h3 style='color: black;'>Other Product</h3>";
-                        document.getElementById("title-content").appendChild(otherProductContent);
-                        var otherProductImages = document.createElement("div");
-                        otherProductImages.style.display = "flex";
-                        otherProductImages.style.alignItems = "center";
-                        marker.other_product.forEach(function (otherProduct) {
-                            var imgSrc = '';
-                            if (otherProduct === "EV") {
-                                imgSrc = "pictures/ev.png";
-                            } else if (otherProduct === "Onion") {
-                                imgSrc = "pictures/onion.png";
-                            }
-                            otherProductImages.innerHTML += '<img src="' + imgSrc + '" alt="' + otherProduct + '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;" />';
+                        // Create a custom icon
+                        var customIcon = L.icon({
+                            iconUrl: customIconUrl,
+                            iconSize: [50, 75], // Adjust icon size as needed
+                            iconAnchor: [24, 75], // Adjust anchor position if needed
+                            popupAnchor: [0, -1000], // Adjust popup anchor if needed
                         });
     
-                        document.getElementById("title-content").appendChild(otherProductImages);
-                        document.getElementById("title-content").innerHTML += "</div>";
+                        // Create a marker with custom icon
+                        var customMarker = L.marker(loc, {
+                            icon: customIcon,
+                            title: marker.title,
+                            service: marker.service,
+                            province: marker.province,
+                            description: marker.description,
+                            address: marker.address,
+                            status: marker.status,
+                            promotion: marker.promotion,
+                        }).addTo(map);
     
-                        document.getElementById("description-content").innerHTML =
-                            "<p>Description: " + marker.description.join(", ") + "</p>";
-                        var directionsButton = popup.querySelector('.popup-content a');
-                        directionsButton.setAttribute('onclick', `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
+                        markers.push(customMarker); // Add marker to the markers array
     
-                        var serviceButtons = document.getElementById("service-buttons");
-                        var serviceImages = '';
-                        marker.service.forEach(function (service) {
-                            var imgSrc = "";
-                            if (service === "Fleet card") {
-                                imgSrc = "pictures/fleet.png";
-                            } else if (service === "ABA") {
-                                imgSrc = "pictures/aba.png";
-                            } else if (service === "Cash") {
-                                imgSrc = "pictures/cash.png";
-                            } else {
-                                imgSrc = "default-image.png";
+                        // Add option to select input
+                        var option = document.createElement("option");
+                        option.textContent = marker.title;
+                        option.value = marker.title;
+                        selectInput.appendChild(option);
+    
+                        customMarker.on("click", function (e) {
+                            // Show route to the clicked marker
+                            showRouteToMarker(customMarker.getLatLng());
+    
+                            var myLocation = map.getCenter(); // Assuming your location is the center of the map
+                            var markerLocation = customMarker.getLatLng();
+                            var distance = calculateDistance(myLocation.lat, myLocation.lng, markerLocation.lat, markerLocation.lng);
+                            // Set popup content dynamically from marker data
+                            popup.querySelector(".popup-header img").src = "./pictures/Google_Maps_icon.png";
+                            document.getElementById("marker-image").src = "pictures/" + marker.picture;
+    
+                            // Get the marker status element and status icon element
+                            var markerStatusElement = document.getElementById("marker-status");
+                            var statusIconElement = document.getElementById("status-icon");
+                            var statusTextElement = document.getElementById("status-text");
+    
+                            // Get the status icon class, text, and background color based on the marker's status
+                            var statusInfo = getStatusIconClass(marker.status);
+    
+                            // Set the class of the status icon element
+                            statusIconElement.className = statusInfo.class;
+    
+                            // Set the text content of the status text element
+                            statusTextElement.textContent = statusInfo.text;
+    
+                            // Set the background color of the marker status element
+                            markerStatusElement.style.backgroundColor = statusInfo.color;
+    
+                            function getStatusIconClass(status) {
+                                // Get the current date and time in UTC
+                                var currentTime = new Date();
+    
+                                // Convert UTC time to Cambodia time (UTC+7)
+                                var cambodiaTime = new Date(currentTime.getTime() + (7 * 60 * 60 * 1000));
+                                var currentHour = cambodiaTime.getUTCHours(); // Get the current hour in Cambodia time
+                                var currentMinute = cambodiaTime.getUTCMinutes(); // Get the current minute in Cambodia time
+    
+                                console.log(`Current Cambodia Time: ${currentHour}:${currentMinute}`);
+    
+                                switch (status) {
+                                    case "under construct":
+                                        return { class: "fa fa-tools", text: "Under Construction", color: "#FFA500" }; // Icon class, text, and background color for "under construct" status
+                                    case "16h":
+                                        // Opening and closing times
+                                        var openHour = 5; // 5:00 AM
+                                        var openMinute = 30; // 30 minutes
+                                        var closeHour = 20; // 8:00 PM
+                                        var closeMinute = 30; // 30 minutes
+    
+                                        // Calculate current time in minutes since midnight
+                                        var currentTimeInMinutes = currentHour * 60 + currentMinute;
+                                        // Calculate opening time in minutes since midnight
+                                        var openingTimeInMinutes = openHour * 60 + openMinute;
+                                        // Calculate closing time in minutes since midnight
+                                        var closingTimeInMinutes = closeHour * 60 + closeMinute;
+    
+                                        console.log(`Opening Time in Minutes: ${openingTimeInMinutes}`);
+                                        console.log(`Closing Time in Minutes: ${closingTimeInMinutes}`);
+                                        console.log(`Current Time in Minutes: ${currentTimeInMinutes}`);
+    
+                                        // Check if the current time is within operating hours
+                                        if (currentTimeInMinutes >= openingTimeInMinutes && currentTimeInMinutes < closingTimeInMinutes) {
+                                            return { class: "fa fa-clock", text: "Open", color: "#008000" }; // Open
+                                        } else {
+                                            return { class: "fa fa-clock", text: "Closed", color: "#FF0000" }; // Closed
+                                        }
+                                    case "24h":
+                                        return { class: "fa fa-clock", text: "Open 24 Hours", color: "#008000" }; // Icon class, text, and background color for "24 hours" status
+                                    default:
+                                        return { class: "", text: "", color: "" }; // Default empty class, text, and color if status doesn't match any case
+                                }
                             }
-                            serviceImages += '<div class="service-container"><img src="' + imgSrc + '" alt="' + service + '" style="max-width: 100px; max-height:auto; padding: 10px; vertical-align: middle; margin-right: 5px;" /><span>' + service + '</span></div>';
-                        });
-                        serviceButtons.innerHTML = serviceImages;
     
-                        var descriptionContent = document.getElementById("description-content");
-                        var descriptionImages = '<h3 style="color: black;">Service</h3>';
-                        marker.description.forEach(function (description) {
-                            var imgSrc = '';
-                            if (description === "7-Eleven") {
-                                imgSrc = "pictures/7eleven.png";
-                                descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;" />';
-                            } else if (description === "Amazon") {
-                                imgSrc = "pictures/amazon.png";
-                                descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
-                            }
-                        });
-                        descriptionContent.innerHTML = descriptionImages;
+                            document.getElementById("title-tab1").click();
+                            document.getElementById("title-content2").innerHTML =
+                                "<div id='title-and-product1' style='display: flex; flex-direction: column;'>" +
+                                "<div style='display: flex; align-items: center; margin-top: 0;'>" +
     
-                        var promotionContent = document.getElementById("promotion-content");
-                        var promotionImages = '';
+                                "<h3 style='margin-left: 5px; color: black; font-size: 24px; font-weight: bold; margin-top: 0;'>" +
+                                "<i class='fas fa-gas-pump ' style='color: blue; margin-top: 0;margin-right: 5px;'></i>" +
+                                "<button style='font-family: Prompt-Regular; font-size: 20px; border-radius: 10px; background-color: #3b79db; color: white; border: 0px; margin-top: 0;'>" + marker.title + "</button>" +
+                                "</h3>" +
+                                "</div>" +
+                                "<div style='display: flex; align-items: center; margin-top: 0;'>" +
     
-                        marker.promotion.forEach(function (promotion) {
-                            var imgSrc = '';
-                            if (promotion === "promotion1") {
-                                imgSrc = "pictures/opening1.jpg";
-                            } else if (promotion === "promotion2") {
-                                imgSrc = "pictures/aba.png";
-                            } else if (promotion === "promotion3") {
-                                imgSrc = "pictures/cash.png";
-                            } else if (promotion === "promotion-opening1") {
-                                imgSrc = "pictures/cash.png";
-                            } else if (promotion === "promotion-opening2") {
-                                imgSrc = "pictures/cash.png";
-                            } else if (promotion === "promotion-opening3") {
-                                imgSrc = "pictures/cash.png";
-                            } else {
-                                imgSrc = "default-image.png";
-                            }
-                            promotionImages += '<img src="' + imgSrc + '" alt="' + promotion + '" style="max-width: 150px; padding: 10px; vertical-align: middle; margin-right: 5px; cursor: pointer;" />';
-                        });
+                                "<h3 style='margin-left: 5px; color: black; margin-top: 0;'>" +
+                                "<i class='fas fa-map-marker-alt' style='color: red; margin-top: 0;margin-right: 5px;'></i>" +
+                                "<button style='font-family: Prompt-Regular; font-size: 15px; border-radius: 10px; background-color: #ce3a3a; color: white; border: 0px; margin-top: 0;'>" + marker.province + "</button>" +
+                                "</h3>" +
+                                "</div>" +
+                                "<div style='display: flex; margin-top: 0;'>" +
+                                "<h3 style='margin-left: 5px; white-space: pre-wrap; font-family: Prompt-Regular !important; font-size: 16px; margin-top: 0;'>" +
+                                "<i class='fas fa-address-card' style='color: black; margin-top: 0;'></i>" +
+                                "<span class='black-text' style='margin-top: 0;'> Address: </span>" + marker.address +
+                                "</h3>" +
+                                "</div>" +
+                                "</div>";
     
-                        promotionContent.innerHTML = promotionImages;
+                            // Set default tab to "Title" when marker is clicked
+                            document.getElementById("title-tab1").click();
+                            document.getElementById("title-content").innerHTML =
+                                "<div id='title-and-product' style='display: flex; align-items: center;'>";
     
-                        var promotionImgs = promotionContent.querySelectorAll('img');
-                        promotionImgs.forEach(function (img) {
-                            img.addEventListener('click', function () {
-                                previewImage(img.src);
+                            var titleContent = document.createElement("div");
+                            titleContent.innerHTML = "<h3 style='color: black;'>Product</h3>";
+                            document.getElementById("title-content").appendChild(titleContent);
+                            var productContent = document.createElement("div");
+                            productContent.style.display = "flex";
+                            productContent.style.alignItems = "center";
+                            marker.product.forEach(function (product) {
+                                var imgSrc = ''; // Default empty image source
+                                if (product === "HSD") {
+                                    imgSrc = "pictures/HSD.png"; // Set image source for HSD
+                                } else if (product === "ULG 95") {
+                                    imgSrc = "pictures/ULG95.png"; // Set image source for ULG 95
+                                } else if (product === "ULR 91") {
+                                    imgSrc = "pictures/ULR91.png"; // Set image source for ULR 91
+                                }
+                                // Append image tag with the corresponding source
+                                productContent.innerHTML += '<img src="' + imgSrc + '" alt="' + product + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;border-radius: 50%;" />';
                             });
-                        });
+                            document.getElementById("title-content").appendChild(productContent);
+                            document.getElementById("title-content").innerHTML += "</div>";
     
-                        function previewImage(imgSrc) {
+                            // Add other product content
+                            var otherProductContent = document.createElement("div");
+                            otherProductContent.innerHTML = "<h3 style='color: black;'>Other Product</h3>";
+                            document.getElementById("title-content").appendChild(otherProductContent);
+                            var otherProductImages = document.createElement("div");
+                            otherProductImages.style.display = "flex";
+                            otherProductImages.style.alignItems = "center";
+                            marker.other_product.forEach(function (otherProduct) {
+                                var imgSrc = ''; // Default empty image source
+                                if (otherProduct === "EV") {
+                                    imgSrc = "pictures/ev.png"; // Set image source for EV
+                                } else if (otherProduct === "Onion") {
+                                    imgSrc = "pictures/onion.png"; // Set image source for ULG 98
+                                }
+                                // Append image tag with the corresponding source
+                                otherProductImages.innerHTML += '<img src="' + imgSrc + '" alt="' + otherProduct + '" style="max-width: 60px; vertical-align: middle; margin-right: 5px; padding:10px;"  />';
+                            });
+    
+                            document.getElementById("title-content").appendChild(otherProductImages);
+                            document.getElementById("title-content").innerHTML += "</div>";
+    
+                            document.getElementById("description-content").innerHTML =
+                                "<p>Description: " + marker.description.join(", ") + "</p>";
+                            var directionsButton = popup.querySelector('.popup-content a');
+                            directionsButton.setAttribute('onclick', `openGoogleMaps(${marker.latitude}, ${marker.longitude})`);
+    
+                            // Display service buttons dynamically
+                            var serviceButtons = document.getElementById("service-buttons");
+                            var serviceImages = ''; // Initialize an empty string to store the HTML for service images
+                            marker.service.forEach(function (service) {
+                                var imgSrc = ""; // Default empty image source
+                                // Set different images based on the service
+                                if (service === "Fleet card") {
+                                    imgSrc = "pictures/fleet.png"; // Set image source for Fleet card
+                                } else if (service === "ABA") {
+                                    imgSrc = "pictures/aba.png"; // Set image source for ABA
+                                } else if (service === "Cash") {
+                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                } else {
+                                    imgSrc = "default-image.png"; // Default image if service is not recognized
+                                }
+                                // Append image tag with the corresponding source and service name to the serviceImages string
+                                serviceImages += '<div class="service-container"><img src="' + imgSrc + '" alt="' + service + '" style="max-width: 100px; max-height:auto; padding: 10px; vertical-align: middle; margin-right: 5px;" /><span>' + service + '</span></div>';
+                            });
+                            // Set the HTML content of the service buttons container
+                            serviceButtons.innerHTML = serviceImages;
+    
+                            // Display description images dynamically
+                            var descriptionContent = document.getElementById("description-content");
+                            var descriptionImages = '<h3 style="color: black;">Service</h3>'; // Add text "Service" before displaying images
+                            marker.description.forEach(function (description) {
+                                var imgSrc = ''; // Default empty image source
+                                if (description === "7-Eleven") {
+                                    imgSrc = "pictures/7eleven.png"; // Set image source for 7-Eleven
+                                    // Append image tag with the corresponding source
+                                    descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px;padding:10px; vertical-align: middle; margin-right: 5px;" />';
+                                } else if (description === "Amazon") {
+                                    imgSrc = "pictures/amazon.png"; // Set image source for Amazon
+                                    // Append image tag with the corresponding source
+                                    descriptionImages += '<img src="' + imgSrc + '" alt="' + description + '" style="max-width: 60px; padding:10px;vertical-align: middle; margin-right: 5px;" />';
+                                }
+                            });
+                            // Set the HTML content of the description content div
+                            descriptionContent.innerHTML = descriptionImages;
+    
+                            // Display promotion images dynamically
+                            var promotionContent = document.getElementById("promotion-content");
+                            var promotionImages = '';
+    
+                            marker.promotion.forEach(function (promotion) {
+                                var imgSrc = ''; // Default empty image source
+                                // Adjust this part based on your promotion types and image sources
+                                if (promotion === "promotion1") {
+                                    imgSrc = "pictures/opening1.jpg"; // Set image source for Fleet card
+                                } else if (promotion === "promotion2") {
+                                    imgSrc = "pictures/aba.png"; // Set image source for ABA
+                                } else if (promotion === "promotion3") {
+                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                } else if (promotion === "promotion-opening1") {
+                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                } else if (promotion === "promotion-opening2") {
+                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                } else if (promotion === "promotion-opening3") {
+                                    imgSrc = "pictures/cash.png"; // Set image source for Cash
+                                } else {
+                                    imgSrc = "default-image.png"; // Default image if promotion is not recognized
+                                }
+                                // Append image tag with the corresponding source and promotion name to the promotionImages string
+                                promotionImages += '<img src="' + imgSrc + '" alt="' + promotion + '" style="max-width: 150px; padding: 10px; vertical-align: middle; margin-right: 5px; cursor: pointer;" />';
+                            });
+    
+                            // Set the HTML content of the promotion content div
+                            promotionContent.innerHTML = promotionImages;
+    
+                            // Attach event listeners to the promotion images
+                            var promotionImgs = promotionContent.querySelectorAll('img');
+                            promotionImgs.forEach(function (img) {
+                                img.addEventListener('click', function () {
+                                    previewImage(img.src);
+                                });
+                            });
+    
+                            // Function to preview image on click
+                            function previewImage(imgSrc) {
+                                var overlay = document.getElementById("overlay");
+                                var overlayImage = document.getElementById("overlay-image");
+                                // Set the source of the overlay image to the clicked image source
+                                overlayImage.src = imgSrc;
+                                // Show the overlay
+                                overlay.style.display = "flex"; // Show the overlay as flex container
+                            }
+    
+                            // Display the popup with animation
+                            popup.classList.add("show-popup");
+    
+                            // Get references to the marker image and overlay
+                            var markerImage = document.getElementById("marker-image");
                             var overlay = document.getElementById("overlay");
                             var overlayImage = document.getElementById("overlay-image");
-                            overlayImage.src = imgSrc;
-                            overlay.style.display = "flex";
-                        }
+                            // Add a click event listener to the marker image
+                            markerImage.addEventListener("click", function () {
+                                // Set the source of the overlay image to the marker image source
+                                overlayImage.src = markerImage.src;
+                                // Show the overlay
+                                overlay.style.display = "flex"; // Show the overlay as flex container
+                            });
+                            // Add a click event listener to the overlay to close it when clicked
+                            overlay.addEventListener("click", function () {
+                                // Hide the overlay
+                                overlay.style.display = "none";
+                            });
     
-                        popup.classList.add("show-popup");
-    
-                        var markerImage = document.getElementById("marker-image");
-                        var overlay = document.getElementById("overlay");
-                        var overlayImage = document.getElementById("overlay-image");
-                        markerImage.addEventListener("click", function () {
-                            overlayImage.src = markerImage.src;
-                            overlay.style.display = "flex";
+                            function calculateDistance(lat1, lon1, lat2, lon2) {
+                                const R = 6371; // Radius of the Earth in kilometers
+                                const dLat = deg2rad(lat2 - lat1); // Difference in latitude, converted to radians
+                                const dLon = deg2rad(lon2 - lon1); // Difference in longitude, converted to radians
+                                const a =
+                                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                                    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                                const distance = R * c; // Distance in kilometers
+                                return distance;
+                            }
+                            // Function to convert degrees to radians
+                            function deg2rad(deg) {
+                                return deg * (Math.PI / 180);
+                            }
                         });
-                        overlay.addEventListener("click", function () {
-                            overlay.style.display = "none";
+                        // Add click event listeners for each tab
+                        document.getElementById("title-tab").addEventListener("click", function () {
+                            document.getElementById("title-content").style.display = "block";
+                            document.getElementById("description-content").style.display = "none";
+                            document.getElementById("service-content").style.display = "none";
+                            document.getElementById("title-content2").style.display = "none";
+                            document.getElementById("promotion-content").style.display = "none";
+                        });
+                        document.getElementById("description-tab").addEventListener("click", function () {
+                            document.getElementById("title-content").style.display = "none";
+                            document.getElementById("description-content").style.display = "block";
+                            document.getElementById("service-content").style.display = "none";
+                            document.getElementById("title-content2").style.display = "none";
+                            document.getElementById("promotion-content").style.display = "none";
+    
+                        });
+                        document.getElementById("service-tab").addEventListener("click", function () {
+                            document.getElementById("title-content").style.display = "none";
+                            document.getElementById("description-content").style.display = "none";
+                            document.getElementById("service-content").style.display = "block";
+                            document.getElementById("title-content2").style.display = "none";
+                            document.getElementById("promotion-content").style.display = "none";
+                        });
+                        document.getElementById("title-tab1").addEventListener("click", function () {
+                            document.getElementById("title-content2").style.display = "block";
+                            document.getElementById("description-content").style.display = "none";
+                            document.getElementById("service-content").style.display = "none";
+                            document.getElementById("title-content").style.display = "none";
+                            document.getElementById("promotion-content").style.display = "none";
+                        });
+                        document.getElementById("promotion-tab").addEventListener("click", function () {
+                            document.getElementById("title-content2").style.display = "none";
+                            document.getElementById("description-content").style.display = "none";
+                            document.getElementById("service-content").style.display = "none";
+                            document.getElementById("title-content").style.display = "none";
+                            document.getElementById("promotion-content").style.display = "block";
                         });
     
-                        function calculateDistance(lat1, lon1, lat2, lon2) {
-                            const R = 6371;
-                            const dLat = deg2rad(lat2 - lat1);
-                            const dLon = deg2rad(lon2 - lon1);
-                            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-                                Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                            const distance = R * c;
-                            return distance;
-                        }
-    
-                        function deg2rad(deg) {
-                            return deg * (Math.PI / 180);
-                        }
                     });
-    
-                    document.getElementById("title-tab").addEventListener("click", function () {
-                        document.getElementById("title-content").style.display = "block";
-                        document.getElementById("description-content").style.display = "none";
-                        document.getElementById("service-content").style.display = "none";
-                        document.getElementById("title-content2").style.display = "none";
-                        document.getElementById("promotion-content").style.display = "none";
-                    });
-                    document.getElementById("description-tab").addEventListener("click", function () {
-                        document.getElementById("title-content").style.display = "none";
-                        document.getElementById("description-content").style.display = "block";
-                        document.getElementById("service-content").style.display = "none";
-                        document.getElementById("title-content2").style.display = "none";
-                        document.getElementById("promotion-content").style.display = "none";
-                    });
-                    document.getElementById("service-tab").addEventListener("click", function () {
-                        document.getElementById("title-content").style.display = "none";
-                        document.getElementById("description-content").style.display = "none";
-                        document.getElementById("service-content").style.display = "block";
-                        document.getElementById("title-content2").style.display = "none";
-                        document.getElementById("promotion-content").style.display = "none";
-                    });
-                    document.getElementById("title-tab1").addEventListener("click", function () {
-                        document.getElementById("title-content2").style.display = "block";
-                        document.getElementById("description-content").style.display = "none";
-                        document.getElementById("service-content").style.display = "none";
-                        document.getElementById("title-content").style.display = "none";
-                        document.getElementById("promotion-content").style.display = "none";
-                    });
-                    document.getElementById("promotion-tab").addEventListener("click", function () {
-                        document.getElementById("title-content2").style.display = "none";
-                        document.getElementById("description-content").style.display = "none";
-                        document.getElementById("service-content").style.display = "none";
-                        document.getElementById("title-content").style.display = "none";
-                        document.getElementById("promotion-content").style.display = "block";
-                    });
-    
-                });
-            })
-            .catch((error) => console.error("Error loading marker data:", error));
-    
-        document.getElementById("close-button").addEventListener("click", function (event) {
-            event.stopPropagation();
-            popup.classList.remove("show-popup");
-        });
-    
-        selectInput.addEventListener("change", function (event) {
-            var selectedTitle = event.target.value;
-            if (selectedTitle) {
-                var targetMarker = markers.find(
-                    (marker) => marker.options.title === selectedTitle
-                );
-                if (targetMarker) {
-                    map.setView(targetMarker.getLatLng(), 15);
-                }
-            }
-        });
-    
-        document.getElementById("find-location-button").addEventListener("click", function () {
-            findMyLocation();
-        });
-    
-        document.getElementById("zoom-button").addEventListener("click", function () {
-            var selectedTitle = selectInput.value;
-            if (selectedTitle) {
-                var targetMarker = markers.find(
-                    (marker) => marker.options.title === selectedTitle
-                );
-                if (targetMarker) {
-                    map.setView(targetMarker.getLatLng(), 15);
-                }
-            }
-        });
-    
-        document.getElementById("province-filter").addEventListener("change", function (event) {
-            var selectedProvince = event.target.value;
-            updateTitleOptions(selectedProvince);
-        });
-    
-        function updateTitleOptions(selectedProvince) {
-            var titleDropdown = document.getElementById("search-input");
-            titleDropdown.innerHTML = "";
-            var defaultOption = document.createElement("option");
-            defaultOption.value = "";
-            defaultOption.textContent = "Select Title";
-            defaultOption.disabled = true;
-            defaultOption.selected = true;
-            titleDropdown.appendChild(defaultOption);
-            var provinceMarkers = [];
-            markers.forEach(function (marker) {
-                if (selectedProvince === "" || selectedProvince === "all" || marker.options.province.includes(selectedProvince)) {
-                    provinceMarkers.push(marker);
-                    var option = document.createElement("option");
-                    option.value = marker.options.title;
-                    option.textContent = marker.options.title;
-                    titleDropdown.appendChild(option);
+                })
+                .catch((error) => console.error("Error loading marker data:", error));
+            // Add click event listener to close button
+            document.getElementById("close-button").addEventListener("click", function (event) {
+                event.stopPropagation(); // Prevent click event from propagating to popup
+                popup.classList.remove("show-popup");
+            });
+            // Add change event listener to select input
+            selectInput.addEventListener("change", function (event) {
+                var selectedTitle = event.target.value;
+                if (selectedTitle) {
+                    var targetMarker = markers.find(
+                        (marker) => marker.options.title === selectedTitle
+                    );
+                    if (targetMarker) {
+                        map.setView(targetMarker.getLatLng(), 15); // Zoom to the marker if found
+                    }
                 }
             });
-            if (provinceMarkers.length > 0) {
-                var group = new L.featureGroup(provinceMarkers);
-                map.fitBounds(group.getBounds());
+            // Add click event listener to find location button
+            document.getElementById("find-location-button").addEventListener("click", function () {
+                findMyLocation();
+            });
+            // Add click event listener to zoom button
+            document.getElementById("zoom-button").addEventListener("click", function () {
+                var selectedTitle = selectInput.value;
+                if (selectedTitle) {
+                    var targetMarker = markers.find(
+                        (marker) => marker.options.title === selectedTitle
+                    );
+                    if (targetMarker) {
+                        map.setView(targetMarker.getLatLng(), 15); // Zoom to the marker if found
+                    }
+                }
+            });
+            // Add change event listener to province selection dropdown
+            document.getElementById("province-filter").addEventListener("change", function (event) {
+                var selectedProvince = event.target.value;
+                updateTitleOptions(selectedProvince);
+            });
+            // Function to update the options in the title dropdown based on selected province
+            function updateTitleOptions(selectedProvince) {
+                var titleDropdown = document.getElementById("search-input");
+                titleDropdown.innerHTML = ""; // Clear existing options
+                // Add a default option
+                var defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "Select Title";
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                titleDropdown.appendChild(defaultOption);
+                // Filter markers based on selected province and add titles to dropdown
+                var provinceMarkers = [];
+                markers.forEach(function (marker) {
+                    if (selectedProvince === "" || selectedProvince === "all" || marker.options.province.includes(selectedProvince)) {
+                        provinceMarkers.push(marker); // Add marker to provinceMarkers array
+                        var option = document.createElement("option");
+                        option.value = marker.options.title;
+                        option.textContent = marker.options.title;
+                        titleDropdown.appendChild(option);
+                    }
+                });
+                // If there are markers in the selected province, set map view to their bounds
+                if (provinceMarkers.length > 0) {
+                    var group = new L.featureGroup(provinceMarkers);
+                    map.fitBounds(group.getBounds());
+                }
+            }
+    
+            L.control.zoom({
+                position: "bottomright"
+            }).addTo(map);
+        }
+    
+        // Function to refresh the marker icons
+        function refreshMarkerIcons() {
+            markers.forEach(function (marker) {
+                var currentDate = new Date(); // Get the current date and time in UTC
+                var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000)); // Convert UTC time to Cambodia time (UTC+7)
+                var currentHour = cambodiaTime.getHours(); // Extract the current hour in Cambodia time
+                var currentMinute = cambodiaTime.getMinutes(); // Extract the current minute in Cambodia time
+    
+                var customIconUrl = ""; // Initialize the custom icon URL
+    
+                switch (marker.options.status) {
+                    case "under construct":
+                        customIconUrl = "./pictures/under_construction.png";
+                        break;
+                    case "16h":
+                        if ((currentHour === 5 && currentMinute >= 0) || (currentHour > 5 && currentHour < 20)) {
+                            customIconUrl = "./pictures/61.png"; // Set the icon URL for the hours between 5:00 AM and 8:00 PM
+                        } else {
+                            customIconUrl = "./pictures/time_close1.png"; // Set the icon URL for other hours (gray icon)
+                        }
+                        break;
+                    case "24h":
+                        customIconUrl = "./pictures/61.png";
+                        break;
+                    default:
+                        customIconUrl = "./pictures/61.png";
+                        break;
+                }
+    
+                // Update the marker icon
+                var customIcon = L.icon({
+                    iconUrl: customIconUrl,
+                    iconSize: [50, 75], // Adjust icon size as needed
+                    iconAnchor: [24, 75], // Adjust anchor position if needed
+                    popupAnchor: [0, -1000], // Adjust popup anchor if needed
+                });
+    
+                marker.setIcon(customIcon); // Set the new icon for the marker
+            });
+        }
+    
+        // Set an interval to refresh marker icons every 30 minutes (1800000 milliseconds)
+        setInterval(refreshMarkerIcons, 180000);
+        // Get a reference to the filter popup close button
+        var closeFilterPopupButton = document.getElementById("close-filter-popup");
+        // When the user clicks on the close button, hide the filter popup
+        closeFilterPopupButton.onclick = function () {
+            filterPopup.classList.remove("show-popup");
+        };
+        // Get a reference to the filter popup
+        var filterPopup = document.getElementById("filter-popup");
+        // Get a reference to the filter button
+        var filterButton = document.getElementById("filter-button");
+        // When the user clicks on the filter button, open the filter popup
+        filterButton.onclick = function () {
+            filterPopup.classList.add("show-popup");
+        };
+        // Add event listener to the filter form
+        document.getElementById("filter-form").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission behavior
+            // Retrieve selected filter criteria
+            var selectedService = document.getElementById("service-filter").value;
+            var selectedDescription = document.getElementById("description-filter").value;
+            var selectedProvince = document.getElementById("province-filter").value;
+            // Filter markers based on selected criteria
+            markers.forEach(function (marker) {
+                var serviceMatch = selectedService === "" || marker.options.service.includes(selectedService);
+                var descriptionMatch = selectedDescription === "" || marker.options.description.includes(selectedDescription);
+                var provinceMatch = selectedProvince === "" || marker.options.province.includes(selectedProvince);
+                // Check if both service and description match the selected criteria, or if "Show all" is selected
+                if ((selectedService === "all" || serviceMatch) && (selectedDescription === "all" || descriptionMatch) && (selectedProvince === "all" || provinceMatch)) {
+                    marker.addTo(map); // Add marker to the map
+                } else {
+                    map.removeLayer(marker); // Remove marker from the map
+                }
+            });
+            // Close the filter popup
+            filterPopup.classList.remove("show-popup");
+        });
+    
+        var userMarker = null; // Global variable to store user's marker
+        var routingControl = null; // Global variable to store routing control
+    
+        function showRouteToMarker(markerLocation) {
+            // Get the current location and add routing control to show the route
+            findMyLocation(function (userLocation) {
+                // Remove existing routing control if it exists
+                if (routingControl) {
+                    map.removeControl(routingControl);
+                }
+                // Add routing control to show the route
+                routingControl = L.Routing.control({
+                    waypoints: [
+                        userLocation,
+                        markerLocation,
+                    ],
+                    routeWhileDragging: true,
+                    lineOptions: {
+                        styles: [{ color: 'red', opacity: 0.7, weight: 5 }]
+                    },
+                    createMarker: function () { return null; }, // Disable default markers
+                }).addTo(map);
+                // Event listener to update popup content when route is ready
+                routingControl.on('routesfound', function (e) {
+                    var route = e.routes[0]; // Assuming there's only one route
+                    var distance = route.summary.totalDistance / 1000; // Distance in kilometers
+                    // Update popup content with route information
+                    var popupContent = "<div id='route-info'>";
+                    popupContent += "<p><strong>Distance:</strong> <span class='distance-button' style='font-size:12px; padding: 2px 5px;'>" + distance.toFixed(2) + " km</span></p>";
+                    popupContent += "</div>";
+                    // Update the popup content with route information
+                    document.getElementById("title-content1").innerHTML = popupContent;
+                });
+            });
+        }
+    
+        function findMyLocation(callback) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        var latlng = [position.coords.latitude, position.coords.longitude];
+                        // Create or update the user marker
+                        if (!userMarker) {
+                            userMarker = L.marker(latlng, { icon: redIcon, bounceOnAdd: true }).addTo(map);
+                        } else {
+                            userMarker.setLatLng(latlng);
+                        }
+                        var userLocation = L.latLng(latlng[0], latlng[1]);
+                        // Set map view to user's location with zoom level only if map is being initialized
+                        if (!callback) {
+                            map.setView(latlng, 16);
+                        }
+                        // Invoke the callback function with the user's location
+                        callback(userLocation);
+                    },
+                    function (error) {
+                        console.error("Error getting the user location:", error);
+                    }
+                );
+            } else {
+                console.error("Geolocation is not supported by this browser.");
             }
         }
     
-        L.control.zoom({
-            position: "bottomright"
-        }).addTo(map);
-    }
-    
-    function refreshMarkerIcons() {
-        markers.forEach(function (marker) {
-            var currentDate = new Date();
-            var cambodiaTime = new Date(currentDate.getTime() + (7 * 60 * 60 * 1000));
-            var currentHour = cambodiaTime.getHours();
-            var currentMinute = cambodiaTime.getMinutes();
-            var customIconUrl = "";
-    
-            switch (marker.options.status) {
-                case "under construct":
-                    customIconUrl = "./pictures/under_construction.png";
-                    break;
-                case "16h":
-                    if ((currentHour === 5 && currentMinute >= 0) || (currentHour > 5 && currentHour < 20)) {
-                        customIconUrl = "./pictures/61.png";
-                    } else {
-                        customIconUrl = "./pictures/time_close1.png";
-                    }
-                    break;
-                case "24h":
-                    customIconUrl = "./pictures/61.png";
-                    break;
-                default:
-                    customIconUrl = "./pictures/61.png";
-                    break;
-            }
-    
-            var customIcon = L.icon({
-                iconUrl: customIconUrl,
-                iconSize: [50, 75],
-                iconAnchor: [24, 75],
-                popupAnchor: [0, -1000],
-            });
-    
-            marker.setIcon(customIcon);
+        // Define the red icon
+        var redIcon = L.icon({
+            iconUrl: './pictures/mylocal.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
         });
-    }
     
-    setInterval(refreshMarkerIcons, 180000);
-    
-    var closeFilterPopupButton = document.getElementById("close-filter-popup");
-    closeFilterPopupButton.onclick = function () {
-        filterPopup.classList.remove("show-popup");
-    };
-    
-    var filterPopup = document.getElementById("filter-popup");
-    var filterButton = document.getElementById("filter-button");
-    filterButton.onclick = function () {
-        filterPopup.classList.add("show-popup");
-    };
-    
-    document.getElementById("filter-form").addEventListener("submit", function (event) {
-        event.preventDefault();
-        var selectedService = document.getElementById("service-filter").value;
-        var selectedDescription = document.getElementById("description-filter").value;
-        var selectedProvince = document.getElementById("province-filter").value;
-        markers.forEach(function (marker) {
-            var serviceMatch = selectedService === "" || marker.options.service.includes(selectedService);
-            var descriptionMatch = selectedDescription === "" || marker.options.description.includes(selectedDescription);
-            var provinceMatch = selectedProvince === "" || marker.options.province.includes(selectedProvince);
-            if ((selectedService === "all" || serviceMatch) && (selectedDescription === "all" || descriptionMatch) && (selectedProvince === "all" || provinceMatch)) {
-                marker.addTo(map);
-            } else {
-                map.removeLayer(marker);
-            }
-        });
-        filterPopup.classList.remove("show-popup");
-    });
-    
-    function showRouteToMarker(markerLocation) {
-        findMyLocation(function (userLocation) {
+        // Add event listener to close button
+        document.getElementById("close-button").addEventListener("click", function () {
+            // Remove routing control from the map
             if (routingControl) {
                 map.removeControl(routingControl);
+                routingControl = null; // Set routing control to null to indicate it's removed
             }
-            routingControl = L.Routing.control({
-                waypoints: [
-                    userLocation,
-                    markerLocation,
-                ],
-                routeWhileDragging: true,
-                lineOptions: {
-                    styles: [{ color: 'red', opacity: 0.7, weight: 5 }]
-                },
-                createMarker: function () { return null; },
-            }).addTo(map);
-            routingControl.on('routesfound', function (e) {
-                var route = e.routes[0];
-                var distance = route.summary.totalDistance / 1000;
-                var popupContent = "<div id='route-info'>";
-                popupContent += "<p><strong>Distance:</strong> <span class='distance-button' style='font-size:12px; padding: 2px 5px;'>" + distance.toFixed(2) + " km</span></p>";
-                popupContent += "</div>";
-                document.getElementById("title-content1").innerHTML = popupContent;
-            });
         });
-    }
+        // Load Leaflet map when the window is loaded
+        window.onload = loadMapScenario;
     
-    function findMyLocation(callback) {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    var latlng = [
-                        position.coords.latitude,
-                        position.coords.longitude,
-                    ];
-                    if (!userMarker) {
-                        userMarker = L.marker(latlng, { icon: redIcon, bounceOnAdd: true }).addTo(map);
-                    } else {
-                        userMarker.setLatLng(latlng);
-                    }
-                    var userLocation = L.latLng(latlng[0], latlng[1]);
-                    callback(userLocation);
-                },
-                function (error) {
-                    console.error("Error getting the user location:", error);
-                }
-            );
-        } else {
-            console.error("Geolocation is not supported by this browser.");
+        function openGoogleMaps(lat, lon) {
+            var url = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lon;
+            window.open(url, "_self");
         }
-    }
-    
-    var redIcon = L.icon({
-        iconUrl: './pictures/mylocal.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-    });
-    
-    document.getElementById("close-button").addEventListener("click", function () {
-        if (routingControl) {
-            map.removeControl(routingControl);
-            routingControl = null;
-        }
-    });
-    
-    window.onload = loadMapScenario;
-    
-    function openGoogleMaps(lat, lon) {
-        var url = "https://www.google.com/maps/dir/?api=1&destination=" + lat + "," + lon;
-        window.open(url, "_self");
-    }
     </script>
+    
     <!-- <script>
 
         var map;
