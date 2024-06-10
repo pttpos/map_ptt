@@ -4587,9 +4587,9 @@
             "picture": "2.png"
         },
         {
-            "id": 10034777,
-            "latitude": 11.038194444444445,
-            "longitude": 106.00544444444445,
+            "id": "10034777",
+            "latitude": "11.038194444444445",
+            "longitude": "106.00544444444445",
             "title": "PTT Chi Phou",
             "description": [
                 "Amazon",
@@ -4600,19 +4600,16 @@
                 "ULR 91",
                 "HSD"
             ],
-            "other_product": [
-                ""
-            ],
+            "other_product": [],
             "service": [
+                "Fleet card",
                 "Cash"
             ],
             "province": "Svay Rieng",
             "address": "Road # 1, Chrey Thom Village, Prey Angkunh District, Bavet City, Svay Rieng Province",
             "status": "24h",
-            "promotion": [
-                ""
-            ],
-            "old_picture": "",
+            "promotion": [],
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
