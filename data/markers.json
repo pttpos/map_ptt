@@ -2277,7 +2277,7 @@
             "service": [
                 "Cash",
                 "KHQR",
-                "fleet card"
+                "Fleet card"
             ],
             "province": "Phnom Penh",
             "address": "#552, Street Northbridge, Sangakat Obek Kaorm, Khan Sensok, Phnom Penh",
@@ -4751,7 +4751,8 @@
             "service": [
                 "Fleet card",
                 "KHQR",
-                "Cash"
+                "Cash",
+                "Fleet card"
             ],
             "province": "Svay Rieng",
             "address": "Road # 1, Chrey Thom Village, Prey Angkunh District, Bavet City, Svay Rieng Province",
@@ -5198,7 +5199,8 @@
             ],
             "service": [
                 "Cash",
-                "KHQR"
+                "KHQR",
+                "Fleet card"
             ],
             "province": "Phnom Penh",
             "address": "# 150 E0, St. 130, Phoum 1, Sangkat Phsar Kandal 2, Khan Daun Penh, Phnom Penh, Cambodia",
