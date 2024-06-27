@@ -3716,9 +3716,9 @@
             "picture": "2.png"
         },
         {
-            "id": 10031481,
-            "latitude": 13.1063611111111,
-            "longitude": 103.166527777777,
+            "id": "10031481",
+            "latitude": "13.1063611111111",
+            "longitude": "103.166527777777",
             "title": "PTT AU CHAR 2",
             "description": [
                 "Amazon"
@@ -3728,20 +3728,17 @@
                 "ULR 91",
                 "HSD"
             ],
-            "other_product": [
-                ""
-            ],
+            "other_product": [],
             "service": [
-                "Cash",
-                "KHQR"
+                "Fleet card",
+                "ABA",
+                "Cash"
             ],
             "province": "Battambang",
             "address": "St. Anndong Chenh Village, Sangkat Au Char, Battambang",
             "status": "16h",
-            "promotion": [
-                ""
-            ],
-            "old_picture": "",
+            "promotion": [],
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {

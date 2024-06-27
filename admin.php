@@ -349,7 +349,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="edit-aba" name="service[]"
                                     value="ABA">
-                                <label class="form-check-label" for="edit-aba">ABA QR</label>
+                                <label class="form-check-label" for="edit-aba">KHQR</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="edit-test" name="service[]"
