@@ -39,7 +39,7 @@
             "station_id": 605,
             "promotions": [
                 {
-                    "promotion_id": "",
+                    "promotion_id": "promotion3",
                     "end_time": "2024-12-31T23:59:59Z"
                 }
             ]
