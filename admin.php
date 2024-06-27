@@ -156,7 +156,7 @@
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="aba" name="service[]" value="KHQR">
-                                <label class="form-check-label" for="aba">HRQR</label>
+                                <label class="form-check-label" for="aba">KHQR</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="test" name="service[]" value="Cash">

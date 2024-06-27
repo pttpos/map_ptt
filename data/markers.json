@@ -27,7 +27,7 @@
             "status": "under construct",
             "promotion": [
                 "promotion1",
-                 "Promotion Opening 1"
+                "Promotion Opening 1"
             ],
             "old_picture": "",
             "picture": "2.png"
@@ -5385,6 +5385,31 @@
                 ""
             ],
             "old_picture": "",
+            "picture": "2.png"
+        },
+        {
+            "id": "10037836",
+            "latitude": "13.5766666666667",
+            "longitude": "103.447111111111",
+            "title": "PTT Kralanh ",
+            "description": [
+                "Amazon"
+            ],
+            "product": [
+                "ULG 95",
+                "ULR 91",
+                "HSD"
+            ],
+            "other_product": [],
+            "service": [
+                "KHQR",
+                "Cash"
+            ],
+            "province": "Siem Reap",
+            "address": "National Road No.06, Tachraing Village, Kralanh Commune , Kralanh District,Siem Reap Province, Cambodia",
+            "status": "16h",
+            "promotion": [],
+            "old_picture": "2.png",
             "picture": "2.png"
         }
     ]
