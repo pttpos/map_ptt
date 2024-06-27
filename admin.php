@@ -155,8 +155,8 @@
                                 <label class="form-check-label" for="fleetcard">Fleet Card</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="aba" name="service[]" value="ABA">
-                                <label class="form-check-label" for="aba">ABA QR</label>
+                                <input class="form-check-input" type="checkbox" id="aba" name="service[]" value="KHQR">
+                                <label class="form-check-label" for="aba">HRQR</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="test" name="service[]" value="Cash">
@@ -348,7 +348,7 @@
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="edit-aba" name="service[]"
-                                    value="ABA">
+                                    value="KHQR">
                                 <label class="form-check-label" for="edit-aba">KHQR</label>
                             </div>
                             <div class="form-check">
