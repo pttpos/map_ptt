@@ -1,14 +1,26 @@
 <?php
 // Function to load marker data from JSON file
 function loadMarkerData() {
-    $markersJson = file_get_contents('data/markers.json'); // Corrected path
+    $markersJson = file_get_contents('data/markers.json');
     return json_decode($markersJson, true);
 }
 
 // Function to save marker data to JSON file
 function saveMarkerData($markers) {
     $markersJson = json_encode(['STATION' => $markers], JSON_PRETTY_PRINT);
-    file_put_contents('data/markers.json', $markersJson); // Corrected path
+    file_put_contents('data/markers.json', $markersJson);
+}
+
+// Function to load promotion data from JSON file
+function loadPromotionData() {
+    $promotionsJson = file_get_contents('data/promotion.json');
+    return json_decode($promotionsJson, true);
+}
+
+// Function to save promotion data to JSON file
+function savePromotionData($promotions) {
+    $promotionsJson = json_encode(['PROMOTIONS' => $promotions], JSON_PRETTY_PRINT);
+    file_put_contents('data/promotion.json', $promotionsJson);
 }
 
 // Function to add or update a marker
@@ -53,8 +65,53 @@ function addOrUpdateMarker($markerData) {
         $markers['STATION'][] = $markerData;
     }
     saveMarkerData($markers['STATION']);
+    updatePromotionData($markerData);
 }
 
+// Function to update promotion data
+function updatePromotionData($markerData) {
+    $promotions = loadPromotionData();
+    $existingPromotion = getPromotionByStationId($markerData['id']);
+    if ($existingPromotion) {
+        // Update existing promotions
+        $promotions['PROMOTIONS'] = array_map(function($promotion) use ($markerData) {
+            if ($promotion['station_id'] == $markerData['id']) {
+                $promotion['promotions'] = array_map(function($promo) {
+                    return [
+                        'promotion_id' => $promo,
+                        'end_time' => '2024-12-31T23:59:59Z' // Example end time
+                    ];
+                }, $markerData['promotion']);
+            }
+            return $promotion;
+        }, $promotions['PROMOTIONS']);
+    } else {
+        // Add new promotion entry
+        $newPromotion = [
+            'id' => $markerData['id'],
+            'station_id' => $markerData['id'],
+            'promotions' => array_map(function($promo) {
+                return [
+                    'promotion_id' => $promo,
+                    'end_time' => '2024-12-31T23:59:59Z' // Example end time
+                ];
+            }, $markerData['promotion'])
+        ];
+        $promotions['PROMOTIONS'][] = $newPromotion;
+    }
+    savePromotionData($promotions['PROMOTIONS']);
+}
+
+// Function to get promotion data by station ID
+function getPromotionByStationId($stationId) {
+    $promotions = loadPromotionData();
+    foreach ($promotions['PROMOTIONS'] as $promotion) {
+        if ($promotion['station_id'] == $stationId) {
+            return $promotion;
+        }
+    }
+    return null;
+}
 
 // Function to delete a marker
 function deleteMarker($id) {
@@ -70,6 +127,16 @@ function deleteMarker($id) {
         return true;
     }));
     saveMarkerData($markers['STATION']);
+    deletePromotionData($id);
+}
+
+// Function to delete promotion data by station ID
+function deletePromotionData($stationId) {
+    $promotions = loadPromotionData();
+    $promotions['PROMOTIONS'] = array_values(array_filter($promotions['PROMOTIONS'], function($promotion) use ($stationId) {
+        return $promotion['station_id'] != $stationId;
+    }));
+    savePromotionData($promotions['PROMOTIONS']);
 }
 
 // Function to get marker data by ID
