@@ -245,8 +245,9 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">Dashboard</div>
-            <div class="index.php" class="list-group-item list-group-item-action bg-light">Overview</a>
+            <div class="sidebar-heading">Dashboard </div>
+            <div class="list-group list-group-flush">
+                <a href="index.php" class="list-group-item list-group-item-action bg-light">Overview</a>
                 <a href="manage.php" class="list-group-item list-group-item-action bg-light">Manage</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Analytics</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Export</a>
