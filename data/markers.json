@@ -648,9 +648,9 @@
             "picture": "2.png"
         },
         {
-            "id": 10033316,
-            "latitude": 11.4423666666666,
-            "longitude": 104.884575,
+            "id": "10033316",
+            "latitude": "11.4423666666666",
+            "longitude": "104.884575",
             "title": "PTT SOK KEO KOUR SROV",
             "description": [
                 "Amazon",
@@ -662,20 +662,21 @@
                 "HSD"
             ],
             "other_product": [
-                ""
+                "EV"
             ],
             "service": [
-                "Cash",
-                "KHQR"
+                "Fleet card",
+                "KHQR",
+                "Cash"
             ],
             "province": "Phnom Penh",
             "address": "National Road No.2, Phum krang Svay,Sangkat Prek Kampeus,Khan Dongkor",
             "status": "24h",
             "promotion": [
-                ""
+                "promotion1"
             ],
-            "old_picture": "",
-            "picture": "2.png"
+            "old_picture": "2.png",
+            "picture": "_DSC0502_00001Plantinum.jpg"
         },
         {
             "id": 10033821,

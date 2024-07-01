@@ -1,0 +1,14 @@
+{
+    "PROMOTIONS": [
+        {
+            "id": "10033316",
+            "station_id": "10033316",
+            "promotions": [
+                {
+                    "promotion_id": "promotion1",
+                    "end_time": "2024-12-31T23:59:59Z"
+                }
+            ]
+        }
+    ]
+}
