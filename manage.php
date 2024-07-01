@@ -232,8 +232,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
         <!-- Sidebar -->
         <div class="bg-light border-right" id="sidebar-wrapper">
             <div class="sidebar-heading">Dashboard</div>
-            <div class="list-group list-group-flush">
-                <a href="index.php" class="list-group-item list-group-item-action bg-light">Overview</a>
+            <div class="index.php" class="list-group-item list-group-item-action bg-light">Overview</a>
                 <a href="manage.php" class="list-group-item list-group-item-action bg-light">Manage</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Analytics</a>
                 <a href="#" class="list-group-item list-group-item-action bg-light">Export</a>
@@ -249,7 +248,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             <div class="container-fluid">
                 <h1 class="mt-4">Promotions Dashboard</h1>
                 <!-- Form for Adding Promotion to All Stations -->
-                <form action="index.php" method="post" class="mb-4">
+                <form action="manage.php" method="post" class="mb-4">
                     <input type="hidden" name="action" value="add_to_all">
                     <div class="form-group">
                         <label for="promotion_id">Promotion ID:</label>
@@ -327,7 +326,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                                     <?php foreach ($promotion['promotions'] as $promo): ?>
                                     <tr data-promo-id="<?php echo $promo['promotion_id']; ?>"
                                         data-end-time="<?php echo $promo['end_time']; ?>">
-                                        <form action="index.php" method="post" class="form-inline">
+                                        <form action="manage.php" method="post" class="form-inline">
                                             <input type="hidden" name="station_id"
                                                 value="<?php echo $promotion['station_id']; ?>">
                                             <input type="hidden" name="promotion_id"
@@ -360,7 +359,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                             <?php else: ?>
                             <p>No promotions available.</p>
                             <?php endif; ?>
-                            <form action="index.php" method="post" class="mt-4">
+                            <form action="manage.php" method="post" class="mt-4">
                                 <input type="hidden" name="station_id" value="<?php echo $promotion['station_id']; ?>">
                                 <input type="hidden" name="action" value="add">
                                 <div class="form-group">
@@ -424,7 +423,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
         function deletePromotion(stationId, promotionId) {
             if (confirm("Are you sure you want to delete this promotion?")) {
-                $.post("index.php", {
+                $.post("manage.php", {
                     action: "delete",
                     station_id: stationId,
                     promotion_id: promotionId
@@ -460,7 +459,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             if (confirm('Are you sure you want to delete this promotion?')) {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = 'index.php';
+                form.action = 'manage.php';
 
                 const stationIdInput = document.createElement('input');
                 stationIdInput.type = 'hidden';
