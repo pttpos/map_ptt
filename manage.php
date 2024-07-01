@@ -223,12 +223,8 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                 <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
             </nav>
-
             <div class="container-fluid">
                 <h1 class="mt-4">Promotions Dashboard</h1>
-
-
-
                 <!-- Form for Adding Promotion to All Stations -->
                 <form action="index.php" method="post" class="mb-4">
                     <input type="hidden" name="action" value="add_to_all">
