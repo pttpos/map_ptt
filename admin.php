@@ -97,7 +97,7 @@
                             </div>
                             <!-- Add more checkboxes as needed -->
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label class="form-label">Promotions:</label><br>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="promotion1" name="promotion[]"
@@ -129,8 +129,7 @@
                                     name="promotion[]" value="promotion-opening3">
                                 <label class="form-check-label" for="promotion-opening3">Promotion Opening 3</label>
                             </div>
-                            <!-- Add more checkboxes as needed -->
-                        </div>
+                        </div> -->
 
                         <div class="mb-3">
                             <label class="form-label">Service:</label><br>
@@ -286,7 +285,7 @@
                             </div>
                             <!-- Add more checkboxes as needed -->
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label class="form-label">Promotions:</label><br>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="edit-promotion1" name="promotion[]"
@@ -321,8 +320,7 @@
                                 <label class="form-check-label" for="edit-promotion-opening3">Promotion Opening
                                     3</label>
                             </div>
-                            <!-- Add more checkboxes as needed -->
-                        </div>
+                        </div> -->
 
                         <!-- service  -->
                         <div class="mb-3">
@@ -465,7 +463,7 @@
 
 
                     { "data": "status" },
-                    { "data": "promotion" },
+                    // { "data": "promotion" },
                     {
                         "data": null,
                         "render": function (data, type, row) {
@@ -562,15 +560,15 @@
                                 });
                             });
                         }
-                        if (marker.promotion !== null) {
-                            marker.promotion.forEach(promo => {
-                                document.querySelectorAll(`input[name="promotion[]"]`).forEach(checkbox => {
-                                    if (checkbox.value === promo) {
-                                        checkbox.checked = true;
-                                    }
-                                });
-                            });
-                        }
+                        // if (marker.promotion !== null) {
+                        //     marker.promotion.forEach(promo => {
+                        //         document.querySelectorAll(`input[name="promotion[]"]`).forEach(checkbox => {
+                        //             if (checkbox.value === promo) {
+                        //                 checkbox.checked = true;
+                        //             }
+                        //         });
+                        //     });
+                        // }
                         // Set the old picture filename or an empty string if no picture exists
                         document.getElementById('old-picture').value = marker.picture || '';
 
@@ -637,7 +635,7 @@
                                 <th>Address</th>
                                 <th>Image</th>
                                 <th>Status</th>
-                                <th>promotion</th>
+                                <!-- <th>promotion</th> -->
                                 <th>Actions</th>
                             </tr>
                         </thead>
