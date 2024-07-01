@@ -261,6 +261,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             </nav>
             <div class="container-fluid">
                 <h1 class="mt-4">Promotions Dashboard</h1>
+                   <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
                 <!-- Form for Adding Promotion to All Stations -->
                 <form action="manage.php" method="post" class="mb-4">
                     <input type="hidden" name="action" value="add_to_all">
@@ -280,20 +281,20 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <button type="submit" class="btn btn-primary">Add Promotion to All Stations</button>
                 </form>
                 <!-- Clear Specific Promotion Form -->
-                <form action="manage.php" method="post" class="mb-4">
-                    <input type="hidden" name="clear_promotions" value="1">
-                    <div class="form-group">
-                        <label for="selected_promotion">Select Promotion to Clear:</label>
-                        <select class="form-select" name="selected_promotion" required>
-                            <?php foreach ($unique_promotions as $promotion_id): ?>
-                                <option value="<?php echo $promotion_id; ?>"><?php echo $promotion_id; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-danger">Clear Selected Promotion</button>
-                </form>
+                <!-- <form id="clearPromotionForm" action="manage.php" method="post" class="mb-4">
+            <input type="hidden" name="clear_promotions" value="1">
+            <div class="form-group">
+                <label for="selected_promotion">Select Promotion to Clear:</label>
+                <select class="form-select" name="selected_promotion" required>
+                    <?php foreach ($unique_promotions as $promotion_id): ?>
+                        <option value="<?php echo $promotion_id; ?>"><?php echo $promotion_id; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <button type="button" class="btn btn-danger" onclick="confirmAction('Are you sure you want to clear the selected promotion?', 'clearPromotionForm')">Clear Selected Promotion</button>
+        </form> -->
                 <!-- Button to check for expired promotions -->
-                <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
+               
 
                 <!-- Modal for Expired Promotions -->
                     <div class="modal fade" id="expiredPromotionsModal" tabindex="-1" role="dialog"
@@ -335,22 +336,22 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     </div>
 
                     <!-- Clear All Selected Promotions Form -->
-                    <form action="manage.php" method="post" class="mb-4">
-                        <input type="hidden" name="delete_all_promotions" value="1">
-                        <div class="form-group">
-                            <label for="selected_promotions">Select Promotions to Clear:</label>
-                            <?php foreach ($unique_promotions as $promotion_id): ?>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="selected_promotions[]"
-                                        value="<?php echo $promotion_id; ?>" id="promo_<?php echo $promotion_id; ?>">
-                                    <label class="form-check-label" for="promo_<?php echo $promotion_id; ?>">
-                                        <?php echo $promotion_id; ?>
-                                    </label>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <button type="submit" class="btn btn-danger">Clear Selected Promotions</button>
-                    </form>
+                    <form id="clearAllPromotionsForm" action="manage.php" method="post" class="mb-4">
+            <input type="hidden" name="delete_all_promotions" value="1">
+            <div class="form-group">
+                <label for="selected_promotions">Select Promotions to Clear:</label>
+                <?php foreach ($unique_promotions as $promotion_id): ?>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="selected_promotions[]"
+                            value="<?php echo $promotion_id; ?>" id="promo_<?php echo $promotion_id; ?>">
+                        <label class="form-check-label" for="promo_<?php echo $promotion_id; ?>">
+                            <?php echo $promotion_id; ?>
+                        </label>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <button type="button" class="btn btn-danger" onclick="confirmAction('Are you sure you want to clear the selected promotions?', 'clearAllPromotionsForm')">Clear Selected Promotions</button>
+        </form>
 
                     <!-- Search Form -->
                     <form class="form-inline mb-4" id="searchForm">
@@ -473,6 +474,11 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
         </div>
     </div>
     <script>
+function confirmAction(message, formId) {
+    if (confirm(message)) {
+        document.getElementById(formId).submit();
+    }
+}
 
         $("#menu-toggle").click(function (e) {
             e.preventDefault();
