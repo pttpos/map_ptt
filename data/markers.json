@@ -671,9 +671,7 @@
             "province": "Phnom Penh",
             "address": "National Road No.2, Phum krang Svay,Sangkat Prek Kampeus,Khan Dongkor",
             "status": "24h",
-            "promotion": [
-                "promotion1"
-            ],
+            "promotion": null,
             "old_picture": "_DSC0502_00001Plantinum.jpg",
             "picture": "_DSC0502_00001Plantinum.jpg"
         },
