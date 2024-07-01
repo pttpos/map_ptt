@@ -1,9 +1,9 @@
 {
     "STATION": [
         {
-            "id": 601,
-            "latitude": 11.5704444444444,
-            "longitude": 104.905083333333,
+            "id": "601",
+            "latitude": "11.5704444444444",
+            "longitude": "104.905083333333",
             "title": "PTT Station Neak Vorn",
             "description": [
                 "Amazon",
@@ -15,7 +15,7 @@
                 "HSD"
             ],
             "other_product": [
-                ""
+                "EV"
             ],
             "service": [
                 "Fleet card",
@@ -26,10 +26,9 @@
             "address": "Russian Federation Blvd (St.110), Sangkat Srah Chak, Khan Doun Penh, Cambodia",
             "status": "under construct",
             "promotion": [
-                "promotion1",
-                "Promotion Opening 1"
+                "promotion1"
             ],
-            "old_picture": "",
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
