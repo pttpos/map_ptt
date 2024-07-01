@@ -13,14 +13,14 @@ function saveMarkerData($markers) {
 
 // Function to load promotion data from JSON file
 function loadPromotionData() {
-    $promotionsJson = file_get_contents('data/promotion.json');
+    $promotionsJson = file_get_contents('data/promotions.json');
     return json_decode($promotionsJson, true);
 }
 
 // Function to save promotion data to JSON file
 function savePromotionData($promotions) {
     $promotionsJson = json_encode(['PROMOTIONS' => $promotions], JSON_PRETTY_PRINT);
-    file_put_contents('data/promotion.json', $promotionsJson);
+    file_put_contents('data/promotions.json', $promotionsJson);
 }
 
 // Function to add or update a marker
