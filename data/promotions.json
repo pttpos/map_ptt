@@ -3,12 +3,12 @@
         {
             "id": 601,
             "station_id": 601,
-            "promotions": {
-                "1": {
-                    "promotion_id": "Promotion Opening 1",
-                    "end_time": "2024-12-31T23:59:59Z"
+            "promotions": [
+                {
+                    "promotion_id": "promotion 3",
+                    "end_time": "2024-07-01T11:51:00Z"
                 }
-            }
+            ]
         },
         {
             "id": 603,
@@ -23,12 +23,7 @@
         {
             "id": 605,
             "station_id": 605,
-            "promotions": [
-                {
-                    "promotion_id": "promotion3",
-                    "end_time": "2024-12-31T23:59:59Z"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 606,
