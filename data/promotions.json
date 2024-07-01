@@ -215,8 +215,8 @@
             "station_id": 10033316,
             "promotions": [
                 {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-17T10:46:00Z"
+                    "promotion_id": "promotion1",
+                    "end_time": "2024-12-31T23:59:59Z"
                 }
             ]
         },
