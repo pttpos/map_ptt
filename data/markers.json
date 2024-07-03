@@ -25,8 +25,7 @@
             "province": "Phnom Penh",
             "address": "Russian Federation Blvd (St.110), Sangkat Srah Chak, Khan Doun Penh, Cambodia",
             "status": "under construct",
-            "promotion": [
-            ],
+            "promotion": [],
             "old_picture": "2.png",
             "picture": "2.png"
         },
@@ -5407,6 +5406,32 @@
             "status": "16h",
             "promotion": [],
             "old_picture": "2.png",
+            "picture": "2.png"
+        },
+        {
+            "id": "10037871",
+            "latitude": "11.57636111",
+            "longitude": "104.8031389",
+            "title": "PTT Station Kob Srov Golf Club",
+            "description": [
+                "Amazon",
+                "7-Eleven"
+            ],
+            "product": [
+                "ULG 95",
+                "ULR 91",
+                "HSD"
+            ],
+            "other_product": [],
+            "service": [
+                "KHQR",
+                "Cash"
+            ],
+            "province": "Phnom Penh",
+            "address": "#Win-Win Blvd, Phum Trapeang Thnong, Sangkat Samraong Kraom, Khan Pou Senchey, Phnom Penh, Cambodia.",
+            "status": "24h",
+            "promotion": [],
+            "old_picture": "",
             "picture": "2.png"
         }
     ]
