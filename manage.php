@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $end_time = (new DateTime($end_time, new DateTimeZone('Asia/Phnom_Penh')))->format('Y-m-d\TH:i:s\Z');
     if ($action === 'add_to_all') {
         $selected_provinces = !empty($_POST['provinces']) ? explode(',', $_POST['provinces']) : [];
-        
+
         foreach ($promotions['PROMOTIONS'] as &$station) {
             $station_id = $station['station_id'];
             foreach ($markers['STATION'] as $marker) {
@@ -75,8 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-    }
-     else {
+    } else {
         foreach ($promotions['PROMOTIONS'] as &$station) {
             if ($station['station_id'] == $station_id) {
                 if ($action == 'add') {
@@ -137,13 +136,26 @@ foreach ($promotions['PROMOTIONS'] as $promotion) {
 }
 
 $search_query = isset($_GET['search']) ? $_GET['search'] : '';
+$selected_province = isset($_GET['province']) ? $_GET['province'] : '';
 
-$filtered_promotions = array_filter($combined_data, function ($promotion) use ($search_query) {
-    return empty($search_query) || stripos($promotion['title'], $search_query) !== false ||
+$filtered_promotions = array_filter($combined_data, function ($promotion) use ($search_query, $selected_province, $markers) {
+    $matches_search_query = empty($search_query) || stripos($promotion['title'], $search_query) !== false ||
         array_reduce($promotion['promotions'], function ($carry, $promo) use ($search_query) {
             return $carry || stripos($promo['promotion_id'], $search_query) !== false;
         }, false);
+
+    if (!empty($selected_province)) {
+        foreach ($markers['STATION'] as $marker) {
+            if ($marker['id'] == $promotion['station_id'] && $marker['province'] == $selected_province) {
+                return $matches_search_query;
+            }
+        }
+        return false;
+    }
+
+    return $matches_search_query;
 });
+
 
 $per_page = 10;
 $total_stations = count($filtered_promotions);
@@ -241,28 +253,28 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
         background-color: #dc3545;
         border-color: #dc3545;
     }
+
     .badge {
-    display: inline-block;
-    padding: 0.5em 0.75em;
-    margin: 0.25em 0;
-    font-size: 0.75em;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25rem;
-}
+        display: inline-block;
+        padding: 0.5em 0.75em;
+        margin: 0.25em 0;
+        font-size: 0.75em;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+    }
 
-.badge-secondary {
-    background-color: #6c757d;
-    color: #fff;
-}
+    .badge-secondary {
+        background-color: #6c757d;
+        color: #fff;
+    }
 
-.remove-tag {
-    margin-left: 0.5em;
-}
-
+    .remove-tag {
+        margin-left: 0.5em;
+    }
 </style>
 
 <body>
@@ -286,19 +298,20 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             </nav>
             <div class="container-fluid">
                 <h1 class="mt-4">Promotions Dashboard</h1>
-                <?php if (!empty($messages)): ?>
+                <?php if (!empty($messages)) : ?>
                     <div class="alert alert-warning" role="alert">
                         <?php echo implode('<br>', $messages); ?>
                     </div>
                 <?php endif; ?>
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
                 <!-- Form for Adding Promotion to All Stations -->
-                <form action="manage.php" method="post" class="mb-4">
+                <!-- Form for Adding Promotion to All Stations -->
+                <form action="manage.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
                     <input type="hidden" name="action" value="add_to_all">
                     <div class="form-group">
                         <label for="promotion_id">Promotion ID:</label>
-                        <select class="form-select" name="promotion_id" required>
-                            <?php foreach ($promotion_ids as $promo): ?>
+                        <select class="form-select form-control" name="promotion_id" required>
+                            <?php foreach ($promotion_ids as $promo) : ?>
                                 <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?>
                                 </option>
                             <?php endforeach; ?>
@@ -310,7 +323,8 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     </div>
                     <div class="form-group">
                         <label for="province">Provinces:</label>
-                        <select id="province-select" class="form-select">
+                        <select id="province-select" class="form-control">
+                        <option value="">Select a province</option>
                             <?php
                             $provinces = array_unique(array_column($markers['STATION'], 'province'));
                             foreach ($provinces as $province) {
@@ -321,13 +335,87 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     </div>
                     <div class="form-group">
                         <label>Selected Provinces:</label>
-                        <div id="selected-provinces-container" class="border p-2">
+                        <div id="selected-provinces-container" class="border p-2 rounded" style="background-color: #fff;">
                             <!-- Selected provinces will be displayed here as tags -->
                         </div>
                     </div>
                     <input type="hidden" name="provinces" id="selected-provinces" value="">
                     <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
                 </form>
+
+                <!-- Add the following CSS for additional styling -->
+                <style>
+                    #province-select,
+                    .form-control {
+                        border-radius: 0.25rem;
+                        transition: all 0.3s ease-in-out;
+                    }
+
+                    #province-select:focus,
+                    .form-control:focus {
+                        border-color: #80bdff;
+                        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+                    }
+
+                    #selected-provinces-container {
+                        min-height: 38px;
+                    }
+
+                    .badge-secondary {
+                        background-color: #6c757d;
+                        color: #fff;
+                        cursor: pointer;
+                        margin-right: 5px;
+                        margin-bottom: 5px;
+                        display: inline-block;
+                    }
+
+                    .badge-secondary .remove-tag {
+                        margin-left: 0.5em;
+                    }
+
+                    .badge-secondary .remove-tag:hover {
+                        color: red;
+                    }
+                </style>
+
+                <!-- Add the following JavaScript for tag functionality -->
+                <script>
+                    $(document).ready(function() {
+                        $('#province-select').on('change', function() {
+                            var selectedProvince = $(this).val();
+                            if (selectedProvince) {
+                                addProvinceTag(selectedProvince);
+                                $(this).val('');
+                            }
+                        });
+
+                        function addProvinceTag(province) {
+                            var container = $('#selected-provinces-container');
+                            var existingProvinces = $('#selected-provinces').val().split(',').filter(Boolean);
+
+                            if (!existingProvinces.includes(province)) {
+                                existingProvinces.push(province);
+                                var tag = $('<span class="badge badge-secondary">' + province + ' <span class="remove-tag">&times;</span></span>');
+                                tag.find('.remove-tag').on('click', function() {
+                                    removeProvinceTag(province, tag);
+                                });
+                                container.append(tag);
+                                $('#selected-provinces').val(existingProvinces.join(','));
+                            }
+                        }
+
+                        function removeProvinceTag(province, tag) {
+                            var existingProvinces = $('#selected-provinces').val().split(',').filter(Boolean);
+                            existingProvinces = existingProvinces.filter(function(item) {
+                                return item !== province;
+                            });
+                            $('#selected-provinces').val(existingProvinces.join(','));
+                            tag.remove();
+                        }
+                    });
+                </script>
+
 
 
                 <!-- Clear Specific Promotion Form -->
@@ -336,7 +424,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             <div class="form-group">
                 <label for="selected_promotion">Select Promotion to Clear:</label>
                 <select class="form-select" name="selected_promotion" required>
-                    <?php foreach ($unique_promotions as $promotion_id): ?>
+                    <?php foreach ($unique_promotions as $promotion_id) : ?>
                         <option value="<?php echo $promotion_id; ?>"><?php echo $promotion_id; ?></option>
                     <?php endforeach; ?>
                 </select>
@@ -347,8 +435,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
 
                 <!-- Modal for Expired Promotions -->
-                <div class="modal fade" id="expiredPromotionsModal" tabindex="-1" role="dialog"
-                    aria-labelledby="expiredPromotionsModalLabel" aria-hidden="true">
+                <div class="modal fade" id="expiredPromotionsModal" tabindex="-1" role="dialog" aria-labelledby="expiredPromotionsModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -386,153 +473,298 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                 </div>
 
                 <!-- Clear All Selected Promotions Form -->
-                <form id="clearAllPromotionsForm" action="manage.php" method="post" class="mb-4">
+                <form id="clearAllPromotionsForm" action="manage.php" method="post" class="mb-4 p-3 border rounded shadow-sm" style="background-color: #f8f9fa;">
                     <input type="hidden" name="delete_all_promotions" value="1">
                     <div class="form-group">
                         <label for="selected_promotions">Select Promotions to Clear:</label>
-                        <?php foreach ($unique_promotions as $promotion_id): ?>
+                        <?php foreach ($unique_promotions as $promotion_id) : ?>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="selected_promotions[]"
-                                    value="<?php echo $promotion_id; ?>" id="promo_<?php echo $promotion_id; ?>">
+                                <input class="form-check-input" type="checkbox" name="selected_promotions[]" value="<?php echo $promotion_id; ?>" id="promo_<?php echo $promotion_id; ?>">
                                 <label class="form-check-label" for="promo_<?php echo $promotion_id; ?>">
                                     <?php echo $promotion_id; ?>
                                 </label>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <button type="button" class="btn btn-danger"
-                        onclick="confirmAction('Are you sure you want to clear the selected promotions?', 'clearAllPromotionsForm')">Clear
-                        Selected Promotions</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmAction('Are you sure you want to clear the selected promotions?', 'clearAllPromotionsForm')">Clear Selected Promotions</button>
                 </form>
+
+                <!-- Add the following CSS for animation and additional styling -->
+                <style>
+                    #clearAllPromotionsForm .form-check-input,
+                    #clearAllPromotionsForm .btn {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+
+                    #clearAllPromotionsForm .form-check-input,
+                    #clearAllPromotionsForm .btn {
+                        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                    }
+
+                    #clearAllPromotionsForm .form-check-input:focus,
+                    #clearAllPromotionsForm .btn:focus {
+                        transform: translateY(-5px);
+                        opacity: 0.9;
+                    }
+
+                    #clearAllPromotionsForm {
+                        background-color: #fff;
+                        padding: 20px;
+                        border-radius: 5px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    }
+
+                    #clearAllPromotionsForm .btn {
+                        transition: all 0.3s ease-in-out;
+                    }
+
+                    #clearAllPromotionsForm .btn:hover {
+                        background-color: #c82333;
+                        color: #fff;
+                    }
+                </style>
+
 
                 <!-- Search Form -->
-                <form class="form-inline mb-4" id="searchForm">
-                    <input class="form-control mr-2" type="text" id="search" name="search"
-                        placeholder="Search by Station Title or Promotion ID"
-                        value="<?php echo htmlspecialchars($search_query); ?>">
+                <!-- Search Form -->
+                <form class="form-inline mb-4 p-3 border rounded shadow-sm" id="searchForm" method="get" action="manage.php" style="background-color: #f8f9fa;">
+                    <div class="form-group mr-2">
+                        <input class="form-control" type="text" id="search" name="search" placeholder="Search by Station Title or Promotion ID" value="<?php echo htmlspecialchars($search_query); ?>" style="transition: all 0.3s ease-in-out;">
+                    </div>
+                    <div class="form-group mr-2">
+                        <select class="custom-select" id="province-filter" name="province" style="transition: all 0.3s ease-in-out;">
+                            <option value="">All Provinces</option>
+                            <?php
+                            $provinces = array_unique(array_column($markers['STATION'], 'province'));
+                            foreach ($provinces as $province) {
+                                echo "<option value=\"$province\"" . ($province === $selected_province ? " selected" : "") . ">$province</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2" style="transition: all 0.3s ease-in-out;">Filter</button>
+                    <button type="button" id="clearFilter" class="btn btn-secondary" style="transition: all 0.3s ease-in-out;">Clear</button>
                 </form>
-                <div id="results" style="display: none;">
-                    <?php foreach ($current_page_promotions as $promotion): ?>
-                        <div class="card mb-3">
-                            <div class="card-header">
-                                <strong><?php echo $promotion['title']; ?> (Station ID:
-                                    <?php echo $promotion['station_id']; ?>)</strong>
-                                <br>
-                                <small><?php echo $promotion['address']; ?></small>
-                            </div>
-                            <div class="card-body">
-                                <?php if (!empty($promotion['promotions'])): ?>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Promotion ID</th>
-                                                <th>End Time</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($promotion['promotions'] as $promo): ?>
-                                                <tr data-promo-id="<?php echo $promo['promotion_id']; ?>"
-                                                    data-end-time="<?php echo $promo['end_time']; ?>">
-                                                    <form action="manage.php" method="post" class="form-inline">
-                                                        <input type="hidden" name="station_id"
-                                                            value="<?php echo $promotion['station_id']; ?>">
-                                                        <input type="hidden" name="promotion_id"
-                                                            value="<?php echo $promo['promotion_id']; ?>">
-                                                        <input type="hidden" name="action" value="edit">
-                                                        <td>
-                                                            <select class="form-select" name="new_promotion_id" required>
-                                                                <?php foreach ($promotion_ids as $promo_option): ?>
-                                                                    <option value="<?php echo $promo_option['promotion_id']; ?>" <?php echo ($promo_option['promotion_id'] == $promo['promotion_id']) ? 'selected' : ''; ?>>
-                                                                        <?php echo $promo_option['promotion_id']; ?>
-                                                                    </option>
-                                                                <?php endforeach; ?>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <input type="datetime-local" class="form-control" name="end_time"
-                                                                value="<?php echo date('Y-m-d\TH:i', strtotime($promo['end_time'])); ?>"
-                                                                required>
-                                                        </td>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-primary">Update</button>
-                                                            <button type="button" class="btn btn-danger ml-2"
-                                                                onclick="deletePromotion('<?php echo $promotion['station_id']; ?>', '<?php echo $promo['promotion_id']; ?>')">Delete</button>
-                                                        </td>
-                                                    </form>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                <?php else: ?>
-                                    <p>No promotions available.</p>
-                                <?php endif; ?>
-                                <form action="manage.php" method="post" class="mt-4">
-                                    <input type="hidden" name="station_id" value="<?php echo $promotion['station_id']; ?>">
-                                    <input type="hidden" name="action" value="add">
-                                    <div class="form-group">
-                                        <label for="promotion_id">Promotion ID:</label>
-                                        <select class="form-select" name="promotion_id" required>
-                                            <?php foreach ($promotion_ids as $promo): ?>
-                                                <option value="<?php echo $promo['promotion_id']; ?>">
-                                                    <?php echo $promo['promotion_id']; ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="end_time">End Time:</label>
-                                        <input type="datetime-local" class="form-control" name="end_time" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-success">Add Promotion</button>
-                                </form>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
 
-                    <!-- Pagination Controls -->
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item <?php if ($page <= 1)
-                                echo 'disabled'; ?>">
-                                <a class="page-link"
-                                    href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search_query); ?>"
-                                    aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                <li class="page-item <?php if ($page == $i)
-                                    echo 'active'; ?>"><a class="page-link"
-                                        href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search_query); ?>"><?php echo $i; ?></a>
+                <!-- Add the following CSS for animation and additional styling -->
+                <style>
+                    #searchForm .form-control,
+                    #searchForm .custom-select,
+                    #searchForm .btn {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+
+                    #searchForm .form-control,
+                    #searchForm .custom-select,
+                    #searchForm .btn {
+                        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                    }
+
+                    #searchForm .form-control:focus,
+                    #searchForm .custom-select:focus,
+                    #searchForm .btn:focus {
+                        transform: translateY(-5px);
+                        opacity: 0.9;
+                    }
+
+                    #searchForm {
+                        background-color: #fff;
+                        padding: 20px;
+                        border-radius: 5px;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    }
+
+                    #clearFilter {
+                        transition: all 0.3s ease-in-out;
+                    }
+
+                    #clearFilter:hover {
+                        background-color: #6c757d;
+                        color: #fff;
+                    }
+                </style>
+
+                <!-- Add the following JavaScript to handle the clear button functionality -->
+                <script>
+                    $(document).ready(function() {
+                        $('#clearFilter').click(function() {
+                            $('#search').val('');
+                            $('#province-filter').val('');
+                            $('#results').hide();
+                            window.location.href = 'manage.php';
+                        });
+
+                        $('#searchForm').submit(function(event) {
+                            var searchQuery = $('#search').val();
+                            var selectedProvince = $('#province-filter').val();
+                            var url = 'manage.php?search=' + encodeURIComponent(searchQuery) + '&province=' + encodeURIComponent(selectedProvince);
+                            window.location.href = url;
+                            event.preventDefault();
+                        });
+                    });
+                </script>
+
+
+
+
+                <div id="results" style="display: <?php echo (!empty($selected_province) || !empty($search_query)) ? 'block' : 'none'; ?>;">
+                    <?php if (!empty($filtered_promotions)) : ?>
+                        <?php foreach ($current_page_promotions as $promotion) : ?>
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <strong><?php echo $promotion['title']; ?> (Station ID:
+                                        <?php echo $promotion['station_id']; ?>)</strong>
+                                    <br>
+                                    <small><?php echo $promotion['address']; ?></small>
+                                </div>
+                                <div class="card-body">
+                                    <?php if (!empty($promotion['promotions'])) : ?>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Promotion ID</th>
+                                                    <th>End Time</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($promotion['promotions'] as $promo) : ?>
+                                                    <tr data-promo-id="<?php echo $promo['promotion_id']; ?>" data-end-time="<?php echo $promo['end_time']; ?>">
+                                                        <form action="manage.php" method="post" class="form-inline">
+                                                            <input type="hidden" name="station_id" value="<?php echo $promotion['station_id']; ?>">
+                                                            <input type="hidden" name="promotion_id" value="<?php echo $promo['promotion_id']; ?>">
+                                                            <input type="hidden" name="action" value="edit">
+                                                            <td>
+                                                                <select class="form-select" name="new_promotion_id" required>
+                                                                    <?php foreach ($promotion_ids as $promo_option) : ?>
+                                                                        <option value="<?php echo $promo_option['promotion_id']; ?>" <?php echo ($promo_option['promotion_id'] == $promo['promotion_id']) ? 'selected' : ''; ?>>
+                                                                            <?php echo $promo_option['promotion_id']; ?>
+                                                                        </option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input type="datetime-local" class="form-control" name="end_time" value="<?php echo date('Y-m-d\TH:i', strtotime($promo['end_time'])); ?>" required>
+                                                            </td>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-primary">Update</button>
+                                                                <button type="button" class="btn btn-danger ml-2" onclick="deletePromotion('<?php echo $promotion['station_id']; ?>', '<?php echo $promo['promotion_id']; ?>')">Delete</button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    <?php else : ?>
+                                        <p>No promotions available.</p>
+                                    <?php endif; ?>
+                                    <form action="manage.php" method="post" class="mt-4">
+                                        <input type="hidden" name="station_id" value="<?php echo $promotion['station_id']; ?>">
+                                        <input type="hidden" name="action" value="add">
+                                        <div class="form-group">
+                                            <label for="promotion_id">Promotion ID:</label>
+                                            <select class="form-select" name="promotion_id" required>
+                                                <?php foreach ($promotion_ids as $promo) : ?>
+                                                    <option value="<?php echo $promo['promotion_id']; ?>">
+                                                        <?php echo $promo['promotion_id']; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="end_time">End Time:</label>
+                                            <input type="datetime-local" class="form-control" name="end_time" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Add Promotion</button>
+                                    </form>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        <!-- Pagination Controls -->
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item <?php if ($page <= 1)
+                                                            echo 'disabled'; ?>">
+                                    <a class="page-link" href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search_query); ?>&province=<?php echo urlencode($selected_province); ?>" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
                                 </li>
-                            <?php endfor; ?>
-                            <li class="page-item <?php if ($page >= $total_pages)
-                                echo 'disabled'; ?>">
-                                <a class="page-link"
-                                    href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search_query); ?>"
-                                    aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                                <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                                    <li class="page-item <?php if ($page == $i)
+                                                                echo 'active'; ?>"><a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search_query); ?>&province=<?php echo urlencode($selected_province); ?>"><?php echo $i; ?></a>
+                                    </li>
+                                <?php endfor; ?>
+                                <li class="page-item <?php if ($page >= $total_pages)
+                                                            echo 'disabled'; ?>">
+                                    <a class="page-link" href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search_query); ?>&province=<?php echo urlencode($selected_province); ?>" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    <?php else : ?>
+                        <p>No promotions found for the selected criteria.</p>
+                    <?php endif; ?>
                 </div>
+
+
             </div>
         </div>
     </div>
+
     <script>
+        $(document).ready(function() {
+            $('#searchForm').submit(function(event) {
+                var searchQuery = $('#search').val();
+                var selectedProvince = $('#province-filter').val();
+                var url = 'manage.php?search=' + encodeURIComponent(searchQuery) + '&province=' + encodeURIComponent(selectedProvince);
+                window.location.href = url;
+                event.preventDefault();
+            });
+
+            $('#province-filter, #search').on('change', function() {
+                var selectedProvince = $('#province-filter').val();
+                var searchQuery = $('#search').val();
+
+                if (selectedProvince || searchQuery) {
+                    $('#results').show();
+                } else {
+                    $('#results').hide();
+                }
+            });
+
+            $('#clearFilter').click(function() {
+                $('#search').val('');
+                $('#province-filter').val('');
+                $('#results').hide();
+                window.location.href = 'manage.php';
+            });
+        });
+
+
         function confirmAction(message, formId) {
             if (confirm(message)) {
                 document.getElementById(formId).submit();
             }
         }
 
-        $("#menu-toggle").click(function (e) {
+        $("#menu-toggle").click(function(e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
+        });
+        $(document).ready(function() {
+            $('#searchForm').submit(function(event) {
+                var searchQuery = $('#search').val();
+                var selectedProvince = $('#province-filter').val();
+                var url = 'manage.php?search=' + encodeURIComponent(searchQuery) + '&province=' + encodeURIComponent(selectedProvince);
+                window.location.href = url;
+                event.preventDefault();
+            });
         });
 
         const rowsPerPage = 10;
@@ -575,8 +807,8 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             displayExpiredPromotions(expiredPromotions, currentPage);
             displayPagination(expiredPromotions.length, currentPage);
         }
-        $(document).ready(function () {
-            $('#province-select').on('change', function () {
+        $(document).ready(function() {
+            $('#province-select').on('change', function() {
                 var selectedProvince = $(this).val();
                 if (selectedProvince) {
                     addProvinceTag(selectedProvince);
@@ -591,7 +823,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                 if (!existingProvinces.includes(province)) {
                     existingProvinces.push(province);
                     var tag = $('<span class="badge badge-secondary mr-2">' + province + ' <span class="remove-tag" style="cursor:pointer;">&times;</span></span>');
-                    tag.find('.remove-tag').on('click', function () {
+                    tag.find('.remove-tag').on('click', function() {
                         removeProvinceTag(province, tag);
                     });
                     container.append(tag);
@@ -601,7 +833,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
             function removeProvinceTag(province, tag) {
                 var existingProvinces = $('#selected-provinces').val().split(',').filter(Boolean);
-                existingProvinces = existingProvinces.filter(function (item) {
+                existingProvinces = existingProvinces.filter(function(item) {
                     return item !== province;
                 });
                 $('#selected-provinces').val(existingProvinces.join(','));
@@ -609,13 +841,13 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             }
         });
 
-        $(document).ready(function () {
-            $('#search').on('input', function () {
+        $(document).ready(function() {
+            $('#search').on('input', function() {
                 var searchQuery = $(this).val();
                 if (searchQuery.length > 0) {
                     $.get('manage.php', {
                         search: searchQuery
-                    }, function (data) {
+                    }, function(data) {
                         $('#results').html($(data).find('#results').html());
                         $('#results').show();
                     });
@@ -626,7 +858,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
             function checkExpiredPromotions() {
                 var now = new Date().toISOString();
-                $('tr[data-end-time]').each(function () {
+                $('tr[data-end-time]').each(function() {
                     var endTime = $(this).data('end-time');
                     if (now >= endTime) {
                         $(this).remove();
@@ -636,12 +868,12 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
             setInterval(checkExpiredPromotions, 60000);
 
-            $('#checkExpiredPromotionsBtn').click(function () {
+            $('#checkExpiredPromotionsBtn').click(function() {
                 var expiredPromotions = [];
                 var currentTime = new Date().toISOString();
 
-                <?php foreach ($combined_data as $promotion): ?>
-                    <?php foreach ($promotion['promotions'] as $promo): ?>
+                <?php foreach ($combined_data as $promotion) : ?>
+                    <?php foreach ($promotion['promotions'] as $promo) : ?>
                         if (new Date('<?php echo $promo['end_time']; ?>').toISOString() < currentTime) {
                             expiredPromotions.push({
                                 station_id: '<?php echo $promotion['station_id']; ?>',
@@ -659,10 +891,10 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                 $('#expiredPromotionsModal').modal('show');
             });
 
-            $('#clearExpiredPromotionsBtn').click(function () {
+            $('#clearExpiredPromotionsBtn').click(function() {
                 $.post('manage.php', {
                     clear_all_expired: 1
-                }, function (response) {
+                }, function(response) {
                     location.reload();
                 });
             });
