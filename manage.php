@@ -3,6 +3,8 @@ date_default_timezone_set('Asia/Phnom_Penh');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $promotions = json_decode(file_get_contents('./data/promotions.json'), true);
+    $markers = json_decode(file_get_contents('./data/markers.json'), true);
+    $messages = [];
 
     if (isset($_POST['delete_all_promotions'])) {
         $selected_promotions = $_POST['selected_promotions'] ?? [];
@@ -48,15 +50,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'];
 
     $end_time = (new DateTime($end_time, new DateTimeZone('Asia/Phnom_Penh')))->format('Y-m-d\TH:i:s\Z');
-
     if ($action === 'add_to_all') {
+        $selected_provinces = !empty($_POST['provinces']) ? explode(',', $_POST['provinces']) : [];
+        
         foreach ($promotions['PROMOTIONS'] as &$station) {
-            $station['promotions'][] = [
-                'promotion_id' => $promotion_id,
-                'end_time' => $end_time
-            ];
+            $station_id = $station['station_id'];
+            foreach ($markers['STATION'] as $marker) {
+                if ($marker['id'] == $station_id && (empty($selected_provinces) || in_array($marker['province'], $selected_provinces))) {
+                    $already_exists = false;
+                    foreach ($station['promotions'] as $promo) {
+                        if ($promo['promotion_id'] == $promotion_id) {
+                            $already_exists = true;
+                            break;
+                        }
+                    }
+                    if (!$already_exists) {
+                        $station['promotions'][] = [
+                            'promotion_id' => $promotion_id,
+                            'end_time' => $end_time
+                        ];
+                    } else if (!empty($selected_provinces)) {
+                        echo "<script>alert('Promotion $promotion_id already exists in province: {$marker['province']}');</script>";
+                    }
+                }
+            }
         }
-    } else {
+    }
+     else {
         foreach ($promotions['PROMOTIONS'] as &$station) {
             if ($station['station_id'] == $station_id) {
                 if ($action == 'add') {
@@ -84,8 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     file_put_contents('./data/promotions.json', json_encode($promotions, JSON_PRETTY_PRINT));
-    header('Location: manage.php');
-    exit();
+
+    if (empty($messages)) {
+        header('Location: manage.php');
+        exit();
+    }
 }
 
 $promotions = json_decode(file_get_contents('./data/promotions.json'), true);
@@ -218,6 +241,28 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
         background-color: #dc3545;
         border-color: #dc3545;
     }
+    .badge {
+    display: inline-block;
+    padding: 0.5em 0.75em;
+    margin: 0.25em 0;
+    font-size: 0.75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+
+.badge-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.remove-tag {
+    margin-left: 0.5em;
+}
+
 </style>
 
 <body>
@@ -241,6 +286,11 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             </nav>
             <div class="container-fluid">
                 <h1 class="mt-4">Promotions Dashboard</h1>
+                <?php if (!empty($messages)): ?>
+                    <div class="alert alert-warning" role="alert">
+                        <?php echo implode('<br>', $messages); ?>
+                    </div>
+                <?php endif; ?>
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
                 <!-- Form for Adding Promotion to All Stations -->
                 <form action="manage.php" method="post" class="mb-4">
@@ -248,8 +298,9 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <div class="form-group">
                         <label for="promotion_id">Promotion ID:</label>
                         <select class="form-select" name="promotion_id" required>
-                            <?php foreach ($promotion_ids as $promo) : ?>
-                                <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?></option>
+                            <?php foreach ($promotion_ids as $promo): ?>
+                                <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -257,8 +308,27 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                         <label for="end_time">End Time:</label>
                         <input type="datetime-local" class="form-control" name="end_time" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Promotion to All Stations</button>
+                    <div class="form-group">
+                        <label for="province">Provinces:</label>
+                        <select id="province-select" class="form-select">
+                            <?php
+                            $provinces = array_unique(array_column($markers['STATION'], 'province'));
+                            foreach ($provinces as $province) {
+                                echo "<option value=\"$province\">$province</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Selected Provinces:</label>
+                        <div id="selected-provinces-container" class="border p-2">
+                            <!-- Selected provinces will be displayed here as tags -->
+                        </div>
+                    </div>
+                    <input type="hidden" name="provinces" id="selected-provinces" value="">
+                    <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
                 </form>
+
 
                 <!-- Clear Specific Promotion Form -->
                 <!-- <form id="clearPromotionForm" action="manage.php" method="post" class="mb-4">
@@ -266,7 +336,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             <div class="form-group">
                 <label for="selected_promotion">Select Promotion to Clear:</label>
                 <select class="form-select" name="selected_promotion" required>
-                    <?php foreach ($unique_promotions as $promotion_id) : ?>
+                    <?php foreach ($unique_promotions as $promotion_id): ?>
                         <option value="<?php echo $promotion_id; ?>"><?php echo $promotion_id; ?></option>
                     <?php endforeach; ?>
                 </select>
@@ -277,7 +347,8 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
 
                 <!-- Modal for Expired Promotions -->
-                <div class="modal fade" id="expiredPromotionsModal" tabindex="-1" role="dialog" aria-labelledby="expiredPromotionsModalLabel" aria-hidden="true">
+                <div class="modal fade" id="expiredPromotionsModal" tabindex="-1" role="dialog"
+                    aria-labelledby="expiredPromotionsModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -306,7 +377,8 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                                 </nav>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" id="clearExpiredPromotionsBtn">Clear All Expired Promotions</button>
+                                <button type="button" class="btn btn-danger" id="clearExpiredPromotionsBtn">Clear All
+                                    Expired Promotions</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -318,24 +390,29 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <input type="hidden" name="delete_all_promotions" value="1">
                     <div class="form-group">
                         <label for="selected_promotions">Select Promotions to Clear:</label>
-                        <?php foreach ($unique_promotions as $promotion_id) : ?>
+                        <?php foreach ($unique_promotions as $promotion_id): ?>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="selected_promotions[]" value="<?php echo $promotion_id; ?>" id="promo_<?php echo $promotion_id; ?>">
+                                <input class="form-check-input" type="checkbox" name="selected_promotions[]"
+                                    value="<?php echo $promotion_id; ?>" id="promo_<?php echo $promotion_id; ?>">
                                 <label class="form-check-label" for="promo_<?php echo $promotion_id; ?>">
                                     <?php echo $promotion_id; ?>
                                 </label>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <button type="button" class="btn btn-danger" onclick="confirmAction('Are you sure you want to clear the selected promotions?', 'clearAllPromotionsForm')">Clear Selected Promotions</button>
+                    <button type="button" class="btn btn-danger"
+                        onclick="confirmAction('Are you sure you want to clear the selected promotions?', 'clearAllPromotionsForm')">Clear
+                        Selected Promotions</button>
                 </form>
 
                 <!-- Search Form -->
                 <form class="form-inline mb-4" id="searchForm">
-                    <input class="form-control mr-2" type="text" id="search" name="search" placeholder="Search by Station Title or Promotion ID" value="<?php echo htmlspecialchars($search_query); ?>">
+                    <input class="form-control mr-2" type="text" id="search" name="search"
+                        placeholder="Search by Station Title or Promotion ID"
+                        value="<?php echo htmlspecialchars($search_query); ?>">
                 </form>
                 <div id="results" style="display: none;">
-                    <?php foreach ($current_page_promotions as $promotion) : ?>
+                    <?php foreach ($current_page_promotions as $promotion): ?>
                         <div class="card mb-3">
                             <div class="card-header">
                                 <strong><?php echo $promotion['title']; ?> (Station ID:
@@ -344,7 +421,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                                 <small><?php echo $promotion['address']; ?></small>
                             </div>
                             <div class="card-body">
-                                <?php if (!empty($promotion['promotions'])) : ?>
+                                <?php if (!empty($promotion['promotions'])): ?>
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
@@ -354,15 +431,18 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($promotion['promotions'] as $promo) : ?>
-                                                <tr data-promo-id="<?php echo $promo['promotion_id']; ?>" data-end-time="<?php echo $promo['end_time']; ?>">
+                                            <?php foreach ($promotion['promotions'] as $promo): ?>
+                                                <tr data-promo-id="<?php echo $promo['promotion_id']; ?>"
+                                                    data-end-time="<?php echo $promo['end_time']; ?>">
                                                     <form action="manage.php" method="post" class="form-inline">
-                                                        <input type="hidden" name="station_id" value="<?php echo $promotion['station_id']; ?>">
-                                                        <input type="hidden" name="promotion_id" value="<?php echo $promo['promotion_id']; ?>">
+                                                        <input type="hidden" name="station_id"
+                                                            value="<?php echo $promotion['station_id']; ?>">
+                                                        <input type="hidden" name="promotion_id"
+                                                            value="<?php echo $promo['promotion_id']; ?>">
                                                         <input type="hidden" name="action" value="edit">
                                                         <td>
                                                             <select class="form-select" name="new_promotion_id" required>
-                                                                <?php foreach ($promotion_ids as $promo_option) : ?>
+                                                                <?php foreach ($promotion_ids as $promo_option): ?>
                                                                     <option value="<?php echo $promo_option['promotion_id']; ?>" <?php echo ($promo_option['promotion_id'] == $promo['promotion_id']) ? 'selected' : ''; ?>>
                                                                         <?php echo $promo_option['promotion_id']; ?>
                                                                     </option>
@@ -370,18 +450,21 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <input type="datetime-local" class="form-control" name="end_time" value="<?php echo date('Y-m-d\TH:i', strtotime($promo['end_time'])); ?>" required>
+                                                            <input type="datetime-local" class="form-control" name="end_time"
+                                                                value="<?php echo date('Y-m-d\TH:i', strtotime($promo['end_time'])); ?>"
+                                                                required>
                                                         </td>
                                                         <td>
                                                             <button type="submit" class="btn btn-primary">Update</button>
-                                                            <button type="button" class="btn btn-danger ml-2" onclick="deletePromotion('<?php echo $promotion['station_id']; ?>', '<?php echo $promo['promotion_id']; ?>')">Delete</button>
+                                                            <button type="button" class="btn btn-danger ml-2"
+                                                                onclick="deletePromotion('<?php echo $promotion['station_id']; ?>', '<?php echo $promo['promotion_id']; ?>')">Delete</button>
                                                         </td>
                                                     </form>
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
-                                <?php else : ?>
+                                <?php else: ?>
                                     <p>No promotions available.</p>
                                 <?php endif; ?>
                                 <form action="manage.php" method="post" class="mt-4">
@@ -390,7 +473,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                                     <div class="form-group">
                                         <label for="promotion_id">Promotion ID:</label>
                                         <select class="form-select" name="promotion_id" required>
-                                            <?php foreach ($promotion_ids as $promo) : ?>
+                                            <?php foreach ($promotion_ids as $promo): ?>
                                                 <option value="<?php echo $promo['promotion_id']; ?>">
                                                     <?php echo $promo['promotion_id']; ?>
                                                 </option>
@@ -411,20 +494,25 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item <?php if ($page <= 1)
-                                                        echo 'disabled'; ?>">
-                                <a class="page-link" href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search_query); ?>" aria-label="Previous">
+                                echo 'disabled'; ?>">
+                                <a class="page-link"
+                                    href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search_query); ?>"
+                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
-                            <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                                 <li class="page-item <?php if ($page == $i)
-                                                            echo 'active'; ?>"><a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search_query); ?>"><?php echo $i; ?></a>
+                                    echo 'active'; ?>"><a class="page-link"
+                                        href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search_query); ?>"><?php echo $i; ?></a>
                                 </li>
                             <?php endfor; ?>
                             <li class="page-item <?php if ($page >= $total_pages)
-                                                        echo 'disabled'; ?>">
-                                <a class="page-link" href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search_query); ?>" aria-label="Next">
+                                echo 'disabled'; ?>">
+                                <a class="page-link"
+                                    href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search_query); ?>"
+                                    aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>
@@ -442,7 +530,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             }
         }
 
-        $("#menu-toggle").click(function(e) {
+        $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
@@ -461,10 +549,10 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             pagePromotions.forEach(promo => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-            <td>${promo.station_id}</td>
-            <td>${promo.promotion_id}</td>
-            <td>${new Date(promo.end_time).toLocaleString()}</td>
-        `;
+                    <td>${promo.station_id}</td>
+                    <td>${promo.promotion_id}</td>
+                    <td>${new Date(promo.end_time).toLocaleString()}</td>
+                `;
                 tableBody.appendChild(row);
             });
         }
@@ -487,14 +575,47 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             displayExpiredPromotions(expiredPromotions, currentPage);
             displayPagination(expiredPromotions.length, currentPage);
         }
+        $(document).ready(function () {
+            $('#province-select').on('change', function () {
+                var selectedProvince = $(this).val();
+                if (selectedProvince) {
+                    addProvinceTag(selectedProvince);
+                    $(this).val('');
+                }
+            });
 
-        $(document).ready(function() {
-            $('#search').on('input', function() {
+            function addProvinceTag(province) {
+                var container = $('#selected-provinces-container');
+                var existingProvinces = $('#selected-provinces').val().split(',').filter(Boolean);
+
+                if (!existingProvinces.includes(province)) {
+                    existingProvinces.push(province);
+                    var tag = $('<span class="badge badge-secondary mr-2">' + province + ' <span class="remove-tag" style="cursor:pointer;">&times;</span></span>');
+                    tag.find('.remove-tag').on('click', function () {
+                        removeProvinceTag(province, tag);
+                    });
+                    container.append(tag);
+                    $('#selected-provinces').val(existingProvinces.join(','));
+                }
+            }
+
+            function removeProvinceTag(province, tag) {
+                var existingProvinces = $('#selected-provinces').val().split(',').filter(Boolean);
+                existingProvinces = existingProvinces.filter(function (item) {
+                    return item !== province;
+                });
+                $('#selected-provinces').val(existingProvinces.join(','));
+                tag.remove();
+            }
+        });
+
+        $(document).ready(function () {
+            $('#search').on('input', function () {
                 var searchQuery = $(this).val();
                 if (searchQuery.length > 0) {
                     $.get('manage.php', {
                         search: searchQuery
-                    }, function(data) {
+                    }, function (data) {
                         $('#results').html($(data).find('#results').html());
                         $('#results').show();
                     });
@@ -505,7 +626,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
             function checkExpiredPromotions() {
                 var now = new Date().toISOString();
-                $('tr[data-end-time]').each(function() {
+                $('tr[data-end-time]').each(function () {
                     var endTime = $(this).data('end-time');
                     if (now >= endTime) {
                         $(this).remove();
@@ -515,12 +636,12 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
             setInterval(checkExpiredPromotions, 60000);
 
-            $('#checkExpiredPromotionsBtn').click(function() {
+            $('#checkExpiredPromotionsBtn').click(function () {
                 var expiredPromotions = [];
                 var currentTime = new Date().toISOString();
 
-                <?php foreach ($combined_data as $promotion) : ?>
-                    <?php foreach ($promotion['promotions'] as $promo) : ?>
+                <?php foreach ($combined_data as $promotion): ?>
+                    <?php foreach ($promotion['promotions'] as $promo): ?>
                         if (new Date('<?php echo $promo['end_time']; ?>').toISOString() < currentTime) {
                             expiredPromotions.push({
                                 station_id: '<?php echo $promotion['station_id']; ?>',
@@ -538,10 +659,10 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                 $('#expiredPromotionsModal').modal('show');
             });
 
-            $('#clearExpiredPromotionsBtn').click(function() {
+            $('#clearExpiredPromotionsBtn').click(function () {
                 $.post('manage.php', {
                     clear_all_expired: 1
-                }, function(response) {
+                }, function (response) {
                     location.reload();
                 });
             });
