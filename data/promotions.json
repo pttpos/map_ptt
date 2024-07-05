@@ -1595,8 +1595,8 @@
                 },
                 {
                     "promotion_id": "promotion 2",
-                    "end_time": "2024-07-05T12:12:00Z",
-                    "description": "testy"
+                    "end_time": "2024-07-11T02:12:00Z",
+                    "description": null
                 }
             ]
         },
