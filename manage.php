@@ -102,6 +102,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // Handle image upload
+    if (isset($_FILES['promotion_image']) && $_FILES['promotion_image']['error'] == UPLOAD_ERR_OK) {
+        $upload_dir = './pictures/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0755, true);
+        }
+
+        $uploaded_file = $_FILES['promotion_image']['tmp_name'];
+        $uploaded_file_type = mime_content_type($uploaded_file);
+
+        $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+        if (in_array($uploaded_file_type, $allowed_types)) {
+            $new_file_name = $promotion_id . '.' . pathinfo($_FILES['promotion_image']['name'], PATHINFO_EXTENSION);
+            $destination = $upload_dir . $new_file_name;
+
+            if (move_uploaded_file($uploaded_file, $destination)) {
+                echo "<script>alert('Promotion image uploaded successfully.');</script>";
+            } else {
+                echo "<script>alert('Failed to upload promotion image.');</script>";
+            }
+        } else {
+            echo "<script>alert('Invalid file type. Only JPG, PNG, and GIF files are allowed.');</script>";
+        }
+    }
+
     file_put_contents('./data/promotions.json', json_encode($promotions, JSON_PRETTY_PRINT));
 
     if (empty($messages)) {
@@ -421,7 +446,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
 
-                <form action="manage.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
+                <form action="manage.php" method="post" enctype="multipart/form-data" class="mb-4 p-3 border rounded shadow-sm bg-light">
                     <input type="hidden" name="action" value="add_to_all">
                     <div class="form-group">
                         <label for="promotion_id">Promotion ID:</label>
@@ -435,6 +460,10 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <div class="form-group">
                         <label for="end_time">End Time:</label>
                         <input type="datetime-local" class="form-control" name="end_time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="promotion_image">Promotion Image:</label>
+                        <input type="file" class="form-control-file" name="promotion_image" id="promotion_image" accept="image/*">
                     </div>
                     <div class="form-group">
                         <label for="province">Provinces:</label>
