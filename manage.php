@@ -222,90 +222,205 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Manage Promotions</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+
+        #wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        #sidebar-wrapper {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            transition: width 0.3s ease;
+        }
+
+        #sidebar-wrapper.toggled {
+            width: 60px;
+        }
+
+        .sidebar-heading {
+            padding: 20px;
+            font-size: 1.25em;
+            font-weight: bold;
+            background: #007bff;
+            text-align: center;
+        }
+
+        .sidebar-heading img {
+            margin-right: 10px;
+        }
+
+        .list-group-item {
+            border: none;
+            color: white;
+            background-color: #343a40;
+            transition: background-color 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #495057;
+        }
+
+        .list-group-item-action {
+            color: white;
+        }
+
+        #page-content-wrapper {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            transition: margin-left 0.3s ease;
+        }
+
+        #page-content-wrapper.toggled {
+            margin-left: -190px;
+        }
+
+        .navbar {
+            padding: 10px 15px;
+            background-color: whitesmoke;
+            color: white;
+            box-shadow: 0 10px 16px -4px rgba(0, 0, 0, 0.6);
+        }
+
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+
+        .content-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .content-section:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .content-section:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        .content-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .countdown-timer {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .promotion-id {
+            font-size: 1.2em;
+            color: white;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 40vh;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
-<style>
-    #sidebar-wrapper {
-        min-height: 100vh;
-        border-right: 1px solid #ddd;
-    }
-
-    .list-group-item {
-        cursor: pointer;
-    }
-
-    .page-item.active .page-link {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-
-    .page-item.disabled .page-link {
-        color: #6c757d;
-    }
-
-    .form-check-input:checked {
-        background-color: #dc3545;
-        border-color: #dc3545;
-    }
-
-    .badge {
-        display: inline-block;
-        padding: 0.5em 0.75em;
-        margin: 0.25em 0;
-        font-size: 0.75em;
-        font-weight: 700;
-        line-height: 1;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: baseline;
-        border-radius: 0.25rem;
-    }
-
-    .badge-secondary {
-        background-color: #6c757d;
-        color: #fff;
-    }
-
-    .remove-tag {
-        margin-left: 0.5em;
-    }
-</style>
 
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
-        <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">Dashboard </div>
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading">
+                <img src="path_to_your_logo.png" width="30" height="30" alt="Logo">
+            </div>
             <div class="list-group list-group-flush">
-                <a href="index.php" class="list-group-item list-group-item-action bg-light">Overview</a>
-                <a href="manage.php" class="list-group-item list-group-item-action bg-light">Manage</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Analytics</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Export</a>
+                <a href="index.php" class="list-group-item list-group-item-action">Overview</a>
+                <a href="manage.php" class="list-group-item list-group-item-action">Manage</a>
+                <a href="#" class="list-group-item list-group-item-action">Analytics</a>
+                <a href="#" class="list-group-item list-group-item-action">Export</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <!-- <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button> -->
+                <a class="navbar-brand ml-3" href="#">
+                    <img src="./pictures/logo_Station.png" width="200" height="auto" alt="Logo">
+                </a>
             </nav>
-            <div class="container-fluid">
-                <h1 class="mt-4">Promotions Dashboard</h1>
+            <div class="container-fluid mt-5">
+                <h1>Promotions Dashboard</h1>
+
                 <?php if (!empty($messages)) : ?>
                     <div class="alert alert-warning" role="alert">
                         <?php echo implode('<br>', $messages); ?>
                     </div>
                 <?php endif; ?>
+
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
-                <!-- Form for Adding Promotion to All Stations -->
-                <!-- Form for Adding Promotion to All Stations -->
+
                 <form action="manage.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
                     <input type="hidden" name="action" value="add_to_all">
                     <div class="form-group">
@@ -324,7 +439,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <div class="form-group">
                         <label for="province">Provinces:</label>
                         <select id="province-select" class="form-control">
-                        <option value="">Select a province</option>
+                            <option value="">Select a province</option>
                             <?php
                             $provinces = array_unique(array_column($markers['STATION'], 'province'));
                             foreach ($provinces as $province) {
@@ -343,135 +458,6 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
                 </form>
 
-                <!-- Add the following CSS for additional styling -->
-                <style>
-                    #province-select,
-                    .form-control {
-                        border-radius: 0.25rem;
-                        transition: all 0.3s ease-in-out;
-                    }
-
-                    #province-select:focus,
-                    .form-control:focus {
-                        border-color: #80bdff;
-                        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-                    }
-
-                    #selected-provinces-container {
-                        min-height: 38px;
-                    }
-
-                    .badge-secondary {
-                        background-color: #6c757d;
-                        color: #fff;
-                        cursor: pointer;
-                        margin-right: 5px;
-                        margin-bottom: 5px;
-                        display: inline-block;
-                    }
-
-                    .badge-secondary .remove-tag {
-                        margin-left: 0.5em;
-                    }
-
-                    .badge-secondary .remove-tag:hover {
-                        color: red;
-                    }
-                </style>
-
-                <!-- Add the following JavaScript for tag functionality -->
-                <script>
-                    $(document).ready(function() {
-                        $('#province-select').on('change', function() {
-                            var selectedProvince = $(this).val();
-                            if (selectedProvince) {
-                                addProvinceTag(selectedProvince);
-                                $(this).val('');
-                            }
-                        });
-
-                        function addProvinceTag(province) {
-                            var container = $('#selected-provinces-container');
-                            var existingProvinces = $('#selected-provinces').val().split(',').filter(Boolean);
-
-                            if (!existingProvinces.includes(province)) {
-                                existingProvinces.push(province);
-                                var tag = $('<span class="badge badge-secondary">' + province + ' <span class="remove-tag">&times;</span></span>');
-                                tag.find('.remove-tag').on('click', function() {
-                                    removeProvinceTag(province, tag);
-                                });
-                                container.append(tag);
-                                $('#selected-provinces').val(existingProvinces.join(','));
-                            }
-                        }
-
-                        function removeProvinceTag(province, tag) {
-                            var existingProvinces = $('#selected-provinces').val().split(',').filter(Boolean);
-                            existingProvinces = existingProvinces.filter(function(item) {
-                                return item !== province;
-                            });
-                            $('#selected-provinces').val(existingProvinces.join(','));
-                            tag.remove();
-                        }
-                    });
-                </script>
-
-
-
-                <!-- Clear Specific Promotion Form -->
-                <!-- <form id="clearPromotionForm" action="manage.php" method="post" class="mb-4">
-            <input type="hidden" name="clear_promotions" value="1">
-            <div class="form-group">
-                <label for="selected_promotion">Select Promotion to Clear:</label>
-                <select class="form-select" name="selected_promotion" required>
-                    <?php foreach ($unique_promotions as $promotion_id) : ?>
-                        <option value="<?php echo $promotion_id; ?>"><?php echo $promotion_id; ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <button type="button" class="btn btn-danger" onclick="confirmAction('Are you sure you want to clear the selected promotion?', 'clearPromotionForm')">Clear Selected Promotion</button>
-        </form> -->
-                <!-- Button to check for expired promotions -->
-
-
-                <!-- Modal for Expired Promotions -->
-                <div class="modal fade" id="expiredPromotionsModal" tabindex="-1" role="dialog" aria-labelledby="expiredPromotionsModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="expiredPromotionsModalLabel">Expired Promotions</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>Station ID</th>
-                                            <th>Promotion ID</th>
-                                            <th>End Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="expiredPromotionsTable">
-                                        <!-- Rows will be populated by JavaScript -->
-                                    </tbody>
-                                </table>
-                                <nav>
-                                    <ul class="pagination justify-content-center" id="pagination">
-                                        <!-- Pagination links will be populated by JavaScript -->
-                                    </ul>
-                                </nav>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" id="clearExpiredPromotionsBtn">Clear All
-                                    Expired Promotions</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Clear All Selected Promotions Form -->
                 <form id="clearAllPromotionsForm" action="manage.php" method="post" class="mb-4 p-3 border rounded shadow-sm" style="background-color: #f8f9fa;">
                     <input type="hidden" name="delete_all_promotions" value="1">
@@ -489,44 +475,6 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <button type="button" class="btn btn-danger" onclick="confirmAction('Are you sure you want to clear the selected promotions?', 'clearAllPromotionsForm')">Clear Selected Promotions</button>
                 </form>
 
-                <!-- Add the following CSS for animation and additional styling -->
-                <style>
-                    #clearAllPromotionsForm .form-check-input,
-                    #clearAllPromotionsForm .btn {
-                        transform: translateY(0);
-                        opacity: 1;
-                    }
-
-                    #clearAllPromotionsForm .form-check-input,
-                    #clearAllPromotionsForm .btn {
-                        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-                    }
-
-                    #clearAllPromotionsForm .form-check-input:focus,
-                    #clearAllPromotionsForm .btn:focus {
-                        transform: translateY(-5px);
-                        opacity: 0.9;
-                    }
-
-                    #clearAllPromotionsForm {
-                        background-color: #fff;
-                        padding: 20px;
-                        border-radius: 5px;
-                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                    }
-
-                    #clearAllPromotionsForm .btn {
-                        transition: all 0.3s ease-in-out;
-                    }
-
-                    #clearAllPromotionsForm .btn:hover {
-                        background-color: #c82333;
-                        color: #fff;
-                    }
-                </style>
-
-
-                <!-- Search Form -->
                 <!-- Search Form -->
                 <form class="form-inline mb-4 p-3 border rounded shadow-sm" id="searchForm" method="get" action="manage.php" style="background-color: #f8f9fa;">
                     <div class="form-group mr-2">
@@ -546,68 +494,6 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     <button type="submit" class="btn btn-primary mr-2" style="transition: all 0.3s ease-in-out;">Filter</button>
                     <button type="button" id="clearFilter" class="btn btn-secondary" style="transition: all 0.3s ease-in-out;">Clear</button>
                 </form>
-
-                <!-- Add the following CSS for animation and additional styling -->
-                <style>
-                    #searchForm .form-control,
-                    #searchForm .custom-select,
-                    #searchForm .btn {
-                        transform: translateY(0);
-                        opacity: 1;
-                    }
-
-                    #searchForm .form-control,
-                    #searchForm .custom-select,
-                    #searchForm .btn {
-                        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-                    }
-
-                    #searchForm .form-control:focus,
-                    #searchForm .custom-select:focus,
-                    #searchForm .btn:focus {
-                        transform: translateY(-5px);
-                        opacity: 0.9;
-                    }
-
-                    #searchForm {
-                        background-color: #fff;
-                        padding: 20px;
-                        border-radius: 5px;
-                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                    }
-
-                    #clearFilter {
-                        transition: all 0.3s ease-in-out;
-                    }
-
-                    #clearFilter:hover {
-                        background-color: #6c757d;
-                        color: #fff;
-                    }
-                </style>
-
-                <!-- Add the following JavaScript to handle the clear button functionality -->
-                <script>
-                    $(document).ready(function() {
-                        $('#clearFilter').click(function() {
-                            $('#search').val('');
-                            $('#province-filter').val('');
-                            $('#results').hide();
-                            window.location.href = 'manage.php';
-                        });
-
-                        $('#searchForm').submit(function(event) {
-                            var searchQuery = $('#search').val();
-                            var selectedProvince = $('#province-filter').val();
-                            var url = 'manage.php?search=' + encodeURIComponent(searchQuery) + '&province=' + encodeURIComponent(selectedProvince);
-                            window.location.href = url;
-                            event.preventDefault();
-                        });
-                    });
-                </script>
-
-
-
 
                 <div id="results" style="display: <?php echo (!empty($selected_province) || !empty($search_query)) ? 'block' : 'none'; ?>;">
                     <?php if (!empty($filtered_promotions)) : ?>
@@ -686,20 +572,16 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                         <!-- Pagination Controls -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
-                                <li class="page-item <?php if ($page <= 1)
-                                                            echo 'disabled'; ?>">
+                                <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
                                     <a class="page-link" href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search_query); ?>&province=<?php echo urlencode($selected_province); ?>" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                         <span class="sr-only">Previous</span>
                                     </a>
                                 </li>
                                 <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
-                                    <li class="page-item <?php if ($page == $i)
-                                                                echo 'active'; ?>"><a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search_query); ?>&province=<?php echo urlencode($selected_province); ?>"><?php echo $i; ?></a>
-                                    </li>
+                                    <li class="page-item <?php if ($page == $i) echo 'active'; ?>"><a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search_query); ?>&province=<?php echo urlencode($selected_province); ?>"><?php echo $i; ?></a></li>
                                 <?php endfor; ?>
-                                <li class="page-item <?php if ($page >= $total_pages)
-                                                            echo 'disabled'; ?>">
+                                <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
                                     <a class="page-link" href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search_query); ?>&province=<?php echo urlencode($selected_province); ?>" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                         <span class="sr-only">Next</span>
@@ -711,13 +593,17 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                         <p>No promotions found for the selected criteria.</p>
                     <?php endif; ?>
                 </div>
-
-
             </div>
         </div>
     </div>
 
     <script>
+        // document.getElementById("menu-toggle").addEventListener("click", function () {
+        //     document.getElementById("wrapper").classList.toggle("toggled");
+        //     document.getElementById("sidebar-wrapper").classList.toggle("toggled");
+        //     document.getElementById("page-content-wrapper").classList.toggle("toggled");
+        // });
+
         $(document).ready(function() {
             $('#searchForm').submit(function(event) {
                 var searchQuery = $('#search').val();
@@ -746,26 +632,11 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             });
         });
 
-
         function confirmAction(message, formId) {
             if (confirm(message)) {
                 document.getElementById(formId).submit();
             }
         }
-
-        $("#menu-toggle").click(function(e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-        $(document).ready(function() {
-            $('#searchForm').submit(function(event) {
-                var searchQuery = $('#search').val();
-                var selectedProvince = $('#province-filter').val();
-                var url = 'manage.php?search=' + encodeURIComponent(searchQuery) + '&province=' + encodeURIComponent(selectedProvince);
-                window.location.href = url;
-                event.preventDefault();
-            });
-        });
 
         const rowsPerPage = 10;
         let currentPage = 1;
@@ -807,6 +678,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             displayExpiredPromotions(expiredPromotions, currentPage);
             displayPagination(expiredPromotions.length, currentPage);
         }
+
         $(document).ready(function() {
             $('#province-select').on('change', function() {
                 var selectedProvince = $(this).val();
@@ -930,52 +802,43 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
         }
     </script>
 
-    <?php
-    $promotions = json_decode(file_get_contents('./data/promotions.json'), true);
-    $markers = json_decode(file_get_contents('./data/markers.json'), true);
-
-    $combined_data = [];
-    foreach ($promotions['PROMOTIONS'] as $promotion) {
-        foreach ($markers['STATION'] as $station) {
-            if ($station['id'] == $promotion['station_id']) {
-                $promotion['title'] = $station['title'];
-                $promotion['address'] = $station['address'];
-                $combined_data[] = $promotion;
-                break;
-            }
-        }
-    }
-
-    $station_titles = [];
-    $promotion_counts = [];
-    $monthly_promotions = [];
-    $promotion_distribution = [];
-
-    foreach ($combined_data as $promotion) {
-        $station_titles[] = $promotion['title'];
-        $promotion_counts[] = count($promotion['promotions']);
-
-        foreach ($promotion['promotions'] as $promo) {
-            $month = date('F', strtotime($promo['end_time']));
-            if (!isset($monthly_promotions[$month])) {
-                $monthly_promotions[$month] = 0;
-            }
-            $monthly_promotions[$month]++;
-
-            if (!isset($promotion_distribution[$promo['promotion_id']])) {
-                $promotion_distribution[$promo['promotion_id']] = 0;
-            }
-            $promotion_distribution[$promo['promotion_id']]++;
-        }
-    }
-
-    $station_titles_json = json_encode($station_titles);
-    $promotion_counts_json = json_encode($promotion_counts);
-    $monthly_promotions_json = json_encode(array_values($monthly_promotions));
-    $monthly_labels_json = json_encode(array_keys($monthly_promotions));
-    $promotion_distribution_json = json_encode(array_values($promotion_distribution));
-    $promotion_labels_json = json_encode(array_keys($promotion_distribution));
-    ?>
+    <!-- Modal for Expired Promotions -->
+    <div class="modal fade" id="expiredPromotionsModal" tabindex="-1" role="dialog" aria-labelledby="expiredPromotionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="expiredPromotionsModalLabel">Expired Promotions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Station ID</th>
+                                <th>Promotion ID</th>
+                                <th>End Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expiredPromotionsTable">
+                            <!-- Rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pagination justify-content-center" id="pagination">
+                            <!-- Pagination links will be populated by JavaScript -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="clearExpiredPromotionsBtn">Clear All
+                        Expired Promotions</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

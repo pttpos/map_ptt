@@ -82,6 +82,7 @@ $station_titles = [];
 $promotion_counts = [];
 $monthly_promotions = [];
 $promotion_distribution = [];
+$province_promotion_status = [];
 
 foreach ($combined_data as $promotion) {
     $station_titles[] = $promotion['title'];
@@ -98,6 +99,24 @@ foreach ($combined_data as $promotion) {
             $promotion_distribution[$promo['promotion_id']] = 0;
         }
         $promotion_distribution[$promo['promotion_id']]++;
+
+        // Province promotion status
+        foreach ($markers['STATION'] as $station) {
+            if ($station['id'] == $promotion['station_id']) {
+                $province = $station['province'];
+                if (!isset($province_promotion_status[$province])) {
+                    $province_promotion_status[$province] = ['active' => 0, 'expired' => 0];
+                }
+                $current_time = new DateTime('now', new DateTimeZone('Asia/Phnom_Penh'));
+                $end_time = new DateTime($promo['end_time']);
+                if ($end_time < $current_time) {
+                    $province_promotion_status[$province]['expired']++;
+                } else {
+                    $province_promotion_status[$province]['active']++;
+                }
+                break;
+            }
+        }
     }
 }
 
@@ -117,6 +136,14 @@ foreach ($combined_data as $promotion) {
     }
 }
 
+// Prepare data for countdowns
+$promotion_end_times = [];
+foreach ($combined_data as $promotion) {
+    foreach ($promotion['promotions'] as $promo) {
+        $promotion_end_times[$promo['promotion_id']] = $promo['end_time'];
+    }
+}
+
 // Convert data for use in JS
 $station_titles_json = json_encode($station_titles);
 $promotion_counts_json = json_encode($promotion_counts);
@@ -125,6 +152,12 @@ $monthly_labels_json = json_encode(array_keys($monthly_promotions));
 $promotion_distribution_json = json_encode(array_values($promotion_distribution));
 $promotion_labels_json = json_encode(array_keys($promotion_distribution));
 $expiration_status_json = json_encode([$active_count, $expired_count]);
+$promotion_end_times_json = json_encode($promotion_end_times);
+
+// Data for province promotions chart
+$province_labels = json_encode(array_keys($province_promotion_status));
+$province_active_counts = json_encode(array_column($province_promotion_status, 'active'));
+$province_expired_counts = json_encode(array_column($province_promotion_status, 'expired'));
 ?>
 
 <!DOCTYPE html>
@@ -135,49 +168,254 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+        }
+
+        #wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        #sidebar-wrapper {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            transition: width 0.3s ease;
+        }
+
+        #sidebar-wrapper.toggled {
+            width: 60px;
+        }
+
+        .sidebar-heading {
+            padding: 20px;
+            font-size: 1.25em;
+            font-weight: bold;
+            background: #007bff;
+            text-align: center;
+        }
+
+        .sidebar-heading img {
+            margin-right: 10px;
+        }
+
+        .list-group-item {
+            border: none;
+            color: white;
+            background-color: #343a40;
+            transition: background-color 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #495057;
+        }
+
+        .list-group-item-action {
+            color: white;
+        }
+
+        #page-content-wrapper {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            transition: margin-left 0.3s ease;
+        }
+
+        #page-content-wrapper.toggled {
+            margin-left: -190px;
+        }
+
+        .navbar {
+            padding: 10px 15px;
+            background-color: whitesmoke;
+            color: white;
+            box-shadow: 0 10px 16px -4px rgba(0, 0, 0, 0.6);
+        }
+
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+
+        .content-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .content-section:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .content-section:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        .content-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .countdown-timer {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        .promotion-id {
+            font-size: 1.2em;
+            color:white;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 40vh;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
-        <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">Dashboard </div>
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading">
+                <img src="path_to_your_logo.png" width="30" height="30" alt="Logo">
+                Your Brand
+            </div>
             <div class="list-group list-group-flush">
-                <a href="index.php" class="list-group-item list-group-item-action bg-light">Overview</a>
-                <a href="manage.php" class="list-group-item list-group-item-action bg-light">Manage</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Analytics</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Export</a>
+                <a href="index.php" class="list-group-item list-group-item-action">Overview</a>
+                <a href="manage.php" class="list-group-item list-group-item-action">Manage</a>
+                <a href="#" class="list-group-item list-group-item-action">Analytics</a>
+                <a href="#" class="list-group-item list-group-item-action">Export</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <!-- <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button> -->
+                <a class="navbar-brand ml-3" href="#">
+                    <img src="./pictures/logo_Station.png" width="200" height="auto" alt="Logo">
+                </a>
             </nav>
-            <div class="container-fluid">
-                <h1 class="mt-4">Promotions Dashboard</h1>
+            <div class="container-fluid mt-5">
+                <h1>Promotions Dashboard</h1>
 
                 <div class="row">
-                    <div class="col-lg-6">
-                        <canvas id="chart1"></canvas>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-header">EARNINGS (MONTHLY)</div>
+                            <div class="card-body">
+                                <h5 class="card-title">$40,000</h5>
+                                <p class="card-text"><i class="fas fa-arrow-up"></i> 3.48% Since last month</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-6">
-                        <canvas id="chart2"></canvas>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-header">SALES</div>
+                            <div class="card-body">
+                                <h5 class="card-title">650</h5>
+                                <p class="card-text"><i class="fas fa-arrow-up"></i> 12% Since last year</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card text-white bg-info mb-3">
+                            <div class="card-header">NEW USERS</div>
+                            <div class="card-body">
+                                <h5 class="card-title">366</h5>
+                                <p class="card-text"><i class="fas fa-arrow-up"></i> 20.4% Since last month</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div class="content-section">
+                    <h2>Promotion Countdowns</h2>
+                    <ul id="promotion-list" class="list-group">
+                        <?php foreach ($promotion_end_times as $promotion_id => $end_time) : ?>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="promotion-id"><?php echo $promotion_id; ?></span>
+                                <span class="countdown-timer" data-end-time="<?php echo $end_time; ?>"></span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+
                 <div class="row mt-4">
                     <div class="col-lg-6">
-                        <canvas id="chart3"></canvas>
+                        <div class="content-section">
+                            <h2>Promotion Distribution</h2>
+                            <div class="chart-container">
+                                <canvas id="chart3"></canvas>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6">
-                        <canvas id="chart4"></canvas>
+                        <div class="content-section">
+                            <h2>Province Promotion Status</h2>
+                            <div class="chart-container">
+                                <canvas id="chart5"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -185,87 +423,20 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
     </div>
 
     <script>
-        document.getElementById("menu-toggle").addEventListener("click", function () {
-            document.getElementById("wrapper").classList.toggle("toggled");
-        });
+        // document.getElementById("menu-toggle").addEventListener("click", function () {
+        //     document.getElementById("wrapper").classList.toggle("toggled");
+        //     document.getElementById("sidebar-wrapper").classList.toggle("toggled");
+        //     document.getElementById("page-content-wrapper").classList.toggle("toggled");
+        // });
 
-        const ctx1 = document.getElementById('chart1').getContext('2d');
-        const ctx2 = document.getElementById('chart2').getContext('2d');
         const ctx3 = document.getElementById('chart3').getContext('2d');
-        const ctx4 = document.getElementById('chart4').getContext('2d');
+        const ctx5 = document.getElementById('chart5').getContext('2d');
 
-        const stationTitles = <?php echo $station_titles_json; ?>;
-        const promotionCounts = <?php echo $promotion_counts_json; ?>;
-        const monthlyPromotions = <?php echo $monthly_promotions_json; ?>;
-        const monthlyLabels = <?php echo $monthly_labels_json; ?>;
         const promotionDistribution = <?php echo $promotion_distribution_json; ?>;
         const promotionLabels = <?php echo $promotion_labels_json; ?>;
-        const expirationStatus = <?php echo $expiration_status_json; ?>;
-
-        const chart1 = new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: stationTitles,
-                datasets: [{
-                    label: '# of Promotions',
-                    data: promotionCounts,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: true
-                    }
-                }
-            }
-        });
-
-        const chart2 = new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: monthlyLabels,
-                datasets: [{
-                    label: 'Promotions Over Time',
-                    data: monthlyPromotions,
-                    backgroundColor: 'rgba(153, 102, 255, 1)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    borderWidth: 1,
-                    tension: 0.4,
-                    fill: false,
-                    pointBackgroundColor: 'rgba(255, 159, 64, 1)'
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: true
-                    }
-                }
-            }
-        });
+        const provinceLabels = <?php echo $province_labels; ?>;
+        const provinceActiveCounts = <?php echo $province_active_counts; ?>;
+        const provinceExpiredCounts = <?php echo $province_expired_counts; ?>;
 
         const chart3 = new Chart(ctx3, {
             type: 'pie',
@@ -293,41 +464,87 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                 plugins: {
                     legend: {
                         position: 'bottom'
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeInOutBounce'
                     }
                 }
             }
         });
 
-        const chart4 = new Chart(ctx4, {
-            type: 'pie',
+        const chart5 = new Chart(ctx5, {
+            type: 'bar',
             data: {
-                labels: ['Active Promotions', 'Expired Promotions'],
-                datasets: [{
-                    label: 'Promotion Expiration Status',
-                    data: expirationStatus,
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    borderWidth: 1
-                }]
+                labels: provinceLabels,
+                datasets: [
+                    {
+                        label: 'Active Promotions',
+                        data: provinceActiveCounts,
+                        backgroundColor: 'rgba(75, 192, 192, 1)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Expired Promotions',
+                        data: provinceExpiredCounts,
+                        backgroundColor: 'rgba(255, 99, 132, 1)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
                 plugins: {
                     legend: {
+                        display: true,
                         position: 'bottom'
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeInOutBounce'
                     }
                 }
             }
         });
-    </script>
 
+        // Countdown timer functionality
+        const promotionEndTimes = <?php echo $promotion_end_times_json; ?>;
+
+        function updateCountdowns() {
+            const now = new Date().getTime();
+
+            document.querySelectorAll('.countdown-timer').forEach(timer => {
+                const endTime = new Date(timer.dataset.endTime).getTime();
+                const distance = endTime - now;
+
+                if (distance < 0) {
+                    timer.innerHTML = "EXPIRED";
+                    timer.style.color = 'red';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                timer.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            });
+        }
+
+        setInterval(updateCountdowns, 1000);
+        updateCountdowns(); // Initial call to display countdowns immediately
+    </script>
 </body>
 
 </html>
+
+
+
+
