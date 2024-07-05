@@ -1592,6 +1592,11 @@
                     "promotion_id": "promotion 1",
                     "end_time": "2024-07-31T12:12:00Z",
                     "description": "hello thes "
+                },
+                {
+                    "promotion_id": "promotion 2",
+                    "end_time": "2024-07-05T12:12:00Z",
+                    "description": "testy"
                 }
             ]
         },
