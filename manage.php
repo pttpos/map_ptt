@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $promotion_id = $_POST['promotion_id'];
     $new_promotion_id = $_POST['new_promotion_id'] ?? '';
     $end_time = $_POST['end_time'];
+    $description = $_POST['description'];
     $action = $_POST['action'];
 
     $end_time = (new DateTime($end_time, new DateTimeZone('Asia/Phnom_Penh')))->format('Y-m-d\TH:i:s\Z');
@@ -67,7 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (!$already_exists) {
                         $station['promotions'][] = [
                             'promotion_id' => $promotion_id,
-                            'end_time' => $end_time
+                            'end_time' => $end_time,
+                            'description' => $description
                         ];
                     } else if (!empty($selected_provinces)) {
                         echo "<script>alert('Promotion $promotion_id already exists in province: {$marker['province']}');</script>";
@@ -81,13 +83,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($action == 'add') {
                     $station['promotions'][] = [
                         'promotion_id' => $promotion_id,
-                        'end_time' => $end_time
+                        'end_time' => $end_time,
+                        'description' => $description
                     ];
                 } elseif ($action == 'edit') {
                     foreach ($station['promotions'] as &$promotion) {
                         if ($promotion['promotion_id'] == $promotion_id) {
                             $promotion['promotion_id'] = $new_promotion_id;
                             $promotion['end_time'] = $end_time;
+                            $promotion['description'] = $description;
                         }
                     }
                 } elseif ($action == 'delete') {
@@ -101,26 +105,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-
     // Handle image upload
     if (isset($_FILES['promotion_image']) && $_FILES['promotion_image']['error'] == UPLOAD_ERR_OK) {
-        $upload_dir = './pictures/';
+        $upload_dir = './pictures/promotion/';
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0755, true);
         }
 
         $uploaded_file = $_FILES['promotion_image']['tmp_name'];
         $uploaded_file_type = mime_content_type($uploaded_file);
-
         $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+
         if (in_array($uploaded_file_type, $allowed_types)) {
-            $new_file_name = $promotion_id . '.' . pathinfo($_FILES['promotion_image']['name'], PATHINFO_EXTENSION);
+            // Sanitize the promotion_id by replacing spaces with underscores
+            $promotion_id = str_replace(' ', '_', trim($promotion_id));
+            $new_file_name = $promotion_id . '.jpg';
             $destination = $upload_dir . $new_file_name;
 
-            if (move_uploaded_file($uploaded_file, $destination)) {
-                echo "<script>alert('Promotion image uploaded successfully.');</script>";
+            if ($uploaded_file_type == 'image/png' || $uploaded_file_type == 'image/gif') {
+                // Convert to JPG
+                $image = null;
+                if ($uploaded_file_type == 'image/png') {
+                    $image = imagecreatefrompng($uploaded_file);
+                } elseif ($uploaded_file_type == 'image/gif') {
+                    $image = imagecreatefromgif($uploaded_file);
+                }
+
+                if ($image !== null) {
+                    imagejpeg($image, $destination, 100);
+                    imagedestroy($image);
+                    echo "<script>alert('Promotion image uploaded and converted to JPG successfully.');</script>";
+                } else {
+                    echo "<script>alert('Failed to convert image to JPG.');</script>";
+                }
             } else {
-                echo "<script>alert('Failed to upload promotion image.');</script>";
+                // Move the JPG file as is
+                if (move_uploaded_file($uploaded_file, $destination)) {
+                    echo "<script>alert('Promotion image uploaded successfully.');</script>";
+                } else {
+                    echo "<script>alert('Failed to upload promotion image.');</script>";
+                }
             }
         } else {
             echo "<script>alert('Invalid file type. Only JPG, PNG, and GIF files are allowed.');</script>";
@@ -240,6 +264,7 @@ $promotion_distribution_json = json_encode(array_values($promotion_distribution)
 $promotion_labels_json = json_encode(array_keys($promotion_distribution));
 $expiration_status_json = json_encode([$active_count, $expired_count]);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -447,45 +472,49 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
 
                 <form action="manage.php" method="post" enctype="multipart/form-data" class="mb-4 p-3 border rounded shadow-sm bg-light">
-                    <input type="hidden" name="action" value="add_to_all">
-                    <div class="form-group">
-                        <label for="promotion_id">Promotion ID:</label>
-                        <select class="form-select form-control" name="promotion_id" required>
-                            <?php foreach ($promotion_ids as $promo) : ?>
-                                <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="end_time">End Time:</label>
-                        <input type="datetime-local" class="form-control" name="end_time" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="promotion_image">Promotion Image:</label>
-                        <input type="file" class="form-control-file" name="promotion_image" id="promotion_image" accept="image/*">
-                    </div>
-                    <div class="form-group">
-                        <label for="province">Provinces:</label>
-                        <select id="province-select" class="form-control">
-                            <option value="">Select a province</option>
-                            <?php
-                            $provinces = array_unique(array_column($markers['STATION'], 'province'));
-                            foreach ($provinces as $province) {
-                                echo "<option value=\"$province\">$province</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Selected Provinces:</label>
-                        <div id="selected-provinces-container" class="border p-2 rounded" style="background-color: #fff;">
-                            <!-- Selected provinces will be displayed here as tags -->
-                        </div>
-                    </div>
-                    <input type="hidden" name="provinces" id="selected-provinces" value="">
-                    <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
-                </form>
+    <input type="hidden" name="action" value="add_to_all">
+    <div class="form-group">
+        <label for="promotion_id">Promotion ID:</label>
+        <select class="form-select form-control" name="promotion_id" required>
+            <?php foreach ($promotion_ids as $promo) : ?>
+                <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="end_time">End Time:</label>
+        <input type="datetime-local" class="form-control" name="end_time" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" name="description" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="promotion_image">Promotion Image:</label>
+        <input type="file" class="form-control-file" name="promotion_image" id="promotion_image" accept="image/*">
+    </div>
+    <div class="form-group">
+        <label for="province">Provinces:</label>
+        <select id="province-select" class="form-control">
+            <option value="">Select a province</option>
+            <?php
+            $provinces = array_unique(array_column($markers['STATION'], 'province'));
+            foreach ($provinces as $province) {
+                echo "<option value=\"$province\">$province</option>";
+            }
+            ?>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Selected Provinces:</label>
+        <div id="selected-provinces-container" class="border p-2 rounded" style="background-color: #fff;">
+            <!-- Selected provinces will be displayed here as tags -->
+        </div>
+    </div>
+    <input type="hidden" name="provinces" id="selected-provinces" value="">
+    <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
+</form>
+
 
                 <!-- Clear All Selected Promotions Form -->
                 <form id="clearAllPromotionsForm" action="manage.php" method="post" class="mb-4 p-3 border rounded shadow-sm" style="background-color: #f8f9fa;">
