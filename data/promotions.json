@@ -28,7 +28,13 @@
         {
             "id": 608,
             "station_id": 608,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion opening 4",
+                    "end_time": "2024-07-10T12:12:00Z",
+                    "description": "hellow test"
+                }
+            ]
         },
         {
             "id": 609,
@@ -58,7 +64,13 @@
         {
             "id": 614,
             "station_id": 614,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion opening 4",
+                    "end_time": "2024-07-10T12:12:00Z",
+                    "description": "hellow test"
+                }
+            ]
         },
         {
             "id": 617,
@@ -113,7 +125,13 @@
         {
             "id": 10033821,
             "station_id": 10033821,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion opening 4",
+                    "end_time": "2024-07-10T12:12:00Z",
+                    "description": "hellow test"
+                }
+            ]
         },
         {
             "id": 10030896,
@@ -323,7 +341,13 @@
         {
             "id": 618,
             "station_id": 618,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion opening 4",
+                    "end_time": "2024-07-10T12:12:00Z",
+                    "description": "hellow test"
+                }
+            ]
         },
         {
             "id": 10021912,
@@ -333,7 +357,13 @@
         {
             "id": 10021709,
             "station_id": 10021709,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion opening 4",
+                    "end_time": "2024-07-10T12:12:00Z",
+                    "description": "hellow test"
+                }
+            ]
         },
         {
             "id": 10021714,
@@ -448,7 +478,13 @@
         {
             "id": 10021647,
             "station_id": 10021647,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion opening 4",
+                    "end_time": "2024-07-10T12:12:00Z",
+                    "description": "hellow test"
+                }
+            ]
         },
         {
             "id": 10027716,
