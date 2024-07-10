@@ -3,13 +3,7 @@
         {
             "id": 601,
             "station_id": 601,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 603,
@@ -24,13 +18,7 @@
         {
             "id": 605,
             "station_id": 605,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 606,
@@ -50,13 +38,7 @@
         {
             "id": 610,
             "station_id": 610,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 611,
@@ -71,13 +53,7 @@
         {
             "id": 613,
             "station_id": 613,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 614,
@@ -87,24 +63,12 @@
         {
             "id": 617,
             "station_id": 617,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029691,
             "station_id": 10029691,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032997,
@@ -114,24 +78,12 @@
         {
             "id": 10033524,
             "station_id": 10033524,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032217,
             "station_id": 10032217,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029692,
@@ -141,46 +93,22 @@
         {
             "id": 10032352,
             "station_id": 10032352,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032353,
             "station_id": 10032353,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10033523,
             "station_id": 10033523,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10033316,
             "station_id": 10033316,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10033821,
@@ -195,13 +123,7 @@
         {
             "id": 10032893,
             "station_id": 10032893,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032705,
@@ -241,24 +163,12 @@
         {
             "id": 10025514,
             "station_id": 10025514,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034019,
             "station_id": 10034019,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10033146,
@@ -268,46 +178,22 @@
         {
             "id": 10027790,
             "station_id": 10027790,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029893,
             "station_id": 10029893,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030924,
             "station_id": 10030924,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030247,
             "station_id": 10030247,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030894,
@@ -317,189 +203,87 @@
         {
             "id": 10034050,
             "station_id": 10034050,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10026251,
             "station_id": 10026251,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032197,
             "station_id": 10032197,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10025835,
             "station_id": 10025835,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10027083,
             "station_id": 10027083,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10027423,
             "station_id": 10027423,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10027424,
             "station_id": 10027424,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10027728,
             "station_id": 10027728,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10023722,
             "station_id": 10023722,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10026809,
             "station_id": 10026809,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029690,
             "station_id": 10029690,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10027224,
             "station_id": 10027224,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10026802,
             "station_id": 10026802,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10028079,
             "station_id": 10028079,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034689,
             "station_id": 10034689,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034999,
             "station_id": 10034999,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034862,
             "station_id": 10034862,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034074,
@@ -509,68 +293,32 @@
         {
             "id": 10034461,
             "station_id": 10034461,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10023796,
             "station_id": 10023796,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032855,
             "station_id": 10032855,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10023427,
             "station_id": 10023427,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10031806,
             "station_id": 10031806,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10021637,
             "station_id": 10021637,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 618,
@@ -610,35 +358,17 @@
         {
             "id": 10021648,
             "station_id": 10021648,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 615,
             "station_id": 615,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10023212,
             "station_id": 10023212,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10023463,
@@ -648,13 +378,7 @@
         {
             "id": 10030619,
             "station_id": 10030619,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10023997,
@@ -664,35 +388,17 @@
         {
             "id": 10025350,
             "station_id": 10025350,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 30063513,
             "station_id": 30063513,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10025853,
             "station_id": 10025853,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10025918,
@@ -702,24 +408,12 @@
         {
             "id": 10026283,
             "station_id": 10026283,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030392,
             "station_id": 10030392,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10026452,
@@ -729,13 +423,7 @@
         {
             "id": 10026578,
             "station_id": 10026578,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10026673,
@@ -750,24 +438,12 @@
         {
             "id": 10031916,
             "station_id": 10031916,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 30057218,
             "station_id": 30057218,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10021647,
@@ -777,13 +453,7 @@
         {
             "id": 10027716,
             "station_id": 10027716,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030779,
@@ -798,35 +468,17 @@
         {
             "id": 10032579,
             "station_id": 10032579,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10028453,
             "station_id": 10028453,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10028690,
             "station_id": 10028690,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10028834,
@@ -846,24 +498,12 @@
         {
             "id": 10028689,
             "station_id": 10028689,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10028776,
             "station_id": 10028776,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10028779,
@@ -878,24 +518,12 @@
         {
             "id": 10029001,
             "station_id": 10029001,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10028452,
             "station_id": 10028452,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029430,
@@ -905,46 +533,22 @@
         {
             "id": 10029632,
             "station_id": 10029632,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029925,
             "station_id": 10029925,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030168,
             "station_id": 10030168,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030169,
             "station_id": 10030169,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030440,
@@ -959,24 +563,12 @@
         {
             "id": 10030170,
             "station_id": 10030170,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029894,
             "station_id": 10029894,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029786,
@@ -991,13 +583,7 @@
         {
             "id": 10030951,
             "station_id": 10030951,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030973,
@@ -1007,13 +593,7 @@
         {
             "id": 10030895,
             "station_id": 10030895,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030643,
@@ -1023,13 +603,7 @@
         {
             "id": 10031131,
             "station_id": 10031131,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10031323,
@@ -1054,13 +628,7 @@
         {
             "id": 10031773,
             "station_id": 10031773,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10031788,
@@ -1095,13 +663,7 @@
         {
             "id": 10032708,
             "station_id": 10032708,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032704,
@@ -1121,24 +683,12 @@
         {
             "id": 10032944,
             "station_id": 10032944,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032709,
             "station_id": 10032709,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10032710,
@@ -1163,13 +713,7 @@
         {
             "id": 10034077,
             "station_id": 10034077,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10033884,
@@ -1214,13 +758,7 @@
         {
             "id": 10035075,
             "station_id": 10035075,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035074,
@@ -1230,13 +768,7 @@
         {
             "id": 10035079,
             "station_id": 10035079,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034985,
@@ -1251,13 +783,7 @@
         {
             "id": 30078128,
             "station_id": 30078128,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035118,
@@ -1287,35 +813,17 @@
         {
             "id": 10035495,
             "station_id": 10035495,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035664,
             "station_id": 10035664,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035854,
             "station_id": 10035854,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035000,
@@ -1330,24 +838,12 @@
         {
             "id": 30080329,
             "station_id": 30080329,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10036085,
             "station_id": 10036085,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035930,
@@ -1367,46 +863,22 @@
         {
             "id": 30082047,
             "station_id": 30082047,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10037095,
             "station_id": 10037095,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10037152,
             "station_id": 10037152,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 30082667,
             "station_id": 30082667,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10037284,
@@ -1416,13 +888,7 @@
         {
             "id": 10037327,
             "station_id": 10037327,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-12T12:12:00Z",
-                    "description": "test"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 30083692,
