@@ -461,39 +461,39 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
         </div>
         <!-- /#sidebar-wrapper -->
         <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Function to check and delete expired promotions
-    function checkAndDeleteExpiredPromotions() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'delete_expired_promotions.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log('Expired promotions deleted.');
-                commitChanges();
-            }
-        };
-        xhr.send('clear_all_expired=1');
-    }
+            document.addEventListener('DOMContentLoaded', function() {
+                // Function to check and delete expired promotions
+                function checkAndDeleteExpiredPromotions() {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'delete_expired_promotions.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            console.log('Expired promotions deleted.');
+                            commitChanges();
+                        }
+                    };
+                    xhr.send('clear_all_expired=1');
+                }
 
-    // Function to commit changes
-    function commitChanges() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'commit_git.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log('Changes committed to GitHub.');
-                // Optionally, you can reload the page to reflect the changes
-                location.reload();
-            }
-        };
-        xhr.send('commit_changes=1');
-    }
+                // Function to commit changes
+                function commitChanges() {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'commit_git.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            console.log('Changes committed to GitHub.');
+                            // Optionally, you can reload the page to reflect the changes
+                            location.reload();
+                        }
+                    };
+                    xhr.send('commit_changes=1');
+                }
 
-    setInterval(checkAndDeleteExpiredPromotions, 24 * 60 * 60 * 1000); // Check every day (86,400,000 ms)
-});
-</script>
+                setInterval(checkAndDeleteExpiredPromotions, 24 * 60 * 60 * 1000); // Check every day (86,400,000 ms)
+            });
+        </script>
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
@@ -511,18 +511,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         <?php echo implode('<br>', $messages); ?>
                     </div>
                 <?php endif; ?>
-    <!-- Commit Button Form -->
-    <form action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
-        <input type="hidden" name="commit_changes" value="1">
-        <button type="submit" class="btn btn-success">Commit Changes to GitHub</button>
-    </form>
+                <!-- Commit Button Form -->
+                <form action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
+                    <input type="hidden" name="commit_changes" value="1">
+                    <button type="submit" class="btn btn-success">Commit Changes to GitHub</button>
+                </form>
 
-    <!-- Display commit result -->
-    <?php if (isset($_GET['status'])): ?>
-        <div class="alert <?php echo $_GET['status'] == 'success' ? 'alert-success' : 'alert-warning'; ?>">
-            <?php echo htmlspecialchars($_GET['message']); ?>
-        </div>
-    <?php endif; ?>
+                <!-- Display commit result -->
+                <?php if (isset($_GET['status'])) : ?>
+                    <div class="alert <?php echo $_GET['status'] == 'success' ? 'alert-success' : 'alert-warning'; ?>">
+                        <?php echo htmlspecialchars($_GET['message']); ?>
+                    </div>
+                <?php endif; ?>
 
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
 
