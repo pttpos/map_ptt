@@ -138,24 +138,12 @@
         {
             "id": 10030505,
             "station_id": 10030505,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10031826,
             "station_id": 10031826,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10027087,
@@ -185,13 +173,7 @@
         {
             "id": 10033146,
             "station_id": 10033146,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10027790,
@@ -356,13 +338,7 @@
         {
             "id": 10021714,
             "station_id": 10021714,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10021644,
@@ -377,13 +353,7 @@
         {
             "id": 10021643,
             "station_id": 10021643,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10021648,
@@ -653,13 +623,7 @@
         {
             "id": 10031481,
             "station_id": 10031481,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10031773,
@@ -764,13 +728,7 @@
         {
             "id": 10034007,
             "station_id": 10034007,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10033836,
@@ -815,13 +773,7 @@
         {
             "id": 10034985,
             "station_id": 10034985,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034963,
@@ -846,13 +798,7 @@
         {
             "id": 30075518,
             "station_id": 30075518,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035275,
@@ -862,13 +808,7 @@
         {
             "id": 10035465,
             "station_id": 10035465,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-06T12:12:00Z",
-                    "description": "test11111"
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035495,
