@@ -383,13 +383,7 @@
         {
             "id": 10023997,
             "station_id": 10023997,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-20T12:00:00Z",
-                    "description": "Just Test "
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10025350,
@@ -519,13 +513,7 @@
         {
             "id": 10029265,
             "station_id": 10029265,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-20T12:00:00Z",
-                    "description": "Just Test "
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10029001,
@@ -585,13 +573,7 @@
         {
             "id": 10029786,
             "station_id": 10029786,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-20T12:00:00Z",
-                    "description": "Just Test "
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10030375,
@@ -761,13 +743,7 @@
         {
             "id": 30077267,
             "station_id": 30077267,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-20T12:00:00Z",
-                    "description": "Just Test "
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034962,
@@ -827,13 +803,7 @@
         {
             "id": 10035275,
             "station_id": 10035275,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-20T12:00:00Z",
-                    "description": "Just Test "
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10035465,
@@ -923,13 +893,7 @@
         {
             "id": 30083692,
             "station_id": 30083692,
-            "promotions": [
-                {
-                    "promotion_id": "promotion opening 4",
-                    "end_time": "2024-07-20T12:00:00Z",
-                    "description": "Just Test "
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10037634,
