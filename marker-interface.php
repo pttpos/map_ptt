@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     move_uploaded_file($_FILES['picture']['tmp_name'], $uploadedFile);
 
     // Redirect back to the HTML page
-    header('Location: index.html'); // Change index.html to the name of your HTML file
+    header('Location: station_admin.php'); // Change index.html to the name of your HTML file
     exit();
 }
 
