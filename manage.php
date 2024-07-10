@@ -443,6 +443,22 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             color: orange;
         }
     </style>
+    <style>
+    .progress-container {
+        width: 100%;
+        background-color: #f3f3f3;
+    }
+
+    .progress-bar {
+        width: 1%;
+        height: 30px;
+        background-color: #4caf50;
+        text-align: center;
+        line-height: 30px;
+        color: white;
+    }
+</style>
+
 </head>
 
 <body>
@@ -511,18 +527,66 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                         <?php echo implode('<br>', $messages); ?>
                     </div>
                 <?php endif; ?>
-                <!-- Commit Button Form -->
-                <form action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
-                    <input type="hidden" name="commit_changes" value="1">
-                    <button type="submit" class="btn btn-success">Commit Changes to GitHub</button>
-                </form>
+                <div class="progress-container hidden" id="progressContainer">
+    <div class="progress-bar" id="progressBar">1%</div>
+</div>
 
-                <!-- Display commit result -->
-                <?php if (isset($_GET['status'])) : ?>
-                    <div class="alert <?php echo $_GET['status'] == 'success' ? 'alert-success' : 'alert-warning'; ?>">
-                        <?php echo htmlspecialchars($_GET['message']); ?>
-                    </div>
-                <?php endif; ?>
+<!-- Commit Button Form -->
+<form id="commitForm" action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
+    <input type="hidden" name="commit_changes" value="1">
+    <button type="submit" class="btn btn-success">Commit Changes to GitHub</button>
+</form>
+
+<!-- Display commit result -->
+<?php if (isset($_GET['status'])) : ?>
+    <div class="alert <?php echo $_GET['status'] == 'success' ? 'alert-success' : 'alert-warning'; ?>">
+        <?php echo htmlspecialchars($_GET['message']); ?>
+    </div>
+<?php endif; ?>
+
+<script>
+    document.getElementById('commitForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var progressBar = document.getElementById('progressBar');
+        var progressContainer = document.getElementById('progressContainer');
+        progressContainer.classList.remove('hidden');
+        var width = 1;
+
+        // Simulate the loading progress
+        var interval = setInterval(function() {
+            if (width >= 100) {
+                clearInterval(interval);
+            } else {
+                width++;
+                progressBar.style.width = width + '%';
+                progressBar.innerHTML = width + '%';
+            }
+        }, 100); // Simulate loading duration
+
+        // Submit the form via AJAX
+        var formData = new FormData(document.getElementById('commitForm'));
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'commit_git.php', true);
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                progressBar.style.width = '100%';
+                progressBar.innerHTML = '100%';
+                if (response.status === 'success') {
+                    alert('Changes committed to GitHub successfully.');
+                } else {
+                    alert('No changes detected, nothing to commit.');
+                }
+            } else {
+                alert('An error occurred while committing changes.');
+            }
+            progressContainer.classList.add('hidden');
+        };
+
+        xhr.send(formData);
+    });
+</script>
 
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
 
