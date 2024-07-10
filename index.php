@@ -341,8 +341,7 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
             <div class="list-group list-group-flush">
                 <a href="index.php" class="list-group-item list-group-item-action">Overview</a>
                 <a href="manage.php" class="list-group-item list-group-item-action">Manage</a>
-                <a href="#" class="list-group-item list-group-item-action">Analytics</a>
-                <a href="#" class="list-group-item list-group-item-action">Export</a>
+                <a href="#" class="list-group-item list-group-item-action">Station</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
