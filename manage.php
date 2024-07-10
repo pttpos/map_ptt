@@ -468,11 +468,26 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                         <?php echo implode('<br>', $messages); ?>
                     </div>
                 <?php endif; ?>
-                <form action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
+<!-- Commit Button Form -->
+<form action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
         <input type="hidden" name="commit_changes" value="1">
         <button type="submit" class="btn btn-success">Commit Changes to GitHub</button>
     </form>
 
+    <!-- Display commit result -->
+    <?php if (isset($_GET['status'])): ?>
+        <div class="alert <?php echo $_GET['status'] == 'success' ? 'alert-success' : 'alert-warning'; ?>">
+            <?php echo htmlspecialchars($_GET['message']); ?>
+        </div>
+    <?php endif; ?>
+    <style>
+        .alert-success {
+            color: green;
+        }
+        .alert-warning {
+            color: orange;
+        }
+    </style>
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
 
                 <form action="manage.php" method="post" enctype="multipart/form-data" class="mb-4 p-3 border rounded shadow-sm bg-light">
