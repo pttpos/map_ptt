@@ -15,3 +15,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_all_expired']))
     echo 'Expired promotions deleted.';
 }
 ?>
+
