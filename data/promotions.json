@@ -723,13 +723,7 @@
         {
             "id": 10034109,
             "station_id": 10034109,
-            "promotions": [
-                {
-                    "promotion_id": "promotion 1",
-                    "end_time": "2024-07-10T12:12:00Z",
-                    "description": "test "
-                }
-            ]
+            "promotions": []
         },
         {
             "id": 10034007,
