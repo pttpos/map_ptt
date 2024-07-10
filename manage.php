@@ -468,52 +468,56 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                         <?php echo implode('<br>', $messages); ?>
                     </div>
                 <?php endif; ?>
+                <form action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
+        <input type="hidden" name="commit_changes" value="1">
+        <button type="submit" class="btn btn-success">Commit Changes to GitHub</button>
+    </form>
 
                 <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
 
                 <form action="manage.php" method="post" enctype="multipart/form-data" class="mb-4 p-3 border rounded shadow-sm bg-light">
-    <input type="hidden" name="action" value="add_to_all">
-    <div class="form-group">
-        <label for="promotion_id">Promotion ID:</label>
-        <select class="form-select form-control" name="promotion_id" required>
-            <?php foreach ($promotion_ids as $promo) : ?>
-                <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="end_time">End Time:</label>
-        <input type="datetime-local" class="form-control" name="end_time" required>
-    </div>
-    <div class="form-group">
-        <label for="description">Description:</label>
-        <textarea class="form-control" name="description" required></textarea>
-    </div>
-    <div class="form-group">
-        <label for="promotion_image">Promotion Image:</label>
-        <input type="file" class="form-control-file" name="promotion_image" id="promotion_image" accept="image/*">
-    </div>
-    <div class="form-group">
-        <label for="province">Provinces:</label>
-        <select id="province-select" class="form-control">
-            <option value="">Select a province</option>
-            <?php
-            $provinces = array_unique(array_column($markers['STATION'], 'province'));
-            foreach ($provinces as $province) {
-                echo "<option value=\"$province\">$province</option>";
-            }
-            ?>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Selected Provinces:</label>
-        <div id="selected-provinces-container" class="border p-2 rounded" style="background-color: #fff;">
-            <!-- Selected provinces will be displayed here as tags -->
-        </div>
-    </div>
-    <input type="hidden" name="provinces" id="selected-provinces" value="">
-    <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
-</form>
+                    <input type="hidden" name="action" value="add_to_all">
+                    <div class="form-group">
+                        <label for="promotion_id">Promotion ID:</label>
+                        <select class="form-select form-control" name="promotion_id" required>
+                            <?php foreach ($promotion_ids as $promo) : ?>
+                                <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="end_time">End Time:</label>
+                        <input type="datetime-local" class="form-control" name="end_time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" name="description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="promotion_image">Promotion Image:</label>
+                        <input type="file" class="form-control-file" name="promotion_image" id="promotion_image" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="province">Provinces:</label>
+                        <select id="province-select" class="form-control">
+                            <option value="">Select a province</option>
+                            <?php
+                            $provinces = array_unique(array_column($markers['STATION'], 'province'));
+                            foreach ($provinces as $province) {
+                                echo "<option value=\"$province\">$province</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Selected Provinces:</label>
+                        <div id="selected-provinces-container" class="border p-2 rounded" style="background-color: #fff;">
+                            <!-- Selected provinces will be displayed here as tags -->
+                        </div>
+                    </div>
+                    <input type="hidden" name="provinces" id="selected-provinces" value="">
+                    <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
+                </form>
 
 
                 <!-- Clear All Selected Promotions Form -->
