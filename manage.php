@@ -443,7 +443,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             color: orange;
         }
     </style>
-    <style>
+   <style>
     .progress-container {
         width: 100%;
         background-color: #f3f3f3;
@@ -457,6 +457,12 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
         line-height: 30px;
         color: white;
     }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
 </style>
 
 </head>
