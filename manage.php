@@ -491,8 +491,7 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.send('commit_changes=1');
     }
 
-    // Periodically check and delete expired promotions
-    setInterval(checkAndDeleteExpiredPromotions,5000); // Check every 5 minutes (300,000 ms)
+    setInterval(checkAndDeleteExpiredPromotions, 24 * 60 * 60 * 1000); // Check every day (86,400,000 ms)
 });
 </script>
 
