@@ -656,9 +656,7 @@
                 "ULR 91",
                 "HSD"
             ],
-            "other_product": [
-                "EV"
-            ],
+            "other_product": [],
             "service": [
                 "Fleet card",
                 "KHQR",
@@ -668,7 +666,7 @@
             "address": "National Road No.2, Phum krang Svay,Sangkat Prek Kampeus,Khan Dongkor",
             "status": "24h",
             "promotion": [],
-            "old_picture": "_DSC0502_00001Plantinum.jpg",
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
