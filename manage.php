@@ -460,6 +460,41 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
+        <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to check and delete expired promotions
+    function checkAndDeleteExpiredPromotions() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'delete_expired_promotions.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log('Expired promotions deleted.');
+                commitChanges();
+            }
+        };
+        xhr.send('clear_all_expired=1');
+    }
+
+    // Function to commit changes
+    function commitChanges() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'commit_git.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log('Changes committed to GitHub.');
+                // Optionally, you can reload the page to reflect the changes
+                location.reload();
+            }
+        };
+        xhr.send('commit_changes=1');
+    }
+
+    // Periodically check and delete expired promotions
+    setInterval(checkAndDeleteExpiredPromotions,5000); // Check every 5 minutes (300,000 ms)
+});
+</script>
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
