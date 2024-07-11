@@ -29,7 +29,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="marker-form" method="POST" action="marker-interface.php" enctype="multipart/form-data">
+                    <form id="marker-form" method="POST" action="test.php" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="id" class="form-label">Station ID:</label>
                             <input type="text" class="form-control" id="id" name="id" required>
@@ -188,7 +188,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="edit-marker-form" method="POST" action="marker-interface.php"
+                    <form id="edit-marker-form" method="POST" action="test.php"
                         enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="edit-id" class="form-label">Station ID:</label>
@@ -427,7 +427,7 @@
                 "processing": true, // Show processing indicator
                 "serverSide": false, // Enable server-side processing
                 "ajax": {
-                    "url": "marker-interface.php",
+                    "url": "test.php",
                     "dataSrc": "STATION" // Specify the property name containing the data
                 },
                 "columns": [
@@ -487,7 +487,7 @@
         function deleteMarker(id) {
             if (confirm('Are you sure you want to delete this marker?')) {
                 // Perform delete operation
-                fetch(`marker-interface.php?id=${id}`, {
+                fetch(`test.php?id=${id}`, {
                     method: 'DELETE'
                 })
                     .then(response => {
@@ -508,7 +508,7 @@
         // Function to populate edit form and show edit modal
         function editMarker(id) {
             // Fetch marker data corresponding to the ID
-            fetch(`marker-interface.php?id=${id}`)
+            fetch(`test.php?id=${id}`)
                 .then(response => response.json())
                 .then(data => {
                     // Check if data is not empty and has the expected structure
