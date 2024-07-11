@@ -11,35 +11,23 @@ function saveMarkerData($markers) {
     file_put_contents('data/markers.json', $markersJson);
 }
 
+// Function to load promotion data from JSON file
+function loadPromotionData() {
+    $promotionsJson = file_get_contents('data/promotions.json');
+    return json_decode($promotionsJson, true);
+}
+
+// Function to save promotion data to JSON file
+function savePromotionData($promotions) {
+    $promotionsJson = json_encode(['PROMOTIONS' => $promotions], JSON_PRETTY_PRINT);
+    file_put_contents('data/promotions.json', $promotionsJson);
+}
+
 // Function to add or update a marker
 function addOrUpdateMarker($markerData) {
-    // Check if a new file was uploaded
-    if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
-        // Handle uploading and updating picture
-
-        // Delete old picture if it exists
-        if (!empty($markerData['old_picture'])) {
-            $oldPicturePath = 'pictures/' . $markerData['old_picture'];
-            if (file_exists($oldPicturePath)) {
-                unlink($oldPicturePath);
-            }
-        }
-        $markerData['picture'] = $_FILES['picture']['name']; // Update picture filename
-    } elseif (isset($markerData['old_picture'])) {
-        // Keep the old picture if no new picture is selected
-        $markerData['picture'] = $markerData['old_picture'];
-    } else {
-        // Set picture to an empty string if no new picture is uploaded and no old picture exists
-        $markerData['picture'] = '';
-    }
-
-    // Convert null values to empty arrays for description, other_product, and promotion fields
-    $markerData['description'] = $markerData['description'] ?? [];
-    $markerData['other_product'] = $markerData['other_product'] ?? [];
-    $markerData['promotion'] = $markerData['promotion'] ?? [];
-
     $markers = loadMarkerData();
     $existingMarker = getMarkerById($markerData['id']);
+    
     if ($existingMarker) {
         // Update existing marker
         $markers['STATION'] = array_map(function($marker) use ($markerData) {
@@ -51,8 +39,22 @@ function addOrUpdateMarker($markerData) {
     } else {
         // Add new marker
         $markers['STATION'][] = $markerData;
+        // Add new promotion for the new marker
+        addPromotion((int)$markerData['id']);
     }
+
     saveMarkerData($markers['STATION']);
+}
+
+// Function to add a new promotion
+function addPromotion($stationId) {
+    $promotions = loadPromotionData();
+    $promotions['PROMOTIONS'][] = [
+        'id' => $stationId,
+        'station_id' => $stationId,
+        'promotions' => []
+    ];
+    savePromotionData($promotions['PROMOTIONS']);
 }
 
 // Function to delete a marker
@@ -69,6 +71,18 @@ function deleteMarker($id) {
         return true;
     }));
     saveMarkerData($markers['STATION']);
+
+    // Delete promotion for the deleted marker
+    deletePromotion($id);
+}
+
+// Function to delete a promotion
+function deletePromotion($stationId) {
+    $promotions = loadPromotionData();
+    $promotions['PROMOTIONS'] = array_values(array_filter($promotions['PROMOTIONS'], function($promotion) use ($stationId) {
+        return $promotion['station_id'] != $stationId;
+    }));
+    savePromotionData($promotions['PROMOTIONS']);
 }
 
 // Function to get marker data by ID
@@ -103,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if a new file was uploaded
     if (isset($_FILES['picture']) && $_FILES['picture']['error'] === UPLOAD_ERR_OK) {
-        // Code to handle uploading and updating picture
+        // Handle uploading and updating picture
         $formData['picture'] = $_FILES['picture']['name']; // Capture the file name
 
         // Delete old picture if it exists
