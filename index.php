@@ -83,6 +83,9 @@ $promotion_counts = [];
 $monthly_promotions = [];
 $promotion_distribution = [];
 $province_promotion_status = [];
+$total_stations = 0;
+$total_fleet = 0;
+$total_ev = 0;
 
 foreach ($combined_data as $promotion) {
     $station_titles[] = $promotion['title'];
@@ -117,6 +120,17 @@ foreach ($combined_data as $promotion) {
                 break;
             }
         }
+    }
+}
+
+// Calculate totals
+foreach ($markers['STATION'] as $station) {
+    $total_stations++;
+    if (in_array('Fleet card', $station['service'])) {
+        $total_fleet++;
+    }
+    if (in_array('EV', $station['other_product'])) {
+        $total_ev++;
     }
 }
 
@@ -159,7 +173,6 @@ $province_labels = json_encode(array_keys($province_promotion_status));
 $province_active_counts = json_encode(array_column($province_promotion_status, 'active'));
 $province_expired_counts = json_encode(array_column($province_promotion_status, 'expired'));
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -241,7 +254,6 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
             box-shadow: 0 10px 16px -4px rgba(0, 0, 0, 0.6);
         }
 
-
         .navbar-brand {
             display: flex;
             align-items: center;
@@ -281,17 +293,54 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
             border: none;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .card-header {
-            background-color: #007bff;
+            background-color: transparent;
             color: white;
             border-bottom: none;
-            border-radius: 10px 10px 0 0;
+            font-size: 1.25em;
+            font-weight: bold;
+            padding: 20px;
+            text-align: center;
         }
 
         .card-body {
-            padding: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .card-body h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .card-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .bg-primary {
+            background-color: #007bff !important;
+        }
+
+        .bg-success {
+            background-color: #28a745 !important;
+        }
+
+        .bg-info {
+            background-color: #17a2b8 !important;
         }
 
         .countdown-timer {
@@ -302,7 +351,6 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
 
         .promotion-id {
             font-size: 1.2em;
-            color:white;
         }
 
         .chart-container {
@@ -335,13 +383,13 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <div class="sidebar-heading">
-                <img src="path_to_your_logo.png" width="30" height="30" alt="Logo">
-                Your Brand
+                <img src="" width="30" height="30" alt="">
+                PTT Map Finding
             </div>
             <div class="list-group list-group-flush">
                 <a href="index.php" class="list-group-item list-group-item-action">Overview</a>
-                <a href="manage.php" class="list-group-item list-group-item-action">Manage</a>
-                <a href="#" class="list-group-item list-group-item-action">Station</a>
+                <a href="manage.php" class="list-group-item list-group-item-action">Marketing</a>
+                <a href="station_admin.php" class="list-group-item list-group-item-action">Station</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -359,29 +407,29 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
 
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
-                        <div class="card text-white bg-primary mb-3">
-                            <div class="card-header">EARNINGS (MONTHLY)</div>
+                        <div class="card bg-primary text-white mb-3">
+                            <div class="card-icon"><i class="fas fa-gas-pump"></i></div>
+                            <div class="card-header">TOTAL STATIONS</div>
                             <div class="card-body">
-                                <h5 class="card-title">$40,000</h5>
-                                <p class="card-text"><i class="fas fa-arrow-up"></i> 3.48% Since last month</p>
+                                <h1><?php echo $total_stations; ?></h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="card text-white bg-success mb-3">
-                            <div class="card-header">SALES</div>
+                        <div class="card bg-success text-white mb-3">
+                            <div class="card-icon"><i class="fas fa-id-card"></i></div> <!-- Corrected the icon for fleet card -->
+                            <div class="card-header">TOTAL FLEET</div>
                             <div class="card-body">
-                                <h5 class="card-title">650</h5>
-                                <p class="card-text"><i class="fas fa-arrow-up"></i> 12% Since last year</p>
+                                <h1><?php echo $total_fleet; ?></h1>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6">
-                        <div class="card text-white bg-info mb-3">
-                            <div class="card-header">NEW USERS</div>
+                        <div class="card bg-info text-white mb-3">
+                            <div class="card-icon"><i class="fas fa-charging-station"></i></div>
+                            <div class="card-header">TOTAL EV</div>
                             <div class="card-body">
-                                <h5 class="card-title">366</h5>
-                                <p class="card-text"><i class="fas fa-arrow-up"></i> 20.4% Since last month</p>
+                                <h1><?php echo $total_ev; ?></h1>
                             </div>
                         </div>
                     </div>
@@ -422,12 +470,6 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
     </div>
 
     <script>
-        // document.getElementById("menu-toggle").addEventListener("click", function () {
-        //     document.getElementById("wrapper").classList.toggle("toggled");
-        //     document.getElementById("sidebar-wrapper").classList.toggle("toggled");
-        //     document.getElementById("page-content-wrapper").classList.toggle("toggled");
-        // });
-
         const ctx3 = document.getElementById('chart3').getContext('2d');
         const ctx5 = document.getElementById('chart5').getContext('2d');
 
@@ -476,8 +518,7 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
             type: 'bar',
             data: {
                 labels: provinceLabels,
-                datasets: [
-                    {
+                datasets: [{
                         label: 'Active Promotions',
                         data: provinceActiveCounts,
                         backgroundColor: 'rgba(75, 192, 192, 1)',
@@ -512,9 +553,6 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
             }
         });
 
-        // Countdown timer functionality
-        const promotionEndTimes = <?php echo $promotion_end_times_json; ?>;
-
         function updateCountdowns() {
             const now = new Date().getTime();
 
@@ -543,7 +581,3 @@ $province_expired_counts = json_encode(array_column($province_promotion_status, 
 </body>
 
 </html>
-
-
-
-
