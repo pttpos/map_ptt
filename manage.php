@@ -465,14 +465,14 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-            <div class="sidebar-heading">
-                <img src="path_to_your_logo.png" width="30" height="30" alt="Logo">
+        <div class="sidebar-heading">
+                <img src="" width="30" height="30" alt="">
+                PTT Map Finding
             </div>
             <div class="list-group list-group-flush">
                 <a href="index.php" class="list-group-item list-group-item-action">Overview</a>
-                <a href="manage.php" class="list-group-item list-group-item-action">Manage</a>
-                <a href="#" class="list-group-item list-group-item-action">Analytics</a>
-                <a href="#" class="list-group-item list-group-item-action">Export</a>
+                <a href="manage.php" class="list-group-item list-group-item-action">Marketing</a>
+                <a href="station_admin.php" class="list-group-item list-group-item-action">Station</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
