@@ -13,7 +13,13 @@
         {
             "id": 604,
             "station_id": 604,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion 1",
+                    "end_time": "2024-07-25T12:12:00Z",
+                    "description": "test "
+                }
+            ]
         },
         {
             "id": 605,
@@ -23,7 +29,13 @@
         {
             "id": 606,
             "station_id": 606,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion 1",
+                    "end_time": "2024-07-25T12:12:00Z",
+                    "description": "test "
+                }
+            ]
         },
         {
             "id": 608,
@@ -128,7 +140,13 @@
         {
             "id": 10032705,
             "station_id": 10032705,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion 1",
+                    "end_time": "2024-07-25T12:12:00Z",
+                    "description": "test "
+                }
+            ]
         },
         {
             "id": 10031114,
@@ -343,12 +361,24 @@
         {
             "id": 10021644,
             "station_id": 10021644,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion 1",
+                    "end_time": "2024-07-25T12:12:00Z",
+                    "description": "test "
+                }
+            ]
         },
         {
             "id": 10025909,
             "station_id": 10025909,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion 1",
+                    "end_time": "2024-07-25T12:12:00Z",
+                    "description": "test "
+                }
+            ]
         },
         {
             "id": 10021643,
@@ -553,7 +583,13 @@
         {
             "id": 10030440,
             "station_id": 10030440,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion 1",
+                    "end_time": "2024-07-25T12:12:00Z",
+                    "description": "test "
+                }
+            ]
         },
         {
             "id": 10030456,
@@ -668,7 +704,13 @@
         {
             "id": 10032704,
             "station_id": 10032704,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion 1",
+                    "end_time": "2024-07-25T12:12:00Z",
+                    "description": "test "
+                }
+            ]
         },
         {
             "id": 10032943,
