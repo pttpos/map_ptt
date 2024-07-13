@@ -433,8 +433,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                 transform: translateY(0);
             }
         }
-    </style>
-    <style>
+
         .alert-success {
             color: green;
         }
@@ -442,30 +441,28 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
         .alert-warning {
             color: orange;
         }
+
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+        }
+
+        .progress-bar {
+            width: 1%;
+            height: 30px;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
     </style>
-    <style>
-    .progress-container {
-        width: 100%;
-        background-color: #f3f3f3;
-    }
-
-    .progress-bar {
-        width: 1%;
-        height: 30px;
-        background-color: #4caf50;
-        text-align: center;
-        line-height: 30px;
-        color: white;
-    }
-</style>
-
 </head>
 
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-        <div class="sidebar-heading">
+            <div class="sidebar-heading">
                 <img src="" width="30" height="30" alt="">
                 PTT Map Finding
             </div>
@@ -476,45 +473,10 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Function to check and delete expired promotions
-                function checkAndDeleteExpiredPromotions() {
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'delete_expired_promotions.php', true);
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            console.log('Expired promotions deleted.');
-                            commitChanges();
-                        }
-                    };
-                    xhr.send('clear_all_expired=1');
-                }
-
-                // Function to commit changes
-                function commitChanges() {
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'commit_git.php', true);
-                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            console.log('Changes committed to GitHub.');
-                            // Optionally, you can reload the page to reflect the changes
-                            location.reload();
-                        }
-                    };
-                    xhr.send('commit_changes=1');
-                }
-
-                setInterval(checkAndDeleteExpiredPromotions, 24 * 60 * 60 * 1000); // Check every day (86,400,000 ms)
-            });
-        </script>
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <!-- <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button> -->
                 <a class="navbar-brand ml-3" href="#">
                     <img src="./pictures/logo_Station.png" width="200" height="auto" alt="Logo">
                 </a>
@@ -527,102 +489,116 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                         <?php echo implode('<br>', $messages); ?>
                     </div>
                 <?php endif; ?>
-                <!-- Commit Button Form -->
-                <form action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
-                    <input type="hidden" name="commit_changes" value="1">
-                    <button type="submit" class="btn btn-success">Commit Changes to GitHub</button>
-                </form>
 
-                <!-- Display commit result -->
-                <?php if (isset($_GET['status'])) : ?>
-                    <div class="alert <?php echo $_GET['status'] == 'success' ? 'alert-success' : 'alert-warning'; ?>">
-                        <?php echo htmlspecialchars($_GET['message']); ?>
-                    </div>
-                <?php endif; ?>
+                <!-- Buttons to toggle sections -->
+                <div class="mb-4">
+                    <button class="btn btn-primary" onclick="showSection(1)">Show Commit Changes</button>
+                    <button class="btn btn-primary" onclick="showSection(2)">Show Check Expired Promotions</button>
+                    <button class="btn btn-primary" onclick="showSection(3)">Show Add Promotion</button>
+                    <button class="btn btn-primary" onclick="showSection(4)">Show Clear Promotions</button>
+                    <button class="btn btn-primary" onclick="showSection(5)">Show Search Promotions</button>
+                </div>
 
-                <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
+                <!-- Section 1 -->
+                <div id="section1" class="content-section">
+                    <form action="commit_git.php" method="post" class="mb-4 p-3 border rounded shadow-sm bg-light">
+                        <input type="hidden" name="commit_changes" value="1">
+                        <button type="submit" class="btn btn-success">Commit Changes to GitHub</button>
+                    </form>
+                </div>
 
-                <form action="manage.php" method="post" enctype="multipart/form-data" class="mb-4 p-3 border rounded shadow-sm bg-light">
-                    <input type="hidden" name="action" value="add_to_all">
-                    <div class="form-group">
-                        <label for="promotion_id">Promotion ID:</label>
-                        <select class="form-select form-control" name="promotion_id" required>
-                            <?php foreach ($promotion_ids as $promo) : ?>
-                                <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="end_time">End Time:</label>
-                        <input type="datetime-local" class="form-control" name="end_time" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea class="form-control" name="description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="promotion_image">Promotion Image:</label>
-                        <input type="file" class="form-control-file" name="promotion_image" id="promotion_image" accept="image/*">
-                    </div>
-                    <div class="form-group">
-                        <label for="province">Provinces:</label>
-                        <select id="province-select" class="form-control">
-                            <option value="">Select a province</option>
-                            <?php
-                            $provinces = array_unique(array_column($markers['STATION'], 'province'));
-                            foreach ($provinces as $province) {
-                                echo "<option value=\"$province\">$province</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Selected Provinces:</label>
-                        <div id="selected-provinces-container" class="border p-2 rounded" style="background-color: #fff;">
-                            <!-- Selected provinces will be displayed here as tags -->
+                <!-- Section 2 -->
+                <div id="section2" class="content-section">
+                    <button class="btn btn-warning mb-4" id="checkExpiredPromotionsBtn">Check Expired Promotions</button>
+                </div>
+
+                <!-- Section 3 -->
+                <div id="section3" class="content-section">
+                    <form action="manage.php" method="post" enctype="multipart/form-data" class="mb-4 p-3 border rounded shadow-sm bg-light">
+                        <input type="hidden" name="action" value="add_to_all">
+                        <div class="form-group">
+                            <label for="promotion_id">Promotion ID:</label>
+                            <select class="form-select form-control" name="promotion_id" required>
+                                <?php foreach ($promotion_ids as $promo) : ?>
+                                    <option value="<?php echo $promo['promotion_id']; ?>"><?php echo $promo['promotion_id']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
-                    </div>
-                    <input type="hidden" name="provinces" id="selected-provinces" value="">
-                    <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
-                </form>
-
-
-                <!-- Clear All Selected Promotions Form -->
-                <form id="clearAllPromotionsForm" action="manage.php" method="post" class="mb-4 p-3 border rounded shadow-sm" style="background-color: #f8f9fa;">
-                    <input type="hidden" name="delete_all_promotions" value="1">
-                    <div class="form-group">
-                        <label for="selected_promotions">Select Promotions to Clear:</label>
-                        <?php foreach ($unique_promotions as $promotion_id) : ?>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="selected_promotions[]" value="<?php echo $promotion_id; ?>" id="promo_<?php echo $promotion_id; ?>">
-                                <label class="form-check-label" for="promo_<?php echo $promotion_id; ?>">
-                                    <?php echo $promotion_id; ?>
-                                </label>
+                        <div class="form-group">
+                            <label for="end_time">End Time:</label>
+                            <input type="datetime-local" class="form-control" name="end_time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" name="description" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="promotion_image">Promotion Image:</label>
+                            <input type="file" class="form-control-file" name="promotion_image" id="promotion_image" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label for="province">Provinces:</label>
+                            <select id="province-select" class="form-control">
+                                <option value="">Select a province</option>
+                                <?php
+                                $provinces = array_unique(array_column($markers['STATION'], 'province'));
+                                foreach ($provinces as $province) {
+                                    echo "<option value=\"$province\">$province</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Selected Provinces:</label>
+                            <div id="selected-provinces-container" class="border p-2 rounded" style="background-color: #fff;">
+                                <!-- Selected provinces will be displayed here as tags -->
                             </div>
-                        <?php endforeach; ?>
-                    </div>
-                    <button type="button" class="btn btn-danger" onclick="confirmAction('Are you sure you want to clear the selected promotions?', 'clearAllPromotionsForm')">Clear Selected Promotions</button>
-                </form>
+                        </div>
+                        <input type="hidden" name="provinces" id="selected-provinces" value="">
+                        <button type="submit" class="btn btn-primary">Add Promotion to Selected Provinces</button>
+                    </form>
+                </div>
 
-                <!-- Search Form -->
-                <form class="form-inline mb-4 p-3 border rounded shadow-sm" id="searchForm" method="get" action="manage.php" style="background-color: #f8f9fa;">
-                    <div class="form-group mr-2">
-                        <input class="form-control" type="text" id="search" name="search" placeholder="Search by Station Title or Promotion ID" value="<?php echo htmlspecialchars($search_query); ?>" style="transition: all 0.3s ease-in-out;">
-                    </div>
-                    <div class="form-group mr-2">
-                        <select class="custom-select" id="province-filter" name="province" style="transition: all 0.3s ease-in-out;">
-                            <option value="">All Provinces</option>
-                            <?php
-                            $provinces = array_unique(array_column($markers['STATION'], 'province'));
-                            foreach ($provinces as $province) {
-                                echo "<option value=\"$province\"" . ($province === $selected_province ? " selected" : "") . ">$province</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary mr-2" style="transition: all 0.3s ease-in-out;">Filter</button>
-                    <button type="button" id="clearFilter" class="btn btn-secondary" style="transition: all 0.3s ease-in-out;">Clear</button>
-                </form>
+                <!-- Section 4 -->
+                <div id="section4" class="content-section">
+                    <form id="clearAllPromotionsForm" action="manage.php" method="post" class="mb-4 p-3 border rounded shadow-sm" style="background-color: #f8f9fa;">
+                        <input type="hidden" name="delete_all_promotions" value="1">
+                        <div class="form-group">
+                            <label for="selected_promotions">Select Promotions to Clear:</label>
+                            <?php foreach ($unique_promotions as $promotion_id) : ?>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="selected_promotions[]" value="<?php echo $promotion_id; ?>" id="promo_<?php echo $promotion_id; ?>">
+                                    <label class="form-check-label" for="promo_<?php echo $promotion_id; ?>">
+                                        <?php echo $promotion_id; ?>
+                                    </label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <button type="button" class="btn btn-danger" onclick="confirmAction('Are you sure you want to clear the selected promotions?', 'clearAllPromotionsForm')">Clear Selected Promotions</button>
+                    </form>
+                </div>
+
+                <!-- Section 5 -->
+                <div id="section5" class="content-section">
+                    <form class="form-inline mb-4 p-3 border rounded shadow-sm" id="searchForm" method="get" action="manage.php" style="background-color: #f8f9fa;">
+                        <div class="form-group mr-2">
+                            <input class="form-control" type="text" id="search" name="search" placeholder="Search by Station Title or Promotion ID" value="<?php echo htmlspecialchars($search_query); ?>" style="transition: all 0.3s ease-in-out;">
+                        </div>
+                        <div class="form-group mr-2">
+                            <select class="custom-select" id="province-filter" name="province" style="transition: all 0.3s ease-in-out;">
+                                <option value="">All Provinces</option>
+                                <?php
+                                $provinces = array_unique(array_column($markers['STATION'], 'province'));
+                                foreach ($provinces as $province) {
+                                    echo "<option value=\"$province\"" . ($province === $selected_province ? " selected" : "") . ">$province</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2" style="transition: all 0.3s ease-in-out;">Filter</button>
+                        <button type="button" id="clearFilter" class="btn btn-secondary" style="transition: all 0.3s ease-in-out;">Clear</button>
+                    </form>
+                </div>
 
                 <div id="results" style="display: <?php echo (!empty($selected_province) || !empty($search_query)) ? 'block' : 'none'; ?>;">
                     <?php if (!empty($filtered_promotions)) : ?>
@@ -727,13 +703,14 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
     </div>
 
     <script>
-        // document.getElementById("menu-toggle").addEventListener("click", function () {
-        //     document.getElementById("wrapper").classList.toggle("toggled");
-        //     document.getElementById("sidebar-wrapper").classList.toggle("toggled");
-        //     document.getElementById("page-content-wrapper").classList.toggle("toggled");
-        // });
+        function showSection(sectionNumber) {
+            $('.content-section').hide();
+            $('#section' + sectionNumber).show();
+        }
 
         $(document).ready(function() {
+            $('.content-section').hide(); // Initially hide all sections
+
             $('#searchForm').submit(function(event) {
                 var searchQuery = $('#search').val();
                 var selectedProvince = $('#province-filter').val();
@@ -961,8 +938,7 @@ $expiration_status_json = json_encode([$active_count, $expired_count]);
                     </nav>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="clearExpiredPromotionsBtn">Clear All
-                        Expired Promotions</button>
+                    <button type="button" class="btn btn-danger" id="clearExpiredPromotionsBtn">Clear All Expired Promotions</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
