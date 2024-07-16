@@ -2173,7 +2173,9 @@
                 "ULR 91",
                 "HSD"
             ],
-            "other_product": null,
+            "other_product": [
+                "Otr"
+            ],
             "service": [
                 "Fleet card",
                 "KHQR",
