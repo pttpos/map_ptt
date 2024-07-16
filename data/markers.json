@@ -87,9 +87,9 @@
             "picture": "2.png"
         },
         {
-            "id": 605,
-            "latitude": 11.53295,
-            "longitude": 104.954105555555,
+            "id": "605",
+            "latitude": "11.53295",
+            "longitude": "104.954105555555",
             "title": "PTT Station Chba Ampov",
             "description": [
                 "Amazon",
@@ -102,7 +102,8 @@
             ],
             "other_product": [
                 "EV",
-                "Onion"
+                "Onion",
+                "Otr"
             ],
             "service": [
                 "Fleet card",
@@ -112,10 +113,8 @@
             "province": "Phnom Penh",
             "address": "National Road No. 1 (Phnom Penh-Vietnam), Sangkat Niruth, Khan Chbar Ampov, Phnom Penh, Cambodia",
             "status": "24h",
-            "promotion": [
-                ""
-            ],
-            "old_picture": "",
+            "promotion": null,
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
