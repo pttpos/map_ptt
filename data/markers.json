@@ -2160,9 +2160,9 @@
             "picture": "2.png"
         },
         {
-            "id": 615,
-            "latitude": 11.5316666666666,
-            "longitude": 104.861222222222,
+            "id": "615",
+            "latitude": "11.5316666666666",
+            "longitude": "104.861222222222",
             "title": "PTT Veng Sreng",
             "description": [
                 "Amazon",
@@ -2173,20 +2173,17 @@
                 "ULR 91",
                 "HSD"
             ],
-            "other_product": [
-                ""
-            ],
+            "other_product": null,
             "service": [
-                "Cash",
-                "KHQR"
+                "Fleet card",
+                "KHQR",
+                "Cash"
             ],
             "province": "Phnom Penh",
             "address": "#81, St. Veng Sreng, Tro Pang Tleong village, Sangkat Chom Chav, Phnom Penh",
-            "status": "under construct",
-            "promotion": [
-                ""
-            ],
-            "old_picture": "",
+            "status": "24h",
+            "promotion": null,
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
