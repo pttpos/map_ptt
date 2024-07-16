@@ -5169,32 +5169,28 @@
             "picture": "2.png"
         },
         {
-            "id": 10037095,
-            "latitude": 11.566,
-            "longitude": 104.911305555555,
+            "id": "10037095",
+            "latitude": "11.566",
+            "longitude": "104.911305555555",
             "title": "PTT Borey Keila",
             "description": [
-                ""
+                "Amazon"
             ],
             "product": [
                 "ULG 95",
                 "ULR 91",
                 "HSD"
             ],
-            "other_product": [
-                ""
-            ],
+            "other_product": null,
             "service": [
-                "Cash",
+                "Fleet card",
                 "KHQR",
-                "Fleet card"
+                "Cash"
             ],
             "province": "Phnom Penh",
             "address": "# 150 E0, St. 130, Phoum 1, Sangkat Phsar Kandal 2, Khan Daun Penh, Phnom Penh, Cambodia",
             "status": "16h",
-            "promotion": [
-                ""
-            ],
+            "promotion": null,
             "old_picture": "2.png",
             "picture": "2.png"
         },
