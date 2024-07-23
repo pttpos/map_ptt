@@ -363,7 +363,13 @@
         {
             "id": 615,
             "station_id": 615,
-            "promotions": []
+            "promotions": [
+                {
+                    "promotion_id": "promotion opening 1",
+                    "end_time": "2025-01-01T12:00:00Z",
+                    "description": null
+                }
+            ]
         },
         {
             "id": 10023212,
