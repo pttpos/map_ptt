@@ -180,9 +180,9 @@
             "picture": "2.png"
         },
         {
-            "id": 609,
-            "latitude": 11.35755,
-            "longitude": 104.188733333333,
+            "id": "609",
+            "latitude": "11.20863889",
+            "longitude": "104.1078056",
             "title": "PTT Station Pich Nil",
             "description": [
                 "Amazon",
@@ -193,9 +193,7 @@
                 "ULR 91",
                 "HSD"
             ],
-            "other_product": [
-                ""
-            ],
+            "other_product": null,
             "service": [
                 "Fleet card",
                 "KHQR",
@@ -204,10 +202,8 @@
             "province": "Kampong Speu",
             "address": "National Road No4, Phumi 6, Khom Traeng Troyeung, Srok Phnom Srouch, Kampong Speu Province, Cambodia.",
             "status": "24h",
-            "promotion": [
-                ""
-            ],
-            "old_picture": "",
+            "promotion": null,
+            "old_picture": "2.png",
             "picture": "2.png"
         },
         {
